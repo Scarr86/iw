@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import '../../styles.scss';
+
+.date{
+   text-align: center;
+   padding: 10px 0;
+   color: mat-color($iw-primary, text);
+   cursor: pointer;
+}
+
+
+
+.add-sale_btn{
+   position: fixed;
+   bottom: 30px;
+   left: 50%;
+   transform: translateX(-50%);
+}
+.sale-item{
+   flex-grow: 1;
+}
