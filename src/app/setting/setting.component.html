@@ -1,0 +1,40 @@
+<button
+  *ngIf="!($isSignedIn | async)"
+  (click)="signIn()"
+  mat-flat-button
+  color="primary"
+>
+  SignIn
+</button>
+<button
+  *ngIf="$isSignedIn | async"
+  (click)="signOut()"
+  mat-flat-button
+  color="primary"
+>
+  SignOut
+</button>
+
+<br />
+
+<button
+  *ngIf="$isSignedIn | async"
+  (click)="getList()"
+  mat-flat-button
+  color="primary"
+>
+  Get List
+</button>
+
+<button
+  *ngIf="$isSignedIn | async"
+  (click)="list = ''"
+  mat-flat-button
+  color="primary"
+>
+  Clear List
+</button>
+<pre>
+    {{ list | json }}
+
+</pre>

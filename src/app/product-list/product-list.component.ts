@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Subscription, forkJoin, combineLatest, Observable, of, iif, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { SaleService, Product, Sale, salesBackEnd } from 'src/app/service/sale.service';
-import { map, switchMap, take, pluck, share, publish, refCount, publishReplay, tap, multicast } from 'rxjs/operators';
+import { SaleService, salesBackEnd } from 'src/app/service/sale.service';
+import { map, switchMap, take, pluck, share, publish, refCount, publishReplay, tap, multicast, filter, first } from 'rxjs/operators';
 import { LogService } from 'src/app/service/log.service';
+import { Sale, Product } from '../service/sales';
 
 @Component({
    selector: 'app-product-list',
@@ -12,40 +13,52 @@ import { LogService } from 'src/app/service/log.service';
    styleUrls: ['./product-list.component.scss'],
    // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit, OnDestroy, AfterViewInit {
    title$: Observable<string>;
    products$: Observable<Product[]>;
-   newProduct: Product = new Product();
    sale$: Observable<Sale>;
-   saleList$: Observable<Sale[]>;
-   salse$: BehaviorSubject<Sale> = new BehaviorSubject(new Sale('', []))
    private subscription: Subscription = new Subscription();
 
 
    constructor(
       private saleService: SaleService,
       private location: Location,
-      private activeRoute: ActivatedRoute,
-      private log: LogService) { }
+      private activeRoute: ActivatedRoute) { }
+
+   ngAfterViewInit() {
+      this.activeRoute.queryParams.pipe(pluck('date')).pipe(filter(date => !isNaN(date)))
+         .subscribe(date => {
+            this.saleService.getSales(new Date(+date))
+         });
+   }
+
+
 
    ngOnInit() {
-      this.saleList$ = this.activeRoute.queryParams.pipe(pluck('date'))
-         .pipe(switchMap((date) => this.saleService.getSales(new Date(+date))),
-         );
+      // let saleList$ = this.activeRoute.queryParams.pipe(pluck('date'))
+      //    .pipe(
+      //       switchMap((date) => this.saleService.getSales(new Date(+date))),
+      //       tap(console.log),
+      //       first(s => !!s)
+      //    );
 
       this.sale$ = this.activeRoute.params.pipe(pluck('id')).pipe(
          switchMap(id => iif(() => id === 'newsale',
             of(new Sale("New Sale", [])).pipe(tap(console.log)),
-            this.saleList$.pipe(map(sales => sales[id])))),
-         multicast(this.salse$),
-         // publishReplay(1),
+            this.saleService.sales$.pipe(map(sales => sales?sales[id]: []))
+            /*saleList$.pipe(map(sales => sales[id]))*/
+         )),
+         publishReplay(1),
          refCount()
       );
 
       this.title$ = this.sale$.pipe(pluck('name'));
-      this.products$ = this.sale$.pipe(map(s => [...s.productList, this.newProduct]));
+      this.products$ = this.sale$
+         .pipe(
+            pluck('productList'),
+            map(p => [...p, new Product()]),
+         )
    }
-
    ngOnDestroy() {
    }
 
@@ -53,13 +66,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.location.back();
    }
    addProduct() {
-      let sale = this.salse$.getValue();
+      // let sale = this.salse$.getValue();
 
-      this.newProduct.name = "name product";
-      this.newProduct.price = 1000;
 
-      sale.productList.push(this.newProduct);
-      this.saleService.save(sale);
+      // sale.productList.push(this.newProduct);
+      // this.saleService.save(sale);
       // this.salse$.getValue().productList.push(this.newProduct);
 
       // this.sale$.pipe(

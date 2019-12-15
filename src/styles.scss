@@ -29,13 +29,32 @@ $iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html {
+   box-sizing: border-box;
+ }
+ 
+ *,
+ *::before,
+ *::after {
+   box-sizing: inherit;
+ }
+ 
+ html,
+ body {
+   height: 100%;
+   position: relative;
+   overflow-x: hidden;
+   font-family: Roboto, "Helvetica Neue", sans-serif;
+   margin: 0; 
+ }
+// body { margin: 0; }
 
 .container{
    font-weight: 400;
    padding: 20px 20px 50px;
-   position: relative;
+   // position: relative;
+   height: 100%;
    // $background: map-get($iw-theme, background);
    // background-color: mat-color($background, background);
    // min-height: 100vh;

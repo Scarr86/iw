@@ -14,6 +14,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
 import { SaleItemComponent } from './sale-list/sale-item/sale-item.component';
+import { SettingComponent } from './setting/setting.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -27,7 +28,8 @@ registerLocaleData(localeRu, 'ru');
     HistoryComponent,
     ProductListComponent,
     ProductItemComponent,
-    SaleItemComponent
+    SaleItemComponent,
+    SettingComponent
   ],
   imports: [
     BrowserModule,

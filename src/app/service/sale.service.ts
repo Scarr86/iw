@@ -1,23 +1,13 @@
 import { Injectable } from '@angular/core';
-import { from, of, Observable, interval, Subject, timer, throwError } from 'rxjs';
-import { tap, delay, finalize, publishReplay, refCount, filter, switchMap, shareReplay, repeat, publish, share, map, catchError, switchMapTo, startWith, withLatestFrom, reduce, take, retry, repeatWhen } from 'rxjs/operators';
+import { from, of, Observable, interval, Subject, timer, throwError, BehaviorSubject } from 'rxjs';
+import { tap, delay, finalize, publishReplay, refCount, filter, switchMap, shareReplay, repeat, publish, share, map, catchError, switchMapTo, startWith, withLatestFrom, reduce, take, retry, repeatWhen, multicast } from 'rxjs/operators';
 import { LogService } from './log.service';
+import { GeneratorBase } from './generator-sale.service';
+import { Sale, Product, ISale, ISaleBase } from './sales';
 
-export class Product {
-   constructor(
-      public name: string = '',
-      public num: number = 0,
-      public price: number = 0,
-      public discount: number = 0) {
 
-   }
-}
 
-export class Sale {
-   // name: string;
-   // productList: Product[];
-   constructor(public name: string , public productList:Product[]){}
-}
+
 
 export let salesBackEnd: Sale[] =
    [
@@ -33,71 +23,81 @@ export let salesBackEnd: Sale[] =
 export class SaleService {
 
    sales$: Observable<Sale[]> = new Observable();
-   update$:Subject<any> = new Subject();
+   update$: Subject<any> = new Subject();
+   base$: BehaviorSubject<Sale[]> = new BehaviorSubject(null);
+   getSale$: Subject<Date> = new Subject();
 
-   constructor(private logService: LogService) {
+   constructor(private logService: LogService,
+      private genBase: GeneratorBase) {
       this.log("SaleService Init");
+      
+
+      this.sales$ = this.getSale$.pipe(
+         tap((date) => this.log(`fetch sales by ${date.toLocaleDateString()}`)),
+         switchMap( date => this.load(date).pipe(
+            retry(3),
+            repeatWhen(() => this.update$.pipe(tap(_ => this.info("update"), null, () => this.info("complite")))),
+            catchError(this.handleError<Sale[]>('getSales', []))
+         )),
+         // shareReplay(1),
+         publishReplay(1),
+         refCount(),
+      );
    }
 
 
    getSales(date: Date) {
-   
-      this.sales$ = this.load(date).pipe(
-         // withLatestFrom(of(date)),
-         retry(3),
-         repeatWhen(()=> this.update$.pipe(tap(_=>this.info("update"), null, ()=> this.info("complite")))),
-         // shareReplay(1),
-         publishReplay(1),
-         refCount(),
-      )
-      return this.sales$.pipe(
-         tap(() => this.log(`fetch sales by ${date.toLocaleDateString()}`)),
-         catchError(this.handleError<Sale[]>('getSales',[]))
-      )
+      this.getSale$.next(date);
+
+      // this.sales$ = this.load(date).pipe(
+      //    // withLatestFrom(of(date)),
+      //    tap(() => this.log(`fetch sales by ${date.toLocaleDateString()}`)),
+      //    retry(3),
+      //    repeatWhen(() => this.update$.pipe(tap(_ => this.info("update"), null, () => this.info("complite")))),
+      //    // shareReplay(1),
+      //    publishReplay(1),
+      //    // multicast(this.base$),
+      //    refCount(),
+      // )
+      // return this.sales$.pipe(
+
+      //    catchError(this.handleError<Sale[]>('getSales', []))
+      // )
    }
-   update(){
+   update() {
       this.update$.next(null);
    }
-   addProduct(){}
-   save(sale:Sale){
-      if( !~salesBackEnd.indexOf(sale)){
-         salesBackEnd.push(sale);
-      }
-      this.saveToBackEnd().subscribe(()=>this.update());
-      // return this.saveToBackEnd();
+   addProduct() { }
+   save() {
+         this.saveToBackEnd().subscribe(() => this.update());
    }
 
-   // getNumProducts(i: number): Observable<number> {
-   //    return this.sales$.pipe(
-   //       map((s) => s[i].productList.length),
-   //       tap((l) => this.log(`fetch number of products on sale N${i}: ${l} `)),
-   //       catchError(this.handleError<number>('getNumProducts', 0))
-   //    )
-   // }
-   // getTotalPriseSale(i: number): Observable<number> {
-   //    return this.sales$.pipe(
-   //       switchMap((s) => from(s[i].productList)),
-   //       reduce((s, p: Product) => s += p.price * p.num - p.discount, 0),
-   //       tap((t) => this.log(`fetch total price of products on sale N${i}: ${t}`)),
-   //       catchError(this.handleError<number>('getTotalPriseSale', 0))
-   //    )
-   // }
-   saveToBackEnd(){
+   saveToBackEnd() {
       return of('saved').pipe(
          delay(100),
          // tap(()=> this.info("saved")),
-         );
+      );
    }
 
-   load(date:Date) {
-      // return timer(1000).pipe(
+   load(date: Date) {
+
+      // test error
+      return timer(1000).pipe(
+         tap(_=> this.info(`request server`)),
+         switchMapTo(throwError('Something wrong!'))
+      );
+      //====
+      return this.genBase.genereteSale().pipe(
+         map((base: ISaleBase) => base[date.getFullYear()]),
+         map((base) => base[date.getMonth()]),
+         map(base => (base[date.getDate()] as Sale[])),
+         tap(_ => this.info(`request server`)),
+         delay(500)
+      )
+      // return of(salesBackEnd).pipe(
       //    tap(_=> this.info(`request server`)),
-      //    switchMapTo(throwError('Something wrong!'))
-      // );
-      return of(salesBackEnd).pipe(
-         tap(_=> this.info(`request server ${date.toLocaleDateString()}`)),
-         delay(1000)
-         );
+      //    delay(1000)
+      //    );
    }
 
    log(msg: string) {
@@ -112,9 +112,9 @@ export class SaleService {
 
    private handleError<T>(operation = "operation", result?: T) {
       return (error: any): Observable<T> => {
-        this.warp(`${operation} failed: ${error}`);
-        return of(result as T);
+         this.warp(`${operation} failed: ${error}`);
+         return of(result as T);
       };
-    }
+   }
 
 }

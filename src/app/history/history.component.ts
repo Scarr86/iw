@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneratorBase } from '../service/generator-sale.service';
 
 @Component({
   selector: 'app-history',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+   sales$;
+  constructor(private genereteService: GeneratorBase) { }
 
   ngOnInit() {
   }
-
+  generete(){
+   //   this.sales$ = this.genereteService.genereteSale();
+   let sub= this.genereteService.genereteSale().subscribe(console.log);
+   
+   setTimeout(()=>{
+      console.log("unsub");
+      sub.unsubscribe();
+   }, 1500)
+  }
 }

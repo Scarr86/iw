@@ -1,13 +1,16 @@
-.sidenav-container {
-  height: 100%;
+.mat-drawer-content{
+  min-height: 100vh;
 }
 
 .sidenav {
   width: 200px;
 }
+.container{
+  // min-height: 100vh;
+}
 
 .sidenav .mat-toolbar {
-  background: inherit;
+  // background: inherit;
 }
 
 .mat-toolbar.mat-primary {

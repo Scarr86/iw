@@ -11,7 +11,8 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 export class NavigationComponent {
    links = [
       { name: "Sale", patch: "/sale-list" },
-      { name: "History", patch: "/history" }
+      { name: "History", patch: "/history" },
+      { name: "Setting", patch: "/setting" }
    ];
 
    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

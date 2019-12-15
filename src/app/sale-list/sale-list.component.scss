@@ -1,6 +1,8 @@
 @import '~@angular/material/theming';
 @import '../../styles.scss';
 
+
+
 .date{
    text-align: center;
    padding: 10px 0;
@@ -18,4 +20,7 @@
 }
 .sale-item{
    flex-grow: 1;
+}
+input{
+   display: none;
 }
