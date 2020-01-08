@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Product } from 'src/app/service/sales';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-product-item',
@@ -8,7 +9,11 @@ import { Product } from 'src/app/service/sales';
 })
 export class ProductItemComponent implements OnInit {
    @Input() product:Product;
-  constructor() { }
+
+  constructor( ) { 
+
+    
+  }
 
   ngOnInit() {
   }

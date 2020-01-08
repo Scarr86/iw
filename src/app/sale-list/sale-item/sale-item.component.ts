@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Sale } from 'src/app/service/sales';
 
 @Component({
@@ -11,7 +11,6 @@ export class SaleItemComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
-
    }
    getNumProducts(): number {
       if (!this.sale) return 0;

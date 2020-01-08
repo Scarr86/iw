@@ -1,4 +1,21 @@
+@import '~@angular/material/theming';
+@import '../../styles.scss';
+ $background: map-get($dark-theme, background);
+ $foreground: map-get($iw-theme, foreground);
+
 .new-product{
    // filter: brightness(0.8);
    opacity: 0.5;
 }
+:host{
+   display: block;
+   min-height: 100vh;
+}
+.container{
+   min-height: 100vh;
+   // background-color: #fff;
+   // background-color: mat-color($background, background);
+   // background-color: mat-color($foreground, text);
+}
+
+// @include mat-button-theme($dark-theme);

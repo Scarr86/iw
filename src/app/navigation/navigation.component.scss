@@ -5,18 +5,32 @@
 .sidenav {
   width: 200px;
 }
-.container{
-  // min-height: 100vh;
-}
 
 .sidenav .mat-toolbar {
   // background: inherit;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
+// .mat-toolbar.mat-primary {
+//   position: sticky;
+//   top: 0;
+//   z-index: 1;
+// }
+
+.more-vert{
+  margin-left: auto;
+}
+.title{
+  margin-left: 15px;
+}
+.header{
+  position: sticky !important;
   top: 0;
-  z-index: 1;
+  // left: 0;
+  // bottom: 0;
+  z-index: 1000;
+}
+.active{
+  background: rgba(0, 0, 0, 0.04);
 }
 
 

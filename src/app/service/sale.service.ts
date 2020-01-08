@@ -82,22 +82,22 @@ export class SaleService {
    load(date: Date) {
 
       // test error
-      return timer(1000).pipe(
-         tap(_=> this.info(`request server`)),
-         switchMapTo(throwError('Something wrong!'))
-      );
-      //====
-      return this.genBase.genereteSale().pipe(
-         map((base: ISaleBase) => base[date.getFullYear()]),
-         map((base) => base[date.getMonth()]),
-         map(base => (base[date.getDate()] as Sale[])),
-         tap(_ => this.info(`request server`)),
-         delay(500)
-      )
-      // return of(salesBackEnd).pipe(
+      // return timer(1000).pipe(
       //    tap(_=> this.info(`request server`)),
-      //    delay(1000)
-      //    );
+      //    switchMapTo(throwError('Something wrong!'))
+      // );
+      //====
+      // return this.genBase.genereteSale().pipe(
+      //    map((base: ISaleBase) => base[date.getFullYear()]),
+      //    map((base) => base[date.getMonth()]),
+      //    map(base => (base[date.getDate()] as Sale[])),
+      //    tap(_ => this.info(`request server`)),
+      //    delay(500)
+      // )
+      return of(salesBackEnd).pipe(
+         tap(_=> this.info(`request server`)),
+         delay(1000)
+         );
    }
 
    log(msg: string) {

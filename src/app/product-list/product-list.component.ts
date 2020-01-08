@@ -6,6 +6,7 @@ import { SaleService, salesBackEnd } from 'src/app/service/sale.service';
 import { map, switchMap, take, pluck, share, publish, refCount, publishReplay, tap, multicast, filter, first } from 'rxjs/operators';
 import { LogService } from 'src/app/service/log.service';
 import { Sale, Product } from '../service/sales';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
    selector: 'app-product-list',
@@ -23,7 +24,9 @@ export class ProductListComponent implements OnInit, OnDestroy, AfterViewInit {
    constructor(
       private saleService: SaleService,
       private location: Location,
-      private activeRoute: ActivatedRoute) { }
+      private activeRoute: ActivatedRoute,
+   ) {
+   }
 
    ngAfterViewInit() {
       this.activeRoute.queryParams.pipe(pluck('date')).pipe(filter(date => !isNaN(date)))
@@ -45,7 +48,7 @@ export class ProductListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.sale$ = this.activeRoute.params.pipe(pluck('id')).pipe(
          switchMap(id => iif(() => id === 'newsale',
             of(new Sale("New Sale", [])).pipe(tap(console.log)),
-            this.saleService.sales$.pipe(map(sales => sales?sales[id]: []))
+            this.saleService.sales$.pipe(map(sales => sales ? sales[id] : []))
             /*saleList$.pipe(map(sales => sales[id]))*/
          )),
          publishReplay(1),

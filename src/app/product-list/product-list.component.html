@@ -1,16 +1,19 @@
-<mat-toolbar color="primary">
-   <button mat-icon-button (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon>
-   </button>
-
-   <span>{{title$ | async}} </span>
-</mat-toolbar>
 
 
-<div class="container">
-      <!-- [multi]='true' -->
-   <mat-accordion  [hideToggle]='true'>
-      <mat-expansion-panel #panel [class.new-product]='lastItem && !panel.expanded' *ngFor="let p of products$ | async; let lastItem = last">
+   <mat-toolbar color="primary">
+      <button mat-icon-button (click)="goBack()">
+         <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <span>{{title$ | async}} </span>
+   </mat-toolbar>
+
+
+   <!-- <div class="container"> -->
+   <!-- [multi]='true' -->
+   <mat-accordion [hideToggle]='true'>
+      <mat-expansion-panel #panel [class.new-product]='lastItem && !panel.expanded'
+         *ngFor="let p of products$ | async; let lastItem = last">
          <mat-expansion-panel-header>
             <mat-panel-title> {{lastItem? '': p.name}} </mat-panel-title>
             <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description>
@@ -30,5 +33,4 @@
    <button mat-button (click)="update()">
       <mat-icon>update</mat-icon>
    </button>
-
-</div>
+<!-- </div> -->

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, HostListener, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, HostListener, AfterViewInit, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { SaleService } from '../service/sale.service';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -25,7 +25,7 @@ export class SaleListComponent implements OnInit, OnDestroy, AfterViewInit {
       private router: Router,
       private saleService: SaleService,
       private dm: DownloadManager,
-      private log: LogService
+      private log: LogService,
    ) { }
 
    ngOnInit() {
@@ -34,6 +34,9 @@ export class SaleListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.sales$ = this.saleService.getSales(this.date);
       this.sales$ = this.saleService.sales$;
+
+
+
    }
    ngAfterViewInit() {
       this.saleService.getSales(this.date);

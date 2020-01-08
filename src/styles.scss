@@ -1,7 +1,9 @@
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -9,13 +11,24 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
+
+// Тест кастем тема
+// @mixin candy-carousel-theme($theme) {
+//   $primary: map-get($theme, primary);
+//   $foreground: map-get($theme, foreground);
+//   $background: map-get($theme, background);
+//   .active{
+//     background-color: mat-color($primary, 100);
+//     // background-color: mat-color($background);
+//     // .mat-line{
+//     //   color: mat-color($foreground, text);
+//     // }
+//   }
+// }
+
+
 $iw-primary: mat-palette($mat-indigo);
 $iw-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
 $iw-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
@@ -26,8 +39,26 @@ $iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($iw-theme);
+// @include candy-carousel-theme($iw-theme); 
 
-/* You can add global styles to this file, and also import other style files */
+
+
+// Define an alternate dark theme.
+// $dark-primary: mat-palette($mat-blue-grey);
+// $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+// $dark-warn:    mat-palette($mat-deep-orange);
+// $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-theme:   mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
+
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  // @include candy-carousel-theme($dark-theme); 
+}
+
+
 
 
 html {
@@ -47,14 +78,17 @@ html {
    overflow-x: hidden;
    font-family: Roboto, "Helvetica Neue", sans-serif;
    margin: 0; 
+   background-color: #e7ebf0;
  }
-// body { margin: 0; }
 
 .container{
-   font-weight: 400;
-   padding: 20px 20px 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  // overflow-x: hidden;
+  //  font-weight: 400;
+  //  padding: 20px 20px 50px;
    // position: relative;
-   height: 100%;
+  //  height: 100%;
    // $background: map-get($iw-theme, background);
    // background-color: mat-color($background, background);
    // min-height: 100vh;
