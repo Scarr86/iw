@@ -41,7 +41,7 @@ export class NavigationComponent implements OnInit{
 ngOnInit() {
    this.isSignedIn$ = this.auth.isSignedIn;
    // this.componentCssClass = 'dark-theme';
-   this.theme.isDarkTheme.subscribe(console.log)
+   this.theme.isDarkTheme.subscribe((r)=> console.log("isDarkTheme", r))
 }
 
 

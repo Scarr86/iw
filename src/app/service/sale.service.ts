@@ -30,7 +30,6 @@ export class SaleService {
    constructor(private logService: LogService,
       private genBase: GeneratorBase) {
       this.log("SaleService Init");
-      
 
       this.sales$ = this.getSale$.pipe(
          tap((date) => this.log(`fetch sales by ${date.toLocaleDateString()}`)),

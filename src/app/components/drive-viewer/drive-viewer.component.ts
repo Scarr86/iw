@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, DoCheck, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 import { Observable, merge } from "rxjs";
 import { map, first } from "rxjs/operators";
 
@@ -11,7 +11,8 @@ import { FormControl, FormControlDirective, Validators } from '@angular/forms';
 @Component({
   selector: 'app-drive-viewer',
   templateUrl: './drive-viewer.component.html',
-  styleUrls: ['./drive-viewer.component.scss']
+  styleUrls: ['./drive-viewer.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
 
@@ -48,20 +49,16 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
     this.file$ = this.driveStore.file$;
 
     // this.fcTextarea.valueChanges.subscribe(()=>{
+    //   console.log("CHANGE");
     //   // this.cdr.detectChanges()
     // })
 
   }
   ngAfterViewInit() {
-    // this.driveStore.list()
     setTimeout(() => this.driveStore.list());
   }
 
   onSelected(file: File) {
-    // if(file.mimeType === "application/json"){
-    //   this.driveStore.file(file.id);
-    // }
-
     this.selectedFile = file === this.selectedFile ? null : file;
   }
 
@@ -110,12 +107,12 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
     this.driveStore.createFolder();
   }
   crateFile() {
-    this.fcInput.reset();
-    this.fcTextarea.reset();
     this.isNewFile = true;
+    this.driveStore.fileNew();
+    // this.fcTextarea.valid;
   }
   saveFile() {
-    if (this.isNewFile) {
+    if (!this.isNewFile) {
       this.driveStore.createFile({ name: this.fcInput.value, data: this.fcTextarea.value })
     } else {
       this.file$.subscribe((file: Response<File>) => {

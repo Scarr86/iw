@@ -47,6 +47,8 @@ export enum EDriveActions {
     fileSuccess = '[DriveStore] Get File Success',
     fileError = '[DriveStore] Get File failed',
 
+    fileNew = '[DriveStore] New File',
+
     fileUpd = '[DriveStore] Updata File',
     fileUpdSuccess = '[DriveStore] Updata File Success',
     fileUpdError = '[DriveStore] Updata File Failed ',
@@ -217,7 +219,7 @@ export class DriveStore {
     stateDrive$: Observable<IDriveState> = this.dispatcher$.pipe(
         startWith(defaultListState),
         scan(this.reducer),
-        tap(state => console.log(`[state]`, state)),
+        tap(state => console.log('[SATE] ', state)),
         publishReplay(1),
         refCount(),
     )
@@ -277,6 +279,9 @@ export class DriveStore {
             case EDriveActions.fileUpdError:
                 return { ...state, error: action.payload, loading: false }
 
+            case EDriveActions.fileNew:
+                return { ...state, file: { body: "" } };
+
             default: return { ...state }
         }
     }
@@ -299,8 +304,6 @@ export class DriveStore {
     */
     //    list(file: File | IBreadcrumbs = { id: "root", name: "root" }) {
     list({ id = "root", q = `'${id}' in parents and trashed = false` } = {}) {
-        console.log(id);
-
         this.dispatch({ type: EDriveActions.list, payload: { id, q } });
     }
     listClear() {
@@ -311,6 +314,9 @@ export class DriveStore {
     }
     file(id) {
         this.dispatch({ type: EDriveActions.file, payload: { id } });
+    }
+    fileNew() {
+        this.dispatch({ type: EDriveActions.fileNew });
     }
     updataFile({ id, name = "new file", data = "" }) {
         this.dispatch({ type: EDriveActions.fileUpd, payload: { id, name, data } });
@@ -337,6 +343,9 @@ export class DriveStore {
 
     private log(msg) {
         this.logger.write(`${msg}`)
+    }
+    private accentLog(msg) {
+        this.logger.write(msg, 'accent')
     }
     private warn(msg) {
         this.logger.write(`${msg}`, 'warn');

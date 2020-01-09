@@ -15,10 +15,7 @@ export class ThemeService {
     //   refCount()
     // )
   }
-  constructor() {
-    console.log(this);
-    
-   }
+  constructor() { }
 
   setDarkTheme(isDarkTheme: boolean): void {
     this._darkTheme.next(isDarkTheme);
