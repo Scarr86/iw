@@ -42,19 +42,23 @@
 
 <ng-template #matListTemplate>
     <mat-action-list [disableRipple]='true'>
-        <mat-list-item [class.active]="selectedFile === file" (click)="onSelected(file)" (dblclick)="onDblClick(file)"
-            *ngFor="let file of list$ | async">
-            <img src="{{file.iconLink}}" alt="">
-            <div>
-                <span matLine>{{file.name}} </span>
-                <span matLine>{{file.modifiedByMeTime | date:"EE, d MMM yyyy"}}</span>
+        <mat-list-item [class.active]="selectedFile === file" *ngFor="let file of list$ | async">
+
+            <div class="file-info" (click)="onSelected(file)">
+                <img src="{{file.iconLink}}" alt="">
+
+                <div class="file-info__text">
+                    <span matLine>{{file.name}} </span>
+                    <span matLine>{{file.modifiedByMeTime | date:"EE, d MMM yyyy"}}</span>
+                </div>
+
             </div>
             <button class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
 
             <mat-menu [xPosition]="'before'" #menu="matMenu">
-                <button (click)="deleteFile()" mat-menu-item> Удалить </button>
+                <button (click)="deleteFile(file)" mat-menu-item> Удалить </button>
             </mat-menu>
             <mat-divider></mat-divider>
         </mat-list-item>
@@ -63,17 +67,28 @@
 
 <ng-template #fileTemplate>
     <ng-container *ngIf="!(driveStore.loading$ | async)">
-        <mat-form-field class="full-width">
-            <input matInput  [formControl]="fcInput" placeholder="Имя файла">
+
+        <form  [formGroup]='fg' [appConnectFormControl]="(file$ | async)" class="form" (ngSubmit)="saveFile()">
+            <mat-form-field  >
+                <input formControlName='name' matInput placeholder="Имя файла">
+            </mat-form-field>
+            <mat-form-field  >
+                <textarea formControlName='text' cdkTextareaAutosize matInput placeholder="Содержание файла"> </textarea>
+            </mat-form-field>
+            <button [disabled]="fg.invalid" mat-raised-button color="primary"> Сохранить </button>
+        </form>
+        <!-- <mat-form-field class="full-width">
+            <input matInput [formControl]="fcInput" placeholder="Имя файла">
         </mat-form-field>
         <mat-form-field class="full-width">
             <textarea [appConnectFormControl]="(file$ | async)?.body" [formControl]="fcTextarea" cdkTextareaAutosize
                 matInput placeholder="Содержание файла">
         </textarea>
-        </mat-form-field>
-        <button (click)="saveFile()" [disabled]="!(fcTextarea.valid && fcInput.valid)" mat-raised-button
+        </mat-form-field> -->
+        <!-- <button (click)="saveFile()" [disabled]="!(fcTextarea.valid && fcInput.valid)" mat-raised-button
             color="primary"> Сохранить
-        </button>
+        </button> -->
+
     </ng-container>
 </ng-template>
 

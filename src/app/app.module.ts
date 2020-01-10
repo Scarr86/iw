@@ -54,13 +54,15 @@ export function initGapi(gapiSession: Auth2Service) {
   providers: [
     { provide: APP_INITIALIZER, useFactory: initGapi, deps: [Auth2Service], multi: true },
 
-    // { provide: LOCALE_ID, useValue: "ru" }
+    { provide: LOCALE_ID, useValue: "ru" }
   ],
   bootstrap: [AppComponent]
 
 })
 export class AppModule {
   constructor(overlayContainer: OverlayContainer, private theme: ThemeService) {
-    theme.isDarkTheme.subscribe((isDark) => isDark ? overlayContainer.getContainerElement().classList.add('dark-theme') : "")
+    theme.isDarkTheme.subscribe((isDark) => isDark ? 
+    overlayContainer.getContainerElement().classList.add('dark-theme') : 
+    overlayContainer.getContainerElement().classList.remove('dark-theme'))
   }
 }

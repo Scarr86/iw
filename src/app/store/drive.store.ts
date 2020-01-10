@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject, MonoTypeOperatorFunction, Observable, from, merge, of, concat } from 'rxjs';
+import { Subject, MonoTypeOperatorFunction, Observable, from, merge, of, concat, forkJoin } from 'rxjs';
 import { filter, exhaustMap, map, startWith, mapTo, tap, scan, catchError, publishReplay, refCount, switchMap, switchAll, first, mergeMap } from 'rxjs/operators';
 import { FileService, MIME_TYPE_FOLDER } from '../service/google-gapi/file.service';
 import { LogService } from '../service/log.service';
@@ -67,7 +67,7 @@ export enum EDriveActions {
 }
 
 function ofType<T extends Action>(type: EDriveActions): MonoTypeOperatorFunction<T> {
-    return filter((_) => type === _.type);
+    return filter(_ => type === _.type);
 }
 
 @Injectable({
@@ -158,22 +158,42 @@ export class DriveStore {
 
     private _file$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.file),
-        exhaustMap((a) => from(this.fileService.file(a.payload.id)).pipe(
-            map((payload) => ({
+        exhaustMap(a => from(this.fileService.file( a.payload.id)).pipe(
+            map(payload => ({
                 type: EDriveActions.fileSuccess,
                 payload
-            })),
+            }
+            )),
             catchError(erorr => of({
                 type: EDriveActions.fileError,
                 payload: erorr,
             }))
+        )
+            //     {
+            //     return forkJoin(
+            //         from(this.fileService.file({ id: a.payload.id })),
+            //         from(this.fileService.file({ id: a.payload.id, alt: "media" }))
+            //     ).pipe(
+            //         map(([info, media]) => {
+            //             media.result = info.result;
+            //             return {
+            //                 type: EDriveActions.fileSuccess,
+            //                 payload: media
+            //             }
+            //         }),
+            //         catchError(erorr => of({
+            //             type: EDriveActions.fileError,
+            //             payload: erorr,
+            //         }))
 
-        ))
+            //     )
+            // }
+        )
     );
 
     private _updFile$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.fileUpd),
-        exhaustMap((a) => from(this.fileService.list(a.payload)).pipe(
+        exhaustMap((a) => from(this.fileService.updateFile(a.payload)).pipe(
             map((payload) => ({
                 type: EDriveActions.fileUpdSuccess,
                 payload: payload
@@ -280,7 +300,7 @@ export class DriveStore {
                 return { ...state, error: action.payload, loading: false }
 
             case EDriveActions.fileNew:
-                return { ...state, file: { body: "" } };
+                return { ...state, file: { result: { name: "" }, body: "" } };
 
             default: return { ...state }
         }

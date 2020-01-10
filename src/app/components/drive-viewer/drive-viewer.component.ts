@@ -6,7 +6,7 @@ import { File, Response } from "../../store/drive.store"
 import { IBreadcrumbs, DriveStore } from 'src/app/store/drive.store';
 import { LogService } from 'src/app/service/log.service';
 import { FileService } from 'src/app/service/google-gapi/file.service';
-import { FormControl, FormControlDirective, Validators } from '@angular/forms';
+import { FormControl, FormControlDirective, Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-drive-viewer',
@@ -22,12 +22,13 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
   pre$;
   breadcrumbs$: Observable<IBreadcrumbs>;
   list$: Observable<File[]>;
-  file$: Observable<Response<File>>
+  file$: Observable<{name, text}>
   selectedFile: File = null;
   isNewFile: boolean = false;
 
   fcTextarea: FormControl = new FormControl('', Validators.required);
   fcInput: FormControl = new FormControl("", Validators.required);
+  fg: FormGroup;
 
   constructor(
     // public auth: Auth2Service,
@@ -36,17 +37,25 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
     private log: LogService,
     public driveStore: DriveStore,
     public fileService: FileService,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private formBuilder: FormBuilder
+  ) {
+    this.fg = formBuilder.group({
+      name: ["1111", [Validators.required]],
+      text: ["2222", [Validators.required]]
+    })
+  }
 
   ngOnInit() {
 
-    this.pre$ = merge(this.driveStore.list$);
+    this.pre$ = merge(this.driveStore.list$, this.driveStore.file$);
     this.list$ = this.driveStore.list$;
     this.breadcrumbs$ = this.driveStore.breadcrumbs$.pipe(map(bc => bc.length ? bc.slice(-1)[0] : { id: "root", name: "root" }));
-    // console.log(this.fcTextarea);
 
-    this.file$ = this.driveStore.file$;
+    this.file$ = this.driveStore.file$.pipe(map(f=> ({
+      name: f.result.name,
+      text:f.body
+    })));
 
     // this.fcTextarea.valueChanges.subscribe(()=>{
     //   console.log("CHANGE");
@@ -59,7 +68,14 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   onSelected(file: File) {
-    this.selectedFile = file === this.selectedFile ? null : file;
+
+    if (file.mimeType === "application/json") {
+      this.isNewFile = true;
+      this.selectedFile = file;
+      this.driveStore.file(file.id);
+    } else {
+      this.driveStore.list({ id: file.id });
+    }
   }
 
   onChange() {
@@ -72,16 +88,12 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
 
   }
   onDblClick(file: File) {
-    if (file.mimeType === "application/json") {
-      this.isNewFile = true;
-      this.driveStore.file(file.id);
-    } else {
-      this.driveStore.list({ id: file.id });
-    }
+
   }
   navigateTo() {
     if (this.isNewFile) {
       this.isNewFile = false;
+      this.selectedFile = null;
       this.breadcrumbs$.pipe(first()).subscribe(bc => {
         this.driveStore.list({ id: bc.id });
       })
@@ -96,29 +108,42 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
   getList(file: File = { id: "root" }) {
     this.driveStore.list({ id: file.id });
   }
-  deleteFile() {
-
-    this.driveStore.delete(this.selectedFile.id);
-    this.selectedFile = null;
+  deleteFile(file: File) {
+    this.driveStore.delete(file.id);
   }
-
-
   crateFolder() {
     this.driveStore.createFolder();
   }
   crateFile() {
     this.isNewFile = true;
+    this.selectedFile = null;
     this.driveStore.fileNew();
+    console.log(`select ${this.selectedFile} new file: ${this.isNewFile}`);
     // this.fcTextarea.valid;
   }
   saveFile() {
-    if (!this.isNewFile) {
-      this.driveStore.createFile({ name: this.fcInput.value, data: this.fcTextarea.value })
+    console.log(`select ${this.selectedFile} new file: ${this.isNewFile}`);
+    if (!this.selectedFile && this.isNewFile) {
+      this.driveStore.createFile({
+        name: this.fg.get('name').value,
+        data: this.fg.get('text').value
+      })
     } else {
-      this.file$.subscribe((file: Response<File>) => {
-        this.driveStore.updataFile({ id: file.result.id, name: this.fcInput.value, data: this.fcTextarea.value })
+      this.driveStore.file$.pipe(first()).subscribe((file: Response<File>) => {
+        this.driveStore.updataFile({
+          id: file.result.id,
+          name: this.fg.get('name').value,
+          data: this.fg.get('text').value
+        })
       })
     }
+    // if (!this.selectedFile && this.isNewFile) {
+    //   this.driveStore.createFile({ name: this.fcInput.value, data: this.fcTextarea.value })
+    // } else {
+    //   this.file$.pipe(first()).subscribe((file: Response<File>) => {
+    //     this.driveStore.updataFile({ id: file.result.id, name: this.fcInput.value, data: this.fcTextarea.value })
+    //   })
+    // }
   }
 
   loadTemplate() {

@@ -25,8 +25,8 @@ export class FileService {
 
             gapi.client.drive.files.get({
                 fileId: id,
-                alt: 'media', 
-                // fields: " id, name, size, mimeType, parents, modifiedByMeTime"
+                alt: 'media',
+                fields: "body, id, name, size, mimeType, modifiedByMeTime"
             }).then(resolve, reject);
         })
     }
@@ -96,8 +96,8 @@ export class FileService {
             JSON.stringify(metadata) +
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
-            data +
-            // JSON.stringify(data, null, 2) +
+            // data +
+            JSON.stringify(data, null, 2) +
             close_delim;
 
         return new Promise((resolve, reject) => {

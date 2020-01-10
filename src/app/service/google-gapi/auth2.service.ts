@@ -29,42 +29,33 @@ export class Auth2Service {
   gapiLoaded = false;
   gapiReady = false;
 
-
-
-  constructor(private log: LogService, private zone: NgZone) {
-
-
-
-  }
+  constructor(private log: LogService, private zone: NgZone) { }
 
   initGapi() {
     return this.loadClient()
-      .then(() => {
-        this.log.write("Auth2Service: LOAD");
-        // this.gapiLoaded = true;
-        return this.initClient();
-      },
+      .then(
+        () => {
+          this.log.write("Auth2Service: LOAD");
+          // this.gapiLoaded = true;
+          return this.initClient();
+        },
         err => {
           throw new Error(`LOAD FAILED ${err}`);
-        }
-      ).then(() => {
-        this.googleAuth = gapi.auth2.getAuthInstance();
-        this.isSignedIn$.next(this.googleAuth.isSignedIn.get());
-        this.googleAuth.isSignedIn.listen(this.updateSigninStatus.bind(this));
-        this.gapiReady = true;
-        this.log.write(`Auth2Service: INIT CLIENT GAPI `);
-        // this.gapiReady$.next(true);
-        // this.gapiReady$.complete();
-      },
+        })
+      .then(
+        () => {
+          this.googleAuth = gapi.auth2.getAuthInstance();
+          this.isSignedIn$.next(this.googleAuth.isSignedIn.get());
+          this.googleAuth.isSignedIn.listen(this.updateSigninStatus.bind(this));
+          this.gapiReady = true;
+          this.log.write(`Auth2Service: INIT CLIENT GAPI `);
+          // this.gapiReady$.next(true);
+          // this.gapiReady$.complete();
+        },
         err => {
           throw new Error(`Auth2Service ${err}`);
-        }
-      )
-
+        })
   }
-
-
-
 
   private loadClient(): Promise<any> {
     return new Promise((resolve, reject) => {

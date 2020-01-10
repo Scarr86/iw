@@ -39,13 +39,25 @@ ul{
 
 
 
-  .more-vert{
-    margin-left: auto;
-  }
-  .full-width{
-    width: 100%;
+  // .more-vert{
+  //   margin-left: auto;
+  // }
+  .form{
     padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    button{
+      align-self: flex-start;
+    }
   }
   textarea.mat-input-element{
     overflow-y: hidden ;
+  }
+  .file-info{
+    width: 100%;
+    &__text{
+      display: inline-block;
+      vertical-align: middle;
+    }
+   
   }
