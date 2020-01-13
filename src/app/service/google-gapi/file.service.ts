@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { GeneratorBase } from '../generator-sale.service';
 
 export const MIME_TYPE_FOLDER = "application/vnd.google-apps.folder";
 export const MIME_TYPE_FILE = "application/vnd.google-apps.file";
@@ -7,6 +8,8 @@ export const MIME_TYPE_FILE = "application/vnd.google-apps.file";
     providedIn: "root"
 })
 export class FileService {
+
+    constructor(private generatorBase: GeneratorBase) { }
 
     list({ id = 'root', q = "" } = {}) {
         return new Promise((resove, reject) => {
@@ -19,14 +22,15 @@ export class FileService {
             }).then(resove, reject);
         })
     }
-    file(id): Promise<gapi.client.Response<gapi.client.drive.File>> {
+    file({ id, alt = "" }): Promise<gapi.client.Response<gapi.client.drive.File>> {
 
         return new Promise((resolve, reject) => {
+            // console.log("one");
 
             gapi.client.drive.files.get({
                 fileId: id,
-                alt: 'media',
-                fields: "body, id, name, size, mimeType, modifiedByMeTime"
+                alt,
+                fields: "id, name, size, mimeType, modifiedByMeTime"
             }).then(resolve, reject);
         })
     }
@@ -44,7 +48,7 @@ export class FileService {
     }
 
 
-    createFile({ name, data }) {
+    createFile({ name, data = {} }) {
 
         const boundary = "-------314159265358979323846";
         const delimiter = "\r\n--" + boundary + "\r\n";
@@ -55,14 +59,14 @@ export class FileService {
             mimeType: contentType
         };
 
+        let base = this.generatorBase.genereteSale(new Date(2020, 0, 1));
         var multipartRequestBody =
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
             JSON.stringify(metadata) +
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
-            data +
-            // JSON.stringify(data, null, 2) +
+            JSON.stringify(base, null, 2) +
             close_delim;
 
         return new Promise((resolve, reject) => {
@@ -79,7 +83,7 @@ export class FileService {
         })
     }
 
-    updateFile({ id, name = "new file", data = "" }) {
+    updateFile({ id, name = "new file", data = {} }) {
         const boundary = "-------314159265358979323846";
         const delimiter = "\r\n--" + boundary + "\r\n";
         const close_delim = "\r\n--" + boundary + "--";
@@ -96,7 +100,6 @@ export class FileService {
             JSON.stringify(metadata) +
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
-            // data +
             JSON.stringify(data, null, 2) +
             close_delim;
 

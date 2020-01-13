@@ -12,7 +12,7 @@ import { MaterialModule } from './material/material.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { SaleListComponent } from './sale-list/sale-list.component';
+import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
 import { SaleItemComponent } from './sale-list/sale-item/sale-item.component';
 import { SettingComponent } from './setting/setting.component';
@@ -21,6 +21,7 @@ import { DriveViewerComponent } from './components/drive-viewer/drive-viewer.com
 import { ConnectFormControlDirective } from './components/connect-form.directive';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from './service/theme.service';
+import { ModalDialogComponent } from './components/drive-viewer/modal-diolog/modal-diolog.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -41,7 +42,11 @@ export function initGapi(gapiSession: Auth2Service) {
     SaleItemComponent,
     SettingComponent,
     DriveViewerComponent,
-    ConnectFormControlDirective
+    ConnectFormControlDirective,
+    ModalDialogComponent
+  ],
+  entryComponents:[
+    ModalDialogComponent
   ],
   imports: [
     BrowserModule,

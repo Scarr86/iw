@@ -6,14 +6,12 @@ import { Input } from '@angular/compiler/src/core';
 import { Observable, from, Subscription, fromEvent, pipe, Subject, of } from 'rxjs';
 import { tap, filter, switchMap, reduce, count, scan, take, finalize, map, repeatWhen } from 'rxjs/operators';
 import { DownloadManager } from '../service/download-manager.service';
-import { LogService } from '../service/log.service';
 import { Sale } from '../service/sales';
 
 @Component({
    selector: 'app-sale',
    templateUrl: './sale-list.component.html',
    styleUrls: ['./sale-list.component.scss'],
-   // providers:[LogService]
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaleListComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -25,7 +23,6 @@ export class SaleListComponent implements OnInit, OnDestroy, AfterViewInit {
       private router: Router,
       private saleService: SaleService,
       private dm: DownloadManager,
-      private log: LogService,
    ) { }
 
    ngOnInit() {
@@ -43,7 +40,7 @@ export class SaleListComponent implements OnInit, OnDestroy, AfterViewInit {
    }
 
    ngOnDestroy() {
-      this.log.write("unsubscribe SaleListComponent")
+      // this.log.write("unsubscribe SaleListComponent")
    }
    goToProductList(i: number) {
       this.router.navigate(

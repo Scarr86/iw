@@ -85,6 +85,7 @@ export class DriveStore {
     /**
     * Effects
     */
+   
     private _list$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.list),
         exhaustMap((a) => from(this.fileService.list(a.payload)).pipe(
@@ -123,7 +124,7 @@ export class DriveStore {
                 payload: erorr,
             }))
         )),
-        tap(() => this.list())
+        // tap(() => this.list())
 
     );
 
@@ -158,36 +159,43 @@ export class DriveStore {
 
     private _file$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.file),
-        exhaustMap(a => from(this.fileService.file( a.payload.id)).pipe(
-            map(payload => ({
-                type: EDriveActions.fileSuccess,
-                payload
-            }
-            )),
-            catchError(erorr => of({
-                type: EDriveActions.fileError,
-                payload: erorr,
-            }))
-        )
-            //     {
-            //     return forkJoin(
-            //         from(this.fileService.file({ id: a.payload.id })),
-            //         from(this.fileService.file({ id: a.payload.id, alt: "media" }))
-            //     ).pipe(
-            //         map(([info, media]) => {
-            //             media.result = info.result;
-            //             return {
-            //                 type: EDriveActions.fileSuccess,
-            //                 payload: media
-            //             }
-            //         }),
-            //         catchError(erorr => of({
-            //             type: EDriveActions.fileError,
-            //             payload: erorr,
-            //         }))
+        exhaustMap(a =>
 
-            //     )
-            // }
+
+
+        //     from(this.fileService.file( a.payload.id)).pipe(
+        //     map(payload => (
+
+        //         {
+        //         type: EDriveActions.fileSuccess,
+        //         payload
+        //     }
+        //     )),
+        //     catchError(erorr => of({
+        //         type: EDriveActions.fileError,
+        //         payload: erorr,
+        //     }))
+        // )
+        {
+            return forkJoin(
+                from(this.fileService.file({ id: a.payload.id })),
+                from(this.fileService.file({ id: a.payload.id, alt: "media" }))
+            ).pipe(
+                map(([info, media]) => {
+                    // console.log("info", info, "mrdia", media);
+                    info.body = media.body;
+                    return {
+                        type: EDriveActions.fileSuccess,
+                        payload: info
+                    }
+                }),
+                catchError(erorr => of({
+                    type: EDriveActions.fileError,
+                    payload: erorr,
+                }))
+
+            )
+        }
         )
     );
 
@@ -238,7 +246,7 @@ export class DriveStore {
     */
     stateDrive$: Observable<IDriveState> = this.dispatcher$.pipe(
         startWith(defaultListState),
-        scan(this.reducer),
+        scan((acc:IDriveState, v:Action)=> this.reducer(acc, v)),
         tap(state => console.log('[SATE] ', state)),
         publishReplay(1),
         refCount(),
@@ -276,20 +284,26 @@ export class DriveStore {
                 return { ...state, breadcrumbs: state.breadcrumbs.slice(0, -1) };
             case EDriveActions.listNavigateToSuccess:
                 return { ...state };
-
+            case EDriveActions.fileUpd:
+            case EDriveActions.file:
+                return { ...state, file: { result: { name: action.payload.name }, body: JSON.stringify(action.payload.data, null, 2) }, error: null, loading: true };
 
             case EDriveActions.delete:
             case EDriveActions.createFolder:
             case EDriveActions.createFile:
-            case EDriveActions.fileUpd:
-            case EDriveActions.file:
+                
                 return { ...state, error: null, loading: true };
 
             case EDriveActions.createFolderSuccess:
             case EDriveActions.createFileSuccess:
             case EDriveActions.deleteSuccess:
-            case EDriveActions.fileSuccess:
             case EDriveActions.fileUpdSuccess:
+                this.list();
+                console.log("my state");
+                
+                return { ...state, loading: false }
+
+            case EDriveActions.fileSuccess:
                 return { ...state, file: action.payload, loading: false }
 
             case EDriveActions.createFolderError:
@@ -338,17 +352,17 @@ export class DriveStore {
     fileNew() {
         this.dispatch({ type: EDriveActions.fileNew });
     }
-    updataFile({ id, name = "new file", data = "" }) {
+    updataFile({ id, name = "new file", data = {} }) {
         this.dispatch({ type: EDriveActions.fileUpd, payload: { id, name, data } });
     }
 
     delete(id) {
         this.dispatch({ type: EDriveActions.delete, payload: id });
     }
-    createFolder(resource: { name: string, mimeType: string, parents?: string[] } = { name: "New Folder", mimeType: MIME_TYPE_FOLDER, parents: [] }) {
-        this.dispatch({ type: EDriveActions.createFolder, payload: resource })
+    createFolder({ name = "New Folder", mimeType = MIME_TYPE_FOLDER, parents = [] }) {
+        this.dispatch({ type: EDriveActions.createFolder, payload: { name, mimeType, parents } })
     }
-    createFile({ name = "new File", data = "some date json" }) {
+    createFile({ name = "new File", data = {} }: { name: string, data: Object }) {
 
         this.dispatch({ type: EDriveActions.createFile, payload: { name, data } })
     }

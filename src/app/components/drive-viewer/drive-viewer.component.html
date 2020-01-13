@@ -15,33 +15,21 @@
 
     <span>{{(breadcrumbs$ | async)?.name}} </span>
 </mat-toolbar>
-<mat-progress-bar *ngIf="driveStore.loading$ | async" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar class="load-bar" *ngIf="driveStore.loading$ | async" mode="indeterminate"></mat-progress-bar>
 
-<ul>
+<ul class="control-list">
     <li>
         <button (click)="crateFile()" mat-button color="primary"> Create File </button>
     </li>
     <li>
-        <button (click)="crateFolder()" mat-button color="primary"> Create Folder </button>
+        <button (click)="openDialog()" mat-button color="primary"> Create Folder </button>
     </li>
-    <li>
-        <button (click)="driveStore.listClear()" mat-button color="primary">Clear List </button>
-    </li>
-    <li>
-        <button (click)="getList()" mat-button color="primary"> Get List </button>
-    </li>
-    <li>
-        <button (click)="getFile()" mat-button color="primary"> Get File </button>
-    </li>
-    <!-- <li>
-        <button *ngIf="selectedFile" mat-button (click)="deleteFile()" color="primary">Delete</button>
-    </li> -->
 </ul>
 
 <ng-template [ngTemplateOutlet]="loadTemplate()"></ng-template>
 
 <ng-template #matListTemplate>
-    <mat-action-list [disableRipple]='true'>
+    <mat-action-list class="containter" [disableRipple]='true'>
         <mat-list-item [class.active]="selectedFile === file" *ngFor="let file of list$ | async">
 
             <div class="file-info" (click)="onSelected(file)">
@@ -60,7 +48,7 @@
             <mat-menu [xPosition]="'before'" #menu="matMenu">
                 <button (click)="deleteFile(file)" mat-menu-item> Удалить </button>
             </mat-menu>
-            <mat-divider></mat-divider>
+            <!-- <mat-divider></mat-divider> -->
         </mat-list-item>
     </mat-action-list>
 </ng-template>
@@ -68,12 +56,13 @@
 <ng-template #fileTemplate>
     <ng-container *ngIf="!(driveStore.loading$ | async)">
 
-        <form  [formGroup]='fg' [appConnectFormControl]="(file$ | async)" class="form" (ngSubmit)="saveFile()">
-            <mat-form-field  >
+        <form [formGroup]='fg' [appConnectFormControl]="(file$ | async)" class="form" (ngSubmit)="saveFile()">
+            <mat-form-field>
                 <input formControlName='name' matInput placeholder="Имя файла">
             </mat-form-field>
-            <mat-form-field  >
-                <textarea formControlName='text' cdkTextareaAutosize matInput placeholder="Содержание файла"> </textarea>
+            <mat-form-field>
+                <textarea formControlName='text' cdkTextareaAutosize matInput
+                    placeholder="Содержание файла"> </textarea>
             </mat-form-field>
             <button [disabled]="fg.invalid" mat-raised-button color="primary"> Сохранить </button>
         </form>
@@ -92,6 +81,9 @@
     </ng-container>
 </ng-template>
 
-<pre>    {{ pre$ | async | json }}  </pre>
+
+<div class="log">
+    <pre>    {{ pre$ | async | json }}  </pre>
+</div>
 
 <!-- </div> -->

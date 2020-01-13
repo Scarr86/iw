@@ -1,7 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { Observable, of, Subject, MonoTypeOperatorFunction, merge, timer, throwError } from 'rxjs';
 import { startWith, publishReplay, refCount, delay, tap, finalize, share, shareReplay, scan, filter, switchMap, map, switchMapTo, catchError } from 'rxjs/operators';
-import { LogService } from './log.service';
 
 
 interface ItemsState {
@@ -49,14 +48,12 @@ export class DownloadManager {
    load$: Observable<Action>;
    dispatcher$: Observable<Action>;
 
-   constructor(private log: LogService) {
-      // log.write("dm constructor");
-
+   constructor() {
       this.load$ = this.actions$
          .pipe(
-            finalize(() => log.write("load$ fin", "accent")),
+            // finalize(() => log.write("load$ fin", "accent")),
             ofType('load'),
-            tap(_ => log.write("download", 'accent')),
+            // tap(_ => log.write("download", 'accent')),
             // switchMap(() => this.load()),
             switchMap(() => load() /*loadWithError()*/.pipe(
                map((d): Action => ({
@@ -84,7 +81,7 @@ export class DownloadManager {
             startWith(this.start(defaultState)),
             scan(this.stateReducer.bind(this)),
             // tap(_ => this.log.write("get", "accent")),
-            finalize(() => this.log.write("state$ fin", "accent")),
+            // finalize(() => this.log.write("state$ fin", "accent")),
             // delay(1000),
             publishReplay<ItemsState>(1),
             refCount(),

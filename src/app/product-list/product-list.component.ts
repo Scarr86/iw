@@ -4,9 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SaleService, salesBackEnd } from 'src/app/service/sale.service';
 import { map, switchMap, take, pluck, share, publish, refCount, publishReplay, tap, multicast, filter, first } from 'rxjs/operators';
-import { LogService } from 'src/app/service/log.service';
 import { Sale, Product } from '../service/sales';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
    selector: 'app-product-list',
@@ -44,6 +42,8 @@ export class ProductListComponent implements OnInit, OnDestroy, AfterViewInit {
       //       tap(console.log),
       //       first(s => !!s)
       //    );
+
+      
 
       this.sale$ = this.activeRoute.params.pipe(pluck('id')).pipe(
          switchMap(id => iif(() => id === 'newsale',

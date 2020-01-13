@@ -1,0 +1,29 @@
+<!-- <button mat-flat-button color="primary" (click)='getSaleList()'>Get Sale List</button> -->
+<!-- <pre>{{sales$ | async | json}}</pre> -->
+
+
+<!-- 
+<mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Input & change events"
+           (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field> -->
+
+
+
+<input class="d-none" (dateChange)="setDate($event)" [matDatepicker]="picker" placeholder="Choose a date">
+<mat-datepicker touchUi #picker></mat-datepicker>
+<div (click)="picker.open()" matRipple class="mat-h1 date">
+    {{date | date:"EE, d MMM yyyy"}}
+    <!-- {{date.value | date}} -->
+    <div class="mat-body-1 date-description">Сегодня</div>
+</div>
+
+<mat-action-list class="container">
+    <button *ngFor="let s of sales$ | async; let i = index" mat-list-item (click)="goToProductList(i)">
+        <app-sale-item class="sale-item" [sale]='s'></app-sale-item>
+    </button>
+</mat-action-list>

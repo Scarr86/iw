@@ -4,6 +4,7 @@ export interface IProduct {
     name: string;
     price: number;
     count: number;
+    total?:number;
 }
 
 export class Product implements IProduct{
@@ -15,7 +16,9 @@ export class Product implements IProduct{
        
     }
 
-    get total(){
+    get total():number{
+        console.log("product count and price", this.count, this.price);
+        
         return this.count * this.price;
     }
 }

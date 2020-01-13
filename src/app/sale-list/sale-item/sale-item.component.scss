@@ -3,15 +3,21 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+   
 }
 
-.sale__item_name {
-   flex-grow: 2;
-}
-.sale__item_num {
-   flex-grow: 1;
-}
+// .sale__item_name {
+//    // flex-grow: 2;
+// }
+// .sale__item_num {
+//    // flex-grow: 1;
+// }
 .sale__item_total {
-   flex-grow: 0;
+   text-align: right;
+}
+.sale__item_name, 
+.sale__item_num ,
+.sale__item_total{
+   flex-basis: 33.3333%;
 }
 

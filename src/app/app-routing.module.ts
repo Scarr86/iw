@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
-import { SaleListComponent } from './sale-list/sale-list.component';
+import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SettingComponent } from './setting/setting.component';

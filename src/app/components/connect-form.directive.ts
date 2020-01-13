@@ -8,7 +8,8 @@ export class ConnectFormControlDirective {
   
 
   @Input("appConnectFormControl")
-  set data(value:File) {
+  set data(value) {
+    
     if(!value) return;
     this.formControl.form.patchValue(value);
     this.formControl.form.markAsPristine();

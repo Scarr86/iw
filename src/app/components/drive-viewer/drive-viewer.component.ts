@@ -1,12 +1,13 @@
-import { Component, OnInit, DoCheck, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
-import { Observable, merge } from "rxjs";
-import { map, first } from "rxjs/operators";
+import { Component, OnInit, DoCheck, AfterViewInit, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
+import { Observable, merge, zip, Subscription } from "rxjs";
+import { map, first, filter } from "rxjs/operators";
 
 import { File, Response } from "../../store/drive.store"
 import { IBreadcrumbs, DriveStore } from 'src/app/store/drive.store';
-import { LogService } from 'src/app/service/log.service';
 import { FileService } from 'src/app/service/google-gapi/file.service';
-import { FormControl, FormControlDirective, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDialogComponent } from './modal-diolog/modal-diolog.component';
 
 @Component({
   selector: 'app-drive-viewer',
@@ -14,7 +15,7 @@ import { FormControl, FormControlDirective, Validators, FormBuilder, FormGroup }
   styleUrls: ['./drive-viewer.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
+export class DriveViewerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild("matListTemplate", { static: true }) matListTemplate: TemplateRef<any>;
   @ViewChild("fileTemplate", { static: true }) fileTemplate: TemplateRef<any>;
@@ -22,45 +23,40 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
   pre$;
   breadcrumbs$: Observable<IBreadcrumbs>;
   list$: Observable<File[]>;
-  file$: Observable<{name, text}>
+  file$: Observable<{ name, text }>
   selectedFile: File = null;
   isNewFile: boolean = false;
+  sub: Subscription = new Subscription();
 
   fcTextarea: FormControl = new FormControl('', Validators.required);
   fcInput: FormControl = new FormControl("", Validators.required);
   fg: FormGroup;
 
   constructor(
-    // public auth: Auth2Service,
-    // private drive: DriveService,
-    // private zone: NgZone,
-    private log: LogService,
     public driveStore: DriveStore,
     public fileService: FileService,
-    private cdr: ChangeDetectorRef,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.fg = formBuilder.group({
       name: ["1111", [Validators.required]],
-      text: ["2222", [Validators.required]]
+      text: ["2222"]
     })
   }
 
   ngOnInit() {
 
-    this.pre$ = merge(this.driveStore.list$, this.driveStore.file$);
+    this.pre$ = zip(this.driveStore.list$, this.driveStore.file$);
     this.list$ = this.driveStore.list$;
     this.breadcrumbs$ = this.driveStore.breadcrumbs$.pipe(map(bc => bc.length ? bc.slice(-1)[0] : { id: "root", name: "root" }));
 
-    this.file$ = this.driveStore.file$.pipe(map(f=> ({
-      name: f.result.name,
-      text:f.body
-    })));
+    this.file$ = this.driveStore.file$.pipe(map(f => {
 
-    // this.fcTextarea.valueChanges.subscribe(()=>{
-    //   console.log("CHANGE");
-    //   // this.cdr.detectChanges()
-    // })
+      return ({
+        name: f.result.name,
+        text: f.body
+      })
+    }));
 
   }
   ngAfterViewInit() {
@@ -78,25 +74,17 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  onChange() {
-  }
-  ngDoCheck() {
-  }
 
-  onClick() {
-    this.driveStore.list();
-
-  }
-  onDblClick(file: File) {
-
-  }
   navigateTo() {
     if (this.isNewFile) {
       this.isNewFile = false;
       this.selectedFile = null;
-      this.breadcrumbs$.pipe(first()).subscribe(bc => {
-        this.driveStore.list({ id: bc.id });
-      })
+
+      this.sub.add(
+        this.breadcrumbs$.pipe(first()).subscribe(bc => {
+          this.driveStore.list({ id: bc.id });
+        })
+      )
     } else {
       this.driveStore.navigateTo();
     }
@@ -111,9 +99,7 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
   deleteFile(file: File) {
     this.driveStore.delete(file.id);
   }
-  crateFolder() {
-    this.driveStore.createFolder();
-  }
+ 
   crateFile() {
     this.isNewFile = true;
     this.selectedFile = null;
@@ -126,24 +112,21 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
     if (!this.selectedFile && this.isNewFile) {
       this.driveStore.createFile({
         name: this.fg.get('name').value,
-        data: this.fg.get('text').value
+        data: JSON.parse(this.fg.get('text').value)
       })
     } else {
-      this.driveStore.file$.pipe(first()).subscribe((file: Response<File>) => {
-        this.driveStore.updataFile({
-          id: file.result.id,
-          name: this.fg.get('name').value,
-          data: this.fg.get('text').value
+      this.sub.add(
+        this.driveStore.file$.pipe(first()).subscribe((file: Response<File>) => {
+          this.driveStore.updataFile({
+            id: file.result.id,
+            name: this.fg.get('name').value,
+            data: JSON.parse(this.fg.get('text').value)
+          })
         })
-      })
+      )
+
     }
-    // if (!this.selectedFile && this.isNewFile) {
-    //   this.driveStore.createFile({ name: this.fcInput.value, data: this.fcTextarea.value })
-    // } else {
-    //   this.file$.pipe(first()).subscribe((file: Response<File>) => {
-    //     this.driveStore.updataFile({ id: file.result.id, name: this.fcInput.value, data: this.fcTextarea.value })
-    //   })
-    // }
+
   }
 
   loadTemplate() {
@@ -151,5 +134,27 @@ export class DriveViewerComponent implements OnInit, DoCheck, AfterViewInit {
       return this.fileTemplate;
     }
     return this.matListTemplate;
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(
+      // this.modalDialogComponent
+      ModalDialogComponent
+      , {
+        minWidth: '300px',
+        data: { nameFolder: "Без названия" }
+      }
+    )
+    this.sub.add(
+      dialogRef.afterClosed()
+        .pipe(filter(r => !!r))
+        .subscribe((result: string) => {
+          this.driveStore.createFolder({ name: result })
+        })
+    )
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

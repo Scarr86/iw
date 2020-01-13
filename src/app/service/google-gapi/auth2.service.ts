@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from "@angular/core";
-import { LogService } from "../log.service";
 import { Observable, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
 
 const API_KEY: string = "AIzaSyCofOM8sRo0bZRPxjnZxabuOtjuK6xN48o";
@@ -29,13 +28,13 @@ export class Auth2Service {
   gapiLoaded = false;
   gapiReady = false;
 
-  constructor(private log: LogService, private zone: NgZone) { }
+  constructor( private zone: NgZone) { }
 
   initGapi() {
     return this.loadClient()
       .then(
         () => {
-          this.log.write("Auth2Service: LOAD");
+          // this.log.write("Auth2Service: LOAD");
           // this.gapiLoaded = true;
           return this.initClient();
         },
@@ -48,7 +47,7 @@ export class Auth2Service {
           this.isSignedIn$.next(this.googleAuth.isSignedIn.get());
           this.googleAuth.isSignedIn.listen(this.updateSigninStatus.bind(this));
           this.gapiReady = true;
-          this.log.write(`Auth2Service: INIT CLIENT GAPI `);
+          // this.log.write(`Auth2Service: INIT CLIENT GAPI `);
           // this.gapiReady$.next(true);
           // this.gapiReady$.complete();
         },
@@ -92,8 +91,9 @@ export class Auth2Service {
   signIn() {
     this.googleAuth
       .signIn({ prompt: "select_account" })
-      .catch(err =>
-        this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
+      .catch(err => 
+        console.log(`Auth2Service: signIn  failed ${JSON.stringify(err)}`)
+        // this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
       );
   }
   signOut() {

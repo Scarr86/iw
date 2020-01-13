@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({ providedIn: 'root' })//если нужно один сервис на всех
+@Injectable({providedIn:"root"})//если нужно один сервис на всех
 export class LogService {
 
    consoleStyles = {

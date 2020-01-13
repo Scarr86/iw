@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { Sale } from 'src/app/service/sales';
+import { ISale } from 'src/app/models/sale.model';
 
 @Component({
    selector: 'app-sale-item',
@@ -7,7 +7,7 @@ import { Sale } from 'src/app/service/sales';
    styleUrls: ['./sale-item.component.scss']
 })
 export class SaleItemComponent implements OnInit {
-   @Input() sale: Sale;
+   @Input() sale: ISale;
    constructor() { }
 
    ngOnInit() {
@@ -18,7 +18,7 @@ export class SaleItemComponent implements OnInit {
    }
    getTotalPrice() {
       if (!this.sale) return 0;
-      return this.sale.productList.reduce((sum, p) => sum += p.num * p.price - p.discount, 0)
+      return this.sale.productList.reduce((sum, p) => sum += p.count * p.price, 0) - this.sale.discount;
    }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, of, Observable, interval, Subject, timer, throwError, BehaviorSubject } from 'rxjs';
 import { tap, delay, finalize, publishReplay, refCount, filter, switchMap, shareReplay, repeat, publish, share, map, catchError, switchMapTo, startWith, withLatestFrom, reduce, take, retry, repeatWhen, multicast } from 'rxjs/operators';
-import { LogService } from './log.service';
+// import { LogService } from './log.service';
 import { GeneratorBase } from './generator-sale.service';
 import { Sale, Product, ISale, ISaleBase } from './sales';
 
@@ -27,16 +27,18 @@ export class SaleService {
    base$: BehaviorSubject<Sale[]> = new BehaviorSubject(null);
    getSale$: Subject<Date> = new Subject();
 
-   constructor(private logService: LogService,
+   constructor(
       private genBase: GeneratorBase) {
-      this.log("SaleService Init");
+      console.log("SaleService Init");
+
+      // this.log("SaleService Init");
 
       this.sales$ = this.getSale$.pipe(
-         tap((date) => this.log(`fetch sales by ${date.toLocaleDateString()}`)),
-         switchMap( date => this.load(date).pipe(
+         tap((date) => console.log(`fetch sales by ${date.toLocaleDateString()}`)),
+         switchMap(date => this.load(date).pipe(
             retry(3),
-            repeatWhen(() => this.update$.pipe(tap(_ => this.info("update"), null, () => this.info("complite")))),
-            catchError(this.handleError<Sale[]>('getSales', []))
+            repeatWhen(() => this.update$.pipe(tap(_ => console.log("update"), null, () => console.log("complite")))),
+            // catchError(this.handleError<Sale[]>('getSales', []))
          )),
          // shareReplay(1),
          publishReplay(1),
@@ -68,7 +70,7 @@ export class SaleService {
    }
    addProduct() { }
    save() {
-         this.saveToBackEnd().subscribe(() => this.update());
+      this.saveToBackEnd().subscribe(() => this.update());
    }
 
    saveToBackEnd() {
@@ -94,26 +96,26 @@ export class SaleService {
       //    delay(500)
       // )
       return of(salesBackEnd).pipe(
-         tap(_=> this.info(`request server`)),
+         // tap(_=> this.info(`request server`)),
          delay(1000)
-         );
+      );
    }
 
-   log(msg: string) {
-      this.logService.write(`SaleService: ${msg}`);
-   }
-   info(msg: string) {
-      this.logService.write(`SaleService: ${msg}`, 'accent');
-   }
-   warp(msg: string) {
-      this.logService.write(`SaleService: ${msg}`, 'warn');
-   }
+   // log(msg: string) {
+   //    this.logService.write(`SaleService: ${msg}`);
+   // }
+   // info(msg: string) {
+   //    this.logService.write(`SaleService: ${msg}`, 'accent');
+   // }
+   // warp(msg: string) {
+   //    this.logService.write(`SaleService: ${msg}`, 'warn');
+   // }
 
-   private handleError<T>(operation = "operation", result?: T) {
-      return (error: any): Observable<T> => {
-         this.warp(`${operation} failed: ${error}`);
-         return of(result as T);
-      };
-   }
+   // private handleError<T>(operation = "operation", result?: T) {
+   //    return (error: any): Observable<T> => {
+   //       this.warp(`${operation} failed: ${error}`);
+   //       return of(result as T);
+   //    };
+   // }
 
 }
