@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
-import { ProductListComponent } from './product-list/product-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SettingComponent } from './setting/setting.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 const routesSection: Routes = [
    {path: "", redirectTo:"sale-list", pathMatch:"full"},
