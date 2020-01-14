@@ -61,15 +61,19 @@ export class GeneratorBase {
    }
    genereteSale(from: Date, to: Date = new Date()): { sales: Sale[] } {
       let sales: Sale[] = [];
+      let id = 1;
       for (let date of this.genDate(from, to)) {
-         let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
-         let sale: Sale = new Sale({
-            id: sales.length + 1,
-            date,
-            discount: this.random(1, 3) * 100,
-            productList
-         });
-         sales.push(sale);
+         let countSales = this.random(0, 5);
+         while(countSales--){
+            let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
+            let sale: Sale = new Sale({
+               id: id++,
+               date,
+               discount: this.random(1, 3) * 100,
+               productList
+            });
+            sales.push(sale);
+         }
       }
       return { sales };
    }

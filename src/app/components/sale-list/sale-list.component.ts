@@ -6,6 +6,10 @@ import { Actions } from 'src/app/store/actions/actions';
 import { isArray } from 'util';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
+import { compareDay } from '../../lib/lib';
+import { ISale } from 'src/app/models/sale.model';
+import { map, filter, skip, tap, withLatestFrom, switchMap } from 'rxjs/operators';
+import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-sale-list',
@@ -14,9 +18,38 @@ import { Router } from '@angular/router';
   providers: [LogService]
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
-  sales$ = this.saleStore.saleList$;
-  date: Date = new Date();
-  constructor(public saleStore: SaleStore, private router: Router, ) { }
+  // date: Date = new Date();
+  loading$ = this.saleStore.selectIsLoading();
+  date$: BehaviorSubject<Date> = new BehaviorSubject(new Date());
+  sales$ = combineLatest(this.date$, this.saleStore.selectSaleList())
+    .pipe(
+      map(
+        ([date, sales]) => {
+          let s = sales && sales.filter(s => !compareDay(s.date, { from: date }))
+          console.log(date, s);
+          return s;
+        }
+      )
+    )
+  // sales$ = this.date$.pipe(
+  //   // withLatestFrom(this.saleStore.selectSaleList()),
+  //   switchMap((d) => this.saleStore.selectSaleList()),
+  //   map(
+  //     ([date, sales]) => {
+  //       let s = sales && sales.filter(s => !compareDay(s.date, { from: date }))
+  //       console.log(date, s);
+  //       return s;
+  //     }
+  //   )
+  // )
+
+  // this.saleStore.selectSaleList()
+  //   .pipe(
+  //     skip(2),
+  //     map(
+  //       (s: ISale[]) => s && s.filter(s => !compareDay(s.date, { from: this.date }))
+  //     ));
+  constructor(public saleStore: SaleStore, private router: Router) { }
 
   ngOnInit() {
     // this.saleStore.saleList$.subscribe((r) => {
@@ -26,24 +59,28 @@ export class SaleListComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
-    this.saleStore.getSeleList();
+    // this.date$.
+    setTimeout(() => {
+      this.saleStore.getSaleList();
+    }, 0);
   }
 
   getSaleList() {
-    this.saleStore.getSeleList();
+    // this.saleStore.getSeleList();
   }
   setDate(event: MatDatepickerInputEvent<Date>) {
-    this.date = event.value;
+    // this.date = event.value;
+    this.date$.next(event.value);
   }
-  goToProductList(i: number) {
-    this.router.navigate(
-      ['product-list', i.toString()],
-      {
-        queryParams: {
-          "date": this.date.getTime()
-        }
-      }
-    )
-  }
+  // goToProductList(i: number) {
+  //   this.router.navigate(
+  //     ['product-list', i.toString()],
+  //     {
+  //       queryParams: {
+  //         "date": this.date.getTime()
+  //       }
+  //     }
+  //   )
+  // }
 
 }

@@ -247,7 +247,7 @@ export class DriveStore {
     stateDrive$: Observable<IDriveState> = this.dispatcher$.pipe(
         startWith(defaultListState),
         scan((acc:IDriveState, v:Action)=> this.reducer(acc, v)),
-        tap(state => console.log('[SATE] ', state)),
+        tap(state => console.log('[DRIVE new state] ', state)),
         publishReplay(1),
         refCount(),
     )

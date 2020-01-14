@@ -15,7 +15,7 @@
 
     <span>{{(breadcrumbs$ | async)?.name}} </span>
 </mat-toolbar>
-<mat-progress-bar class="load-bar" *ngIf="driveStore.loading$ | async" mode="indeterminate"></mat-progress-bar>
+<!-- <mat-progress-bar class="load-bar" *ngIf="driveStore.loading$ | async" mode="indeterminate"></mat-progress-bar> -->
 
 <ul class="control-list">
     <li>
@@ -36,7 +36,7 @@
                 <img src="{{file.iconLink}}" alt="">
 
                 <div class="file-info__text">
-                    <span matLine>{{file.name}} </span>
+                    <span class="file-info__name" matLine>{{file.name}} </span>
                     <span matLine>{{file.modifiedByMeTime | date:"EE, d MMM yyyy"}}</span>
                 </div>
 
@@ -80,6 +80,8 @@
 
     </ng-container>
 </ng-template>
+
+
 
 
 <div class="log">

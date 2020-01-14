@@ -7,6 +7,11 @@ import { startWith, scan, publishReplay, refCount, map, tap } from 'rxjs/operato
 import { saleReducers } from './reducers/sale.reducers';
 import { SaleActions, ESaleActions, GetSaleList } from './actions/sale.actions';
 
+/*
+* Global
+*/
+export let stateSales: Observable<ISaleState>;
+
 @Injectable({ providedIn: "root" })
 export class SaleStore {
 
@@ -25,10 +30,11 @@ export class SaleStore {
         .pipe(
             startWith(initSaleState),
             scan((state: ISaleState, action: SaleActions) => {
-                console.log("[Old State]", state);
-                return saleReducers(state, action)
+                let sate = saleReducers(state, action);
+                console.log(action.type, '[state]', state);
+                return sate;
             }),
-            tap(state => console.log("[New State]", state)),
+            // tap(state => console.log("[SALE new State]", state)),
             publishReplay(1),
             refCount(),
         )
@@ -36,19 +42,32 @@ export class SaleStore {
     /**
     * Selectors
     */
-    saleList$ = this.saleState$.pipe(map(state => state.sales));
 
 
-    constructor(private saleEffect: SaleEffect) { 
-        console.log("create sale store");
+
+    selectSaleList() {
+        return this.saleState$.pipe(map(state => state.sales && state.sales));
+    }
+    selectIsLoading() {
+        return this.saleState$.pipe(map(state => state.loading))
+    }
+    slectorBaseID() {
+        return this.saleState$.pipe(map(state => state.baseID));
+    }
+
+
+
+
+    constructor(private saleEffect: SaleEffect) {
+        stateSales = this.saleState$;
     }
 
     private dispatch(action: SaleActions): void {
         this.actions$.next(action);
     }
 
-    getSeleList() {
-        this.dispatch(new GetSaleList(""));
+    getSaleList() {
+        this.dispatch(new GetSaleList("1KMrG-wt5syMh1o0TkYg_TSpXtPfiJjs9"));
     }
 
 

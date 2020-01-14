@@ -14,19 +14,17 @@ export class Sale implements ISale {
     productList: IProduct[];
 
     constructor({ id,
-        date = new Date(),
+        date,
         discount = 0,
         productList = []
     }: ISale) {
         this.id = id;
         this.discount = discount;
-        this.date = date;
+        this.date = new Date(date);
         this.productList = productList;
     }
     get total() {
         return this.productList.reduce((sum, p) => {
-            console.log("product total",p, p.total);
-            
             return sum += p.total;
         }, 0) - this.discount;
     }

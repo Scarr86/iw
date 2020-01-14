@@ -59,14 +59,14 @@ export class FileService {
             mimeType: contentType
         };
 
-        let base = this.generatorBase.genereteSale(new Date(2020, 0, 1));
+        // let base = this.generatorBase.genereteSale(new Date(2020, 0, 1));
         var multipartRequestBody =
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
             JSON.stringify(metadata) +
             delimiter +
             "Content-Type: application/json \r\n\r\n" +
-            JSON.stringify(base, null, 2) +
+            JSON.stringify(data, null, 2) +
             close_delim;
 
         return new Promise((resolve, reject) => {

@@ -58,11 +58,16 @@ $dark-theme:   mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
   // @include candy-carousel-theme($dark-theme); 
 }
 
+@mixin heightContent(){
+  min-height: calc(100vh - 64px);
+} 
 
 
 html {
    box-sizing: border-box;
  }
+
+ 
  
  *,
  *::before,
