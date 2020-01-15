@@ -39,6 +39,8 @@ export class Auth2Service {
           return this.initClient();
         },
         err => {
+          console.log("[LOAD GAPI] FAILED",err)
+
           throw new Error(`LOAD FAILED ${err}`);
         })
       .then(
@@ -52,6 +54,7 @@ export class Auth2Service {
           // this.gapiReady$.complete();
         },
         err => {
+          console.log("[Auth2Service] FAILED",err)
           throw new Error(`Auth2Service ${err}`);
         })
   }

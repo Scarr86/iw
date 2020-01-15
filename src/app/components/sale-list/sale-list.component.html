@@ -10,7 +10,7 @@
     <div class="mat-body-1 date-description">Сегодня</div>
 </div>
 
-<ng-container *ngIf="!(loading$ | async) else loading">
+<ng-container *ngIf="!(loading$ | async)">
     <mat-action-list *ngIf="(sales$ | async)?.length else emtySales " class="container">
         <mat-list-item *ngFor="let s of sales$ | async; let i = index">
             <app-sale-item class="sale-item" [sale]='s' (click)="goToProductList(s)"></app-sale-item>

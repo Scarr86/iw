@@ -16,11 +16,11 @@
         <mat-card class="form__discount">
             <mat-form-field class="form__discount-field" color="primary">
                 <input  formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
-                <button type="button" mat-icon-button matSuffix (click)="clearValue(form.get('discount'))">
+                <button type="button" mat-icon-button matSuffix (click)="clearValue()">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <app-easy-enter  (change)="setValue(form.get('discount'), $event)">
+            <app-easy-enter  (change)="setValue($event)">
             </app-easy-enter>
         </mat-card>
 

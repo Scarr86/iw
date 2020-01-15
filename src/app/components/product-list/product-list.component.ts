@@ -56,15 +56,18 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   goBack() {
     this.router.navigate(['sale-list'])
   }
-  setValue(fc: FormControl, value: number) {
-    fc.setValue(+fc.value + value);
+  setValue(value: number) {
+    this.form.get('discount').setValue(+this.form.get('discount').value + value);
   }
 
-  clearValue(fc: FormControl) {
-    fc.setValue(0);
+  clearValue() {
+    this.form.get('discount').setValue(0);
   }
   get arrayProduct(): FormArray {
     return this.form.get("productList") as FormArray;
+  }
+  save(){
+
   }
 
 }
