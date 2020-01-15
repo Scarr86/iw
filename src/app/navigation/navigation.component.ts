@@ -23,12 +23,11 @@ export class NavigationComponent implements OnInit{
       { name: "Setting", patch: "/setting" }
    ];
 
-   // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-   //    .pipe(
-   //       tap(r => console.log(r)),
-   //       map(result => result.matches),
-   //       shareReplay()
-   //    );
+   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+         map(result => result.matches),
+         shareReplay()
+      );
 
    //  isSmallScreen = this.breakpointObserver.isMatched('(max-width: 599px)');
 

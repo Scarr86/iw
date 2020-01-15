@@ -1,3 +1,8 @@
+
+@import '../../../styles.scss';
+.save-btn{
+    margin-left: auto;
+}
 .date{
     text-align: center;
     padding: 10px 0;
@@ -9,16 +14,12 @@
  }
  .form{
      &__discount-field{
-        width: 100%;
+        width: 225px;
      }
      &__discount{
-        width: 225px;
-         margin-bottom: 30px;
+         margin-bottom: 15px;
      }
-     &__easy-btn{
-         margin-bottom: 30px;
-     }
-     &__product-field{
+    &__product-field{
         display: flex;
         flex-direction: column;
     }

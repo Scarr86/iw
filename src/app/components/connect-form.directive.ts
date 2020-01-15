@@ -5,27 +5,16 @@ import { FormControl, FormControlDirective, FormGroupDirective } from '@angular/
 })
 export class ConnectFormControlDirective {
 
-  
+
 
   @Input("appConnectFormControl")
   set data(value) {
-    
-    if(!value) return;
-    console.log(value);
-    
+    if (!value) return;
     this.formControl.form.patchValue(value);
     this.formControl.form.markAsPristine();
     this.formControl.form.markAsUntouched();
-    console.log(this.formControl.form);
-    
-    
-      // this.cdr.detectChanges();
-    
   }
-  // constructor(private readonly formControl: FormControlDirective, private cdr:ChangeDetectorRef) { }
-  constructor(private readonly formControl: FormGroupDirective) { 
-    console.log("formControl:", formControl);
-    
+  constructor(private readonly formControl: FormGroupDirective) {
   }
 
 }

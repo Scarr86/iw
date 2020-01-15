@@ -1,72 +1,72 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
     <button mat-icon-button (click)="goBack()">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <span>{{title}} </span>
+    <button class="save-btn" [disabled]="form.invalid " mat-flat-button color="primary" (click)="save()"> Сохранить </button>
 </mat-toolbar>
 <div class="container">
     <div class="date mat-h2">
         {{(sale$| async)?.date | date:"EE, d MMM yyyy"}}
     </div>
 
-    <form class="form" [formGroup]='form' [appConnectFormGroup]="sale$ | async">
+
+    <form class="form" *ngIf="!(loading$ | async)" [formGroup]='form' [appConnectFormGroup]="sale$ | async">
         <!-- Discount -->
-        <div class="form__discount">
+        <mat-card class="form__discount">
             <mat-form-field class="form__discount-field" color="primary">
-                <input formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
-                <button mat-icon-button matSuffix (click)="clearValue(form.get('discount'))">
+                <input  formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
+                <button type="button" mat-icon-button matSuffix (click)="clearValue(form.get('discount'))">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <app-easy-enter class="form__easy-btn" (change)="setValue(form.get('discount'), $event)"></app-easy-enter>
-        </div>
+            <app-easy-enter  (change)="setValue(form.get('discount'), $event)">
+            </app-easy-enter>
+        </mat-card>
+
         <!--  -->
-        <mat-accordion [hideToggle]='true'>
+        <mat-accordion formArrayName="productList" [hideToggle]='true'>
             <!-- Product List -->
-            <div formArrayName="productList">
-                <!-- *ngFor="let product of (sale$ | async)?.productList; let lastItem = last"> -->
-                <div *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
+            <!-- *ngFor="let product of (sale$ | async)?.productList; let lastItem = last"> -->
 
 
 
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title> {{product.get("name").value}} </mat-panel-title>
-                            <mat-panel-description>
-                                <div class="panel-description">
-                                    <span>{{product.get("count").value}}шт.</span>
-                                    <span> Cумма {{product.get("price").value * product.get("count").value}} </span>
-                                </div>
-                            </mat-panel-description>
-                            <!-- <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-
-                        <div class="form__product-field">
-
-                            <mat-form-field color="primary">
-                                <input formControlName="name" autocomplete="off" type="text" matInput
-                                    placeholder="Товар">
-                            </mat-form-field>
-                            <mat-form-field color="primary">
-                                <input formControlName="count" autocomplete="off" type="number" matInput
-                                    placeholder="Количество">
-                            </mat-form-field>
-                            <mat-form-field color="primary">
-                                <input formControlName="price" autocomplete="off" type="number" matInput
-                                    placeholder="Цена">
-                            </mat-form-field>
-
+            <mat-expansion-panel *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> {{product.get("name").value}} </mat-panel-title>
+                    <mat-panel-description>
+                        <div class="panel-description">
+                            <span>{{product.get("count").value}}шт.</span>
+                            <span>
+                                {{product.get("price").value * product.get("count").value | currency:'RUB':'symbol-narrow'}}
+                            </span>
                         </div>
+                    </mat-panel-description>
+                    <!-- <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description> -->
+                </mat-expansion-panel-header>
 
-                        <mat-action-row>
-                            <mat-icon>delete</mat-icon>
-                            <span> Удалить </span>
-                        </mat-action-row>
-                        
-                    </mat-expansion-panel>
+                <div class="form__product-field">
+
+                    <mat-form-field color="primary">
+                        <input formControlName="name" autocomplete="off" type="text" matInput placeholder="Товар">
+                    </mat-form-field>
+                    <mat-form-field color="primary">
+                        <input formControlName="count" autocomplete="off" type="number" matInput
+                            placeholder="Количество">
+                    </mat-form-field>
+                    <mat-form-field color="primary">
+                        <input formControlName="price" autocomplete="off" type="number" matInput placeholder="Цена">
+                    </mat-form-field>
+
                 </div>
 
-            </div>
+                <mat-action-row>
+                    <mat-icon>delete</mat-icon>
+                    <span> Удалить </span>
+                </mat-action-row>
+
+            </mat-expansion-panel>
+
             <!--  -->
 
 
@@ -77,7 +77,7 @@
 
 
 
-    <pre>
+    <!-- <pre>
             {{sale$  | async | json}}
-        </pre>
+        </pre> -->
 </div>

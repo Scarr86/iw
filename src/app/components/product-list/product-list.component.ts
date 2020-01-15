@@ -18,6 +18,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   sale$: Observable<ISale>;
   id: number;
   form: FormGroup;
+  loading$: Observable<boolean>
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -29,7 +30,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.id = +this.activeRoute.snapshot.params['id'];
     this.title = "Продажа " + this.id;
-    this.sale$ = this.saleStore.saleList$.pipe(map(sales => sales && sales.find(s => s.id === this.id)));
+    this.sale$ = this.saleStore.selectSaleList().pipe(map(sales => sales && sales.find(s => s.id === this.id)));
+    this.loading$ = this.saleStore.selectIsLoading();
 
 
     this.form = this.fb.group({
@@ -49,7 +51,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
-    this.saleStore.getSeleList();
+    // this.saleStore.getSaleList();
   }
   goBack() {
     this.router.navigate(['sale-list'])
@@ -57,6 +59,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   setValue(fc: FormControl, value: number) {
     fc.setValue(+fc.value + value);
   }
+
   clearValue(fc: FormControl) {
     fc.setValue(0);
   }

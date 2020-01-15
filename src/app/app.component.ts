@@ -8,11 +8,20 @@ import { merge } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent  {
+export class AppComponent implements AfterViewInit, OnInit {
   loading$
 
   title = 'iw';
-  constructor(private saleStory:SaleStore, private driveStore: DriveStore){
-      this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
+  constructor(private saleStory: SaleStore, private driveStore: DriveStore) {
   }
+  ngOnInit(){
+    this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.saleStory.getSaleList();
+    }, 0)
+
+  }
+
 }

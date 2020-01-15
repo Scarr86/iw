@@ -3,9 +3,10 @@ import { Observable, merge } from 'rxjs';
 import { ISaleState, initSaleState } from './state/sale.state';
 import { Action } from './actions/actions';
 import { SaleEffect } from './effects/sale.effects';
-import { startWith, scan, publishReplay, refCount, map, tap } from 'rxjs/operators';
+import { startWith, scan, publishReplay, refCount, map, tap, shareReplay, finalize } from 'rxjs/operators';
 import { saleReducers } from './reducers/sale.reducers';
 import { SaleActions, ESaleActions, GetSaleList } from './actions/sale.actions';
+import { ISale } from '../models/sale.model';
 
 /*
 * Global
@@ -30,21 +31,20 @@ export class SaleStore {
         .pipe(
             startWith(initSaleState),
             scan((state: ISaleState, action: SaleActions) => {
-                let sate = saleReducers(state, action);
                 console.log(action.type, '[state]', state);
-                return sate;
+                return saleReducers(state, action);;
             }),
             // tap(state => console.log("[SALE new State]", state)),
-            publishReplay(1),
-            refCount(),
+            // publishReplay(1),
+            // refCount(),
+            finalize(() => console.log("FIN ")),
+            shareReplay(1),
+
         )
 
     /**
     * Selectors
     */
-
-
-
     selectSaleList() {
         return this.saleState$.pipe(map(state => state.sales && state.sales));
     }
@@ -54,10 +54,6 @@ export class SaleStore {
     slectorBaseID() {
         return this.saleState$.pipe(map(state => state.baseID));
     }
-
-
-
-
     constructor(private saleEffect: SaleEffect) {
         stateSales = this.saleState$;
     }
@@ -66,9 +62,21 @@ export class SaleStore {
         this.actions$.next(action);
     }
 
+    load() {
+    }
+    update() {
+    }
+    getSale() {
+    }
+    addSale(sale: ISale) {
+    }
+    deleteSale() {
+    }
+
     getSaleList() {
         this.dispatch(new GetSaleList("1KMrG-wt5syMh1o0TkYg_TSpXtPfiJjs9"));
     }
+
 
 
 }

@@ -4,15 +4,16 @@ import { Action } from './actions';
 
 
 export enum ESaleActions {
-    GetSaleList = '[Sale] Get SaleList',
-    GetSaleListSuccess = '[Sale] Get SaleList Success',
-    GetSaleListError = '[Sale] Get SaleList Failed',
+    GetSaleList = '[SaleStore] Get SaleList',
+    GetSaleListSuccess = '[SaleStore] Get SaleList Success',
+    GetSaleListError = '[SaleStore] Get SaleList Failed',
 
-    GetSale = '[Sale] Get sale',
-    GetSaleSuccess = '[Sale] Get Sale Success',
-    GetSaleError = '[Sale] Get sale Failed',
-
+    GetSale = '[SaleStore] Get sale',
+    GetSaleSuccess = '[SaleStore] Get Sale Success',
+    GetSaleError = '[SaleStore] Get sale Failed',
 }
+
+
 
 export class GetSaleList implements Action {
     public readonly type = ESaleActions.GetSaleList;

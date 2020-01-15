@@ -85,7 +85,7 @@ export class DriveStore {
     /**
     * Effects
     */
-   
+
     private _list$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.list),
         exhaustMap((a) => from(this.fileService.list(a.payload)).pipe(
@@ -226,28 +226,16 @@ export class DriveStore {
         this._file$,
         this._updFile$
     )
-        .pipe(tap(action => {
-            switch (action.type) {
-                case EDriveActions.listError:
-                case EDriveActions.fileUpdError:
-                case EDriveActions.fileError:
-                    this.warn(`${action.type}: ${action.payload}`);
-                    break;
-
-                default:
-                    this.log(`${action.type}`);
-            }
-        }))
-
-
-
     /**
     * State Reducer
     */
     stateDrive$: Observable<IDriveState> = this.dispatcher$.pipe(
         startWith(defaultListState),
-        scan((acc:IDriveState, v:Action)=> this.reducer(acc, v)),
-        tap(state => console.log('[DRIVE new state] ', state)),
+        scan((state: IDriveState, action: Action) => {
+            console.log(action.type, '[state]', state);
+            return this.reducer(state, action);
+        }),
+        // tap(state => console.log('[DRIVE new state] ', state)),
         publishReplay(1),
         refCount(),
     )
@@ -291,7 +279,7 @@ export class DriveStore {
             case EDriveActions.delete:
             case EDriveActions.createFolder:
             case EDriveActions.createFile:
-                
+
                 return { ...state, error: null, loading: true };
 
             case EDriveActions.createFolderSuccess:
@@ -300,7 +288,7 @@ export class DriveStore {
             case EDriveActions.fileUpdSuccess:
                 this.list();
                 console.log("my state");
-                
+
                 return { ...state, loading: false }
 
             case EDriveActions.fileSuccess:

@@ -6,7 +6,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./easy-enter.component.scss']
 })
 export class EasyEnterComponent implements OnInit {
-  value;
+  value = 55;
   @Output() change = new EventEmitter();
 
 

@@ -25,7 +25,7 @@ export class FileService {
     file({ id, alt = "" }): Promise<gapi.client.Response<gapi.client.drive.File>> {
 
         return new Promise((resolve, reject) => {
-            // console.log("one");
+            console.log(`[GAPI] Get File ${alt === 'media' ? 'media' : 'info'}`);
 
             gapi.client.drive.files.get({
                 fileId: id,

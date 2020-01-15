@@ -12,7 +12,7 @@ export class ConnectFormGroupDirective {
   set data(value: ISale) {
 
     if (!value) return;
-    console.log(value);
+    // console.log(value);
     value.productList.forEach(_ => {
       this.arrayProduct.push(this.fb.group({
         name: ["", [Validators.required]],
@@ -23,7 +23,7 @@ export class ConnectFormGroupDirective {
     this.formGroup.form.patchValue(value);
     this.formGroup.form.markAsPristine();
     this.formGroup.form.markAsUntouched();
-    console.log("this.formGroup.form", this.formGroup.form);
+    // console.log("this.formGroup.form", this.formGroup.form);
   }
   constructor(private readonly formGroup: FormGroupDirective, private fb: FormBuilder) {
   }

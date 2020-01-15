@@ -12,12 +12,12 @@ const routesSection: Routes = [
    {path:"sale-list", component:SaleListComponent},
    {path:"history", component:HistoryComponent},
    {path:"setting", component:SettingComponent},
+   {path:"product-list/:id", component:ProductListComponent},
 ]
 // children: routesSection
 // component:NavigationComponent
 const routes: Routes = [
    {path:"", component:NavigationComponent, children: routesSection  },
-   {path:"product-list/:id", component:ProductListComponent},
    {path:"**", component:NotFoundComponent}
 ];
 
