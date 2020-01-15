@@ -1,0 +1,83 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{title}} </span>
+</mat-toolbar>
+<div class="container">
+    <div class="date mat-h2">
+        {{(sale$| async)?.date | date:"EE, d MMM yyyy"}}
+    </div>
+
+    <form class="form" [formGroup]='form' [appConnectFormGroup]="sale$ | async">
+        <!-- Discount -->
+        <div class="form__discount">
+            <mat-form-field class="form__discount-field" color="primary">
+                <input formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
+                <button mat-icon-button matSuffix (click)="clearValue(form.get('discount'))">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <app-easy-enter class="form__easy-btn" (change)="setValue(form.get('discount'), $event)"></app-easy-enter>
+        </div>
+        <!--  -->
+        <mat-accordion [hideToggle]='true'>
+            <!-- Product List -->
+            <div formArrayName="productList">
+                <!-- *ngFor="let product of (sale$ | async)?.productList; let lastItem = last"> -->
+                <div *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
+
+
+
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> {{product.get("name").value}} </mat-panel-title>
+                            <mat-panel-description>
+                                <div class="panel-description">
+                                    <span>{{product.get("count").value}}шт.</span>
+                                    <span> Cумма {{product.get("price").value * product.get("count").value}} </span>
+                                </div>
+                            </mat-panel-description>
+                            <!-- <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description> -->
+                        </mat-expansion-panel-header>
+
+                        <div class="form__product-field">
+
+                            <mat-form-field color="primary">
+                                <input formControlName="name" autocomplete="off" type="text" matInput
+                                    placeholder="Товар">
+                            </mat-form-field>
+                            <mat-form-field color="primary">
+                                <input formControlName="count" autocomplete="off" type="number" matInput
+                                    placeholder="Количество">
+                            </mat-form-field>
+                            <mat-form-field color="primary">
+                                <input formControlName="price" autocomplete="off" type="number" matInput
+                                    placeholder="Цена">
+                            </mat-form-field>
+
+                        </div>
+
+                        <mat-action-row>
+                            <mat-icon>delete</mat-icon>
+                            <span> Удалить </span>
+                        </mat-action-row>
+                        
+                    </mat-expansion-panel>
+                </div>
+
+            </div>
+            <!--  -->
+
+
+        </mat-accordion>
+
+
+    </form>
+
+
+
+    <pre>
+            {{sale$  | async | json}}
+        </pre>
+</div>
