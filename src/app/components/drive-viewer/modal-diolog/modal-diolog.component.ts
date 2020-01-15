@@ -14,7 +14,7 @@ export interface IDialogData {
   styleUrls: ['./modal-diolog.component.scss']
 })
 export class ModalDialogComponent implements OnInit, OnDestroy {
-  @ViewChild("input", { static: false }) input: ElementRef<HTMLInputElement>;
+  @ViewChild("inputNameFolder", { static: false }) inputNameFolder: ElementRef<HTMLInputElement>;
 
   sub: Subscription;
 
@@ -23,7 +23,7 @@ export class ModalDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.dialogRef.afterOpen().subscribe(() => {
-      this.input.nativeElement.select();
+      this.inputNameFolder.nativeElement.select();
     })
   }
   onNoClick() {
