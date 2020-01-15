@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { SaleStore } from 'src/app/store/sale.store';
 import { SaleEffect } from 'src/app/store/effects/sale.effects';
 import { LogService } from 'src/app/service/log.service';
@@ -8,86 +8,104 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { compareDay } from '../../lib/lib';
 import { ISale } from 'src/app/models/sale.model';
-import { map, filter, skip, tap, withLatestFrom, switchMap, mapTo } from 'rxjs/operators';
-import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
+import { map, filter, skip, tap, withLatestFrom, switchMap, mapTo, finalize } from 'rxjs/operators';
+import { Subject, combineLatest, BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
   styleUrls: ['./sale-list.component.scss'],
-  providers: [LogService]
+  providers: [LogService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
   // date: Date = new Date();
   title = "Продажи";
   loading$ = this.saleStore.selectIsLoading();
-  date$: Subject<Date> = new Subject();
+  date: Date;
+  date$: Subject<{ forth?, to?} | never> = new Subject()
+  // date$: Subject<Date> = new Subject();
   // sales$ = combineLatest(this.date$.pipe(tap(console.log)), this.saleStore.selectSaleList().pipe(tap(console.log)))
   //   .pipe(
   //     map(
   //       ([date, sales]) => {
   //         console.log(date, sales);
-          
+
   //         // localStorage.setItem("date-sales", date.toString())
   //         let s = sales && sales.filter(s => !compareDay(s.date, { from: date }))
   //         return s;
   //       }
   //     )
   //   )
-    sales$ = this.saleStore.selectSaleList()
-    // .pipe(mapTo([]));
-  // sales$ = this.date$.pipe(
-  //   // withLatestFrom(this.saleStore.selectSaleList()),
-  //   switchMap((d) => this.saleStore.selectSaleList()),
-  //   map(
-  //     ([date, sales]) => {
-  //       let s = sales && sales.filter(s => !compareDay(s.date, { from: date }))
-  //       console.log(date, s);
-  //       return s;
-  //     }
-  //   )
-  // )
+  sales$: Observable<ISale[]> = this.date$.pipe(
+    switchMap(options => this.saleStore.selectSaleList(options)),
+    tap((v) => console.log(" emmit", v.length)),
+    finalize(() => console.log("fin sale ")    )
+  )
 
-  // this.saleStore.selectSaleList()
-  //   .pipe(
-  //     skip(2),
-  //     map(
-  //       (s: ISale[]) => s && s.filter(s => !compareDay(s.date, { from: this.date }))
-  //     ));
-  constructor(public saleStore: SaleStore, private router: Router) { }
+// this.saleStore.selectSaleList({forth : this.date})
+// .pipe(mapTo([]));
+// sales$ = this.date$.pipe(
+//   // withLatestFrom(this.saleStore.selectSaleList()),
+//   switchMap((d) => this.saleStore.selectSaleList()),
+//   map(
+//     ([date, sales]) => {
+//       let s = sales && sales.filter(s => !compareDay(s.date, { from: date }))
+//       console.log(date, s);
+//       return s;
+//     }
+//   )
+// )
 
-  ngOnInit() {
-    // this.saleStore.saleList$.subscribe((r) => {
-    //   console.log("Sale list: ", r, isArray(r) && r[0]);
+// this.saleStore.selectSaleList()
+//   .pipe(
+//     skip(2),
+//     map(
+//       (s: ISale[]) => s && s.filter(s => !compareDay(s.date, { from: this.date }))
+//     ));
+constructor(public saleStore: SaleStore, private router: Router, private cdr: ChangeDetectorRef) { }
 
-    // })
+ngOnInit() {
+  let dateStr = localStorage.getItem("date-sales");
+  this.date = new Date(dateStr || Date.now());
+  // this.date$.next({ forth: this.date, to: this.date })
 
-  }
-  ngAfterViewInit() {
-    let dateStr = localStorage.getItem("date-sales");
-    let date = new Date(dateStr ||  Date.now());
-    setTimeout(() => {
-      this.date$.next(date)
+  // this.sales$.subscribe(console.log);
+  // this.saleStore.selectSaleList().subscribe(console.log)
+
+  // this.saleStore.saleList$.subscribe((r) => {
+  //   console.log("Sale list: ", r, isArray(r) && r[0]);
+
+  // })
+
+}
+ngAfterViewInit() {
+  // let dateStr = localStorage.getItem("date-sales");
+  // let date = new Date(dateStr ||  Date.now());
+  setTimeout(() => {
+    this.date$.next({ forth: this.date, to: this.date })
+    // this.date$.next()
     //   // this.saleStore.getSaleList();
-    }, 0);
-  }
+  }, 0);
+}
 
-  getSaleList() {
-    // this.saleStore.getSeleList();
-  }
-  setDate(event: MatDatepickerInputEvent<Date>) {
-    localStorage.setItem("date-sales", event.value.toString())
-    this.date$.next(event.value);
-  }
+getSaleList() {
+  // this.saleStore.getSeleList();
+}
+setDate(event: MatDatepickerInputEvent<Date>) {
+  localStorage.setItem("date-sales", event.value.toString())
+    this.date = event.value;
+  this.date$.next({ forth: event.value, to: event.value });
+}
   goToProductList(sale: ISale) {
-    this.router.navigate(
-      ['product-list', sale.id],
-    )
-  }
-  deleteSale(sale, ev){
-    console.log(sale, ev);
-    
+  this.router.navigate(
+    ['product-list', sale.id],
+  )
+}
+  deleteSale(sale, ev) {
+  console.log(sale, ev);
 
-  }
+
+}
 
 }

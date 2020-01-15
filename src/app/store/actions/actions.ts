@@ -10,10 +10,9 @@ export function ofType<T extends Action>(type): MonoTypeOperatorFunction<T> {
     return filter(_ => type === _.type);
 }
 @Injectable({ providedIn: "root" })
-export class Actions {
-    private _actions$: Subject<Action> = new Subject()
-    get actions$() {
-        return this._actions$;
+export class Actions<T = Action> extends Subject<T>{
+    constructor() { 
+        super()
     }
-    constructor() { }
+
 }

@@ -1,12 +1,14 @@
 import { Injectable, Optional } from "@angular/core";
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, from, empty } from 'rxjs';
 import { ISaleState, initSaleState } from './state/sale.state';
-import { Action } from './actions/actions';
+import { Action, Actions } from './actions/actions';
 import { SaleEffect } from './effects/sale.effects';
-import { startWith, scan, publishReplay, refCount, map, tap, shareReplay, finalize } from 'rxjs/operators';
+import { startWith, scan, publishReplay, refCount, map, tap, shareReplay, finalize, switchMap, toArray, filter, reduce } from 'rxjs/operators';
 import { saleReducers } from './reducers/sale.reducers';
 import { SaleActions, ESaleActions, GetSaleList } from './actions/sale.actions';
 import { ISale } from '../models/sale.model';
+import { SaleDispacher } from './dispatcher/dispatcher.sale';
+import { compareDay } from '../lib/lib';
 
 /*
 * Global
@@ -16,14 +18,16 @@ export let stateSales: Observable<ISaleState>;
 @Injectable({ providedIn: "root" })
 export class SaleStore {
 
-    actions$ = this.saleEffect.actions$;
+    saleEffect: SaleEffect;
+
+    // actions$ = this.saleEffect.actions$;
     /**
     * Dispatcher
     */
-    private dispatcher$: Observable<Action> = merge(
-        this.actions$,
-        this.saleEffect.getSaleList$
-    );
+    // private dispatcher$: Observable<Action> = merge(
+    //     this.actions$,
+    //     this.saleEffect.getSaleList$
+    // );
     /**
     * State Reducer
     */
@@ -31,22 +35,34 @@ export class SaleStore {
         .pipe(
             startWith(initSaleState),
             scan((state: ISaleState, action: SaleActions) => {
-                console.log(action.type, '[state]', state);
-                return saleReducers(state, action);;
+                let _state = saleReducers(state, action);;
+                console.log(action.type, '[state]', _state);
+                return _state;
             }),
             // tap(state => console.log("[SALE new State]", state)),
-            // publishReplay(1),
-            // refCount(),
             finalize(() => console.log("FIN ")),
             shareReplay(1),
+            // publishReplay(1),
+            // refCount(),
 
         )
 
     /**
     * Selectors
     */
-    selectSaleList() {
-        return this.saleState$.pipe(map(state => state.sales && state.sales));
+    selectSaleList(options: { forth?: Date, to?: Date } = { forth: undefined, to: undefined }) {
+        return this.saleState$
+            .pipe(
+                map(state => state.sales ? 
+                    state.sales.filter(sale => !compareDay(sale.date, options.forth, options.to)) 
+                    : []),
+            
+                // map(sale =>  )
+                // toArray()
+                // switchMap( obs => obs)
+
+
+            );
     }
     selectIsLoading() {
         return this.saleState$.pipe(map(state => state.loading))
@@ -54,7 +70,8 @@ export class SaleStore {
     slectorBaseID() {
         return this.saleState$.pipe(map(state => state.baseID));
     }
-    constructor(private saleEffect: SaleEffect) {
+    // constructor(private actions$: Actions, private saleEffect: SaleEffect) {
+    constructor(private actions$: Actions, private dispatcher$: SaleDispacher) {
         stateSales = this.saleState$;
     }
 

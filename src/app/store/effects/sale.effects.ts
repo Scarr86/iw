@@ -7,9 +7,10 @@ import { FileService } from 'src/app/service/google-gapi/file.service';
 import { ISale } from 'src/app/models/sale.model';
 import { ISaleHTTP } from 'src/app/models/http-sale.interface';
 import { selectBaseID } from '../selectors/sale.selectors';
+import { SaleStore } from '../sale.store';
 @Injectable({ providedIn: "root" })
 export class SaleEffect {
-    actions$ = this.actions.actions$;
+    actions$ = this.actions;
     getSaleList$ = this.actions$.pipe(
         ofType(ESaleActions.GetSaleList),
         switchMap(action =>

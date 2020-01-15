@@ -5,13 +5,13 @@
 <input class="d-none" (dateChange)="setDate($event)" [matDatepicker]="picker" placeholder="Choose a date">
 <mat-datepicker touchUi #picker></mat-datepicker>
 <div (click)="picker.open()" matRipple class="mat-h1 date">
-    {{date$ | async | date:"EE, d MMM yyyy"}}
+    {{date | date:"EE, d MMM yyyy"}}
     <!-- {{date.value | date}} -->
     <div class="mat-body-1 date-description">Сегодня</div>
 </div>
 
 <ng-container *ngIf="!(loading$ | async)">
-    <mat-action-list *ngIf="(sales$ | async)?.length else emtySales " class="container">
+    <mat-action-list class="container">
         <mat-list-item *ngFor="let s of sales$ | async; let i = index">
             <app-sale-item class="sale-item" [sale]='s' (click)="goToProductList(s)"></app-sale-item>
 
@@ -28,10 +28,12 @@
     <!-- <div class="mat-h2 emty-sale" *ngIf="!(sales$ | async)?.length " >
         Сегодня небыло продаж
     </div> -->
-</ng-container>
 
-<ng-template #emtySales>
-    <div class="mat-h2 emty-sale">
+    <div *ngIf="!((sales$ | async)?.length)" class="mat-h2 emty-sale">
         Сегодня небыло продаж
     </div>
-</ng-template>
+
+</ng-container>
+
+<!-- <ng-template #emtySales> -->
+<!-- </ng-template> -->
