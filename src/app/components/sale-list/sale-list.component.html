@@ -1,39 +1,26 @@
-<mat-toolbar>
-    <span>{{title}} </span>
-</mat-toolbar>
 
-<input class="d-none" (dateChange)="setDate($event)" [matDatepicker]="picker" placeholder="Choose a date">
-<mat-datepicker touchUi #picker></mat-datepicker>
-<div (click)="picker.open()" matRipple class="mat-h1 date">
-    {{date | date:"EE, d MMM yyyy"}}
-    <!-- {{date.value | date}} -->
-    <div class="mat-body-1 date-description">Сегодня</div>
-</div>
+<!-- <ng-container *ngIf="!(loading$ | async)"> -->
+    <mat-action-list>
+        <mat-list-item *ngFor="let s of sales; let i = index">
 
-<ng-container *ngIf="!(loading$ | async)">
-    <mat-action-list class="container">
-        <mat-list-item *ngFor="let s of sales$ | async; let i = index">
-            <app-sale-item class="sale-item" [sale]='s' (click)="goToProductList(s)"></app-sale-item>
+            <app-sale-item class="sale-item" [sale]='s' (click)="onSelect(s)"></app-sale-item>
 
             <button class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu [xPosition]="'before'" #menu="matMenu">
-                <button (click)="deleteSale(s, $event)" mat-menu-item> Удалить </button>
+                <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
             </mat-menu>
+
         </mat-list-item>
 
     </mat-action-list>
 
-    <!-- <div class="mat-h2 emty-sale" *ngIf="!(sales$ | async)?.length " >
-        Сегодня небыло продаж
-    </div> -->
-
-    <div *ngIf="!((sales$ | async)?.length)" class="mat-h2 emty-sale">
+    <div *ngIf="!sales?.length" class="mat-h2 emty-sale">
         Сегодня небыло продаж
     </div>
 
-</ng-container>
+<!-- </ng-container> -->
 
 <!-- <ng-template #emtySales> -->
 <!-- </ng-template> -->

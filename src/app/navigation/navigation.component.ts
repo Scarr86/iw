@@ -11,7 +11,7 @@ import { ThemeService } from '../service/theme.service';
    templateUrl: './navigation.component.html',
    styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit{
+export class NavigationComponent implements OnInit {
 
    isSignedIn$: Observable<boolean>;
 
@@ -35,23 +35,23 @@ export class NavigationComponent implements OnInit{
       private theme: ThemeService
    ) {
 
-}
+   }
 
-ngOnInit() {
-   this.isSignedIn$ = this.auth.isSignedIn;
-   // this.componentCssClass = 'dark-theme';
-   this.theme.isDarkTheme.subscribe((r)=> console.log("isDarkTheme", r))
-}
+   ngOnInit() {
+      this.isSignedIn$ = this.auth.isSignedIn;
+      // this.componentCssClass = 'dark-theme';
+      this.theme.isDarkTheme.subscribe((r) => console.log("isDarkTheme", r))
+   }
 
 
-cbChange(checked: boolean) {
-   this.theme.setDarkTheme(checked);
-}
+   cbChange(checked: boolean) {
+      this.theme.setDarkTheme(checked);
+   }
 
-signIn() {
-   this.auth.signIn();
-}
-signOut() {
-   this.auth.signOut();
-}
+   signIn() {
+      this.auth.signIn();
+   }
+   signOut() {
+      this.auth.signOut();
+   }
 }

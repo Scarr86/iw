@@ -11,7 +11,7 @@ export interface ISaleState{
 
 export const initSaleState:ISaleState={
     baseID:"1KMrG-wt5syMh1o0TkYg_TSpXtPfiJjs9", 
-    sales: null,
+    sales: [],
     selectedSale: null,
     loading: false,
     error:null

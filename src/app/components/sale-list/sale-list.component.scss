@@ -4,24 +4,6 @@
  .sale-item {
      flex-grow: 1;
  }
-
- .date {
-     margin-top: 20px;
-     text-align: center;
-     padding: 10px 0;
-     color: mat-color($iw-primary, text);
-     cursor: pointer;
- }
- .date-description{
-    color: mat-color($iw-accent, text);
- }
- .d-none{
-     display: none;
- }
-
- .container{
-     padding: 0 15px;
-  }
   .emty-sale{
       width: 100%;
       text-align: center;
@@ -29,8 +11,8 @@
       top: 50%;
       transform: translateY(-50%);
   }
-  :host{
-      display: block;
-      position: relative;
-     @include heightContent;
-  }
+//   :host{
+//       display: block;
+//       position: relative;
+//      @include heightContent;
+//   }

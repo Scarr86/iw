@@ -1,9 +1,22 @@
+
+function Log( target: Object, method: string, des:PropertyDescriptor){
+    let originMethod = des.value;
+    des.value = (...args)=>{
+        let res = originMethod.apply(this, args);
+        console.log(`${JSON.stringify(args)} => ${res}`)
+        return res;
+    }
+}
+
+
+
 /*
  return
  1: date2 > date1 to > day  
  0: date2 === date1  today
  -1: date2 < date1  to < day
  */
+@Log()
 export function compareDay(date: Date, from?: Date, to?: Date): number {
 
     let _date = date.valueOf();
@@ -22,6 +35,6 @@ export function compareDay(date: Date, from?: Date, to?: Date): number {
     else if (_to && _date > _to) result = 1;
     else result = 0;
 
-    console.log("result: ", result);
+    console.log("compare Day result: ", result);
     return result
 }

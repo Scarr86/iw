@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GeneratorBase } from 'src/app/service/generator-sale.service';
 import { Observable, Subject, from } from 'rxjs';
@@ -6,55 +6,49 @@ import { IProduct } from 'src/app/models/product.model';
 import { map, find, switchMap, pairwise, startWith } from 'rxjs/operators';
 import { SaleStore } from 'src/app/store/sale.store';
 import { ISale } from 'src/app/models/sale.model';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit, AfterViewInit {
+export class ProductListComponent implements OnInit {
   title: string = "";
-  sale$: Observable<ISale>;
-  id: number;
   form: FormGroup;
-  loading$: Observable<boolean>
+  _sale: ISale;
+  @Input() set sale(s: ISale) {
+    if (!!s) {
+      this._sale = s;
+    }
+    else {
+      this._sale = {
+        id: 0,
+        date: new Date(),
+        discount: 0,
+        productList: []
+      };
+    }
+  }
 
+
+  @Output() onSave = new EventEmitter<ISale>();
+  @Output() onArrowBack = new EventEmitter<never>();
   constructor(
-    private activeRoute: ActivatedRoute,
     private router: Router,
     private saleStore: SaleStore,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.id = +this.activeRoute.snapshot.params['id'];
-    this.title = "Продажа " + this.id;
-    this.sale$ = this.saleStore.selectSaleList().pipe(map(sales => sales && sales.find(s => s.id === this.id)));
-    this.loading$ = this.saleStore.selectIsLoading();
-
-
+    this.title = "Продажа " + this._sale.id;
     this.form = this.fb.group({
       discount: ["0", [Validators.required]],
       productList: this.fb.array([])
     })
-    // this.sale$.subscribe(sale => {
-    //   sale.productList.forEach(p => {
-    //     this.arrayProduct.push(this.fb.group({
-    //       name: [p.name, [Validators.required]],
-    //       count: [p.count, [Validators.required]],
-    //       price: [p.price, [Validators.required]]
-    //     }))
-
-    //   })
-    // })
-
-  }
-  ngAfterViewInit() {
-    // this.saleStore.getSaleList();
   }
   goBack() {
-    this.router.navigate(['sale-list'])
+    this.onArrowBack.emit();
   }
   setValue(value: number) {
     this.form.get('discount').setValue(+this.form.get('discount').value + value);
@@ -66,8 +60,9 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   get arrayProduct(): FormArray {
     return this.form.get("productList") as FormArray;
   }
-  save(){
-
+  submit() {
+    this.onSave.emit(this.form.value);
+    this.form.reset();
   }
 
 }

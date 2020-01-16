@@ -67,6 +67,10 @@ html {
    box-sizing: border-box;
  }
 
+:host .container{
+  display: block;
+  padding: 0px 15px 30px;
+}
  
  
  *,

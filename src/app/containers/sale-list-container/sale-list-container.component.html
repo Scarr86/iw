@@ -1,0 +1,15 @@
+<mat-toolbar>
+    <span>Продажи</span>
+</mat-toolbar>
+
+<div (click)="picker.open()" matRipple class="mat-h2 date">
+    <input (dateChange)="onDateChange($event)" [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker #picker></mat-datepicker>
+    {{date | date:"EE, d MMM yyyy"}}
+    <div class="mat-body-1 date-description">Сегодня</div>
+</div>
+<ng-container *ngIf="!(loading$ |async)">
+    <app-sale-list class="container" [sales]="sales$ | async" (delete)="delete($event)"
+        (select)="goToProductList($event)">
+    </app-sale-list>
+</ng-container>

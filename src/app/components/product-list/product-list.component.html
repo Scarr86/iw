@@ -3,34 +3,30 @@
         <mat-icon>arrow_back</mat-icon>
     </button>
     <span>{{title}} </span>
-    <button class="save-btn" [disabled]="form.invalid " mat-flat-button color="primary" (click)="save()"> Сохранить </button>
+    <button (click)="submit()" class="save-btn" [disabled]="form.invalid " mat-flat-button color="primary"> Сохранить
+    </button>
+
 </mat-toolbar>
 <div class="container">
     <div class="date mat-h2">
-        {{(sale$| async)?.date | date:"EE, d MMM yyyy"}}
+        {{_sale.date | date:"EE, d MMM yyyy"}}
     </div>
 
-
-    <form class="form" *ngIf="!(loading$ | async)" [formGroup]='form' [appConnectFormGroup]="sale$ | async">
+    <form class="form" [formGroup]='form' [appConnectFormGroup]="_sale">
         <!-- Discount -->
         <mat-card class="form__discount">
             <mat-form-field class="form__discount-field" color="primary">
-                <input  formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
+                <input formControlName="discount" autocomplete="off" type="number" matInput placeholder="Скидка">
                 <button type="button" mat-icon-button matSuffix (click)="clearValue()">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <app-easy-enter  (change)="setValue($event)">
-            </app-easy-enter>
+            <app-easy-enter (change)="setValue($event)"> </app-easy-enter>
         </mat-card>
 
         <!--  -->
         <mat-accordion formArrayName="productList" [hideToggle]='true'>
             <!-- Product List -->
-            <!-- *ngFor="let product of (sale$ | async)?.productList; let lastItem = last"> -->
-
-
-
             <mat-expansion-panel *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
                 <mat-expansion-panel-header>
                     <mat-panel-title> {{product.get("name").value}} </mat-panel-title>
@@ -57,25 +53,15 @@
                     <mat-form-field color="primary">
                         <input formControlName="price" autocomplete="off" type="number" matInput placeholder="Цена">
                     </mat-form-field>
-
                 </div>
-
                 <mat-action-row>
                     <mat-icon>delete</mat-icon>
                     <span> Удалить </span>
                 </mat-action-row>
-
             </mat-expansion-panel>
-
             <!--  -->
-
-
         </mat-accordion>
-
-
     </form>
-
-
 
     <!-- <pre>
             {{sale$  | async | json}}

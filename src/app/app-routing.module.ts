@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
-import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SettingComponent } from './setting/setting.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { SaleListContainerComponent } from './containers/sale-list-container/sale-list-container.component';
+import { ProductListContainerComponent } from './containers/product-list-container/product-list-container.component';
 
 const routesSection: Routes = [
    {path: "", redirectTo:"sale-list", pathMatch:"full"},
-   {path:"sale-list", component:SaleListComponent},
+   {path:"sale-list", component:SaleListContainerComponent},
    {path:"history", component:HistoryComponent},
    {path:"setting", component:SettingComponent},
-   {path:"product-list/:id", component:ProductListComponent},
+   {path:"product-list/:id", component:ProductListContainerComponent},
 ]
 // children: routesSection
 // component:NavigationComponent
