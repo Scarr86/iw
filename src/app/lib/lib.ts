@@ -16,7 +16,7 @@ function Log( target: Object, method: string, des:PropertyDescriptor){
  0: date2 === date1  today
  -1: date2 < date1  to < day
  */
-@Log()
+// @Log()
 export function compareDay(date: Date, from?: Date, to?: Date): number {
 
     let _date = date.valueOf();

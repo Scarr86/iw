@@ -14,7 +14,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   title = 'iw';
   constructor(private saleStory: SaleStore, private driveStore: DriveStore) {
   }
-  ngOnInit(){
+  ngOnInit() {
     this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
   }
   ngAfterViewInit() {
@@ -22,6 +22,10 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.saleStory.getSaleList();
     }, 0)
 
+  }
+
+  onRouterOutletActivate(event: Component) {
+    console.log(event);
   }
 
 }

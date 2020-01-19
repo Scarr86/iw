@@ -1,5 +1,5 @@
 <!-- <app-navigation></app-navigation> -->
 <div class="container">
    <mat-progress-bar class="load-bar" *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
-   <router-outlet></router-outlet>
+   <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
 </div>

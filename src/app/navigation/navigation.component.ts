@@ -46,6 +46,7 @@ export class NavigationComponent implements OnInit {
 
    cbChange(checked: boolean) {
       this.theme.setDarkTheme(checked);
+      this.componentCssClass = checked?"dark-theme":""
    }
 
    signIn() {
@@ -53,5 +54,8 @@ export class NavigationComponent implements OnInit {
    }
    signOut() {
       this.auth.signOut();
+   }
+   swappingTheme(theme){
+      // document.getElementById('themeAsset').href = `assest/${theme}`
    }
 }

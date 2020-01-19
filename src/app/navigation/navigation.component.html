@@ -1,4 +1,4 @@
-<div [ngClass]="{'dark-theme': checkbox.checked}">
+<!-- <div [ngClass]="{'dark-theme': checkbox.checked}"> -->
 
    <mat-sidenav-container class="sidenav-container ">
       <mat-sidenav #drawer class="sidenav" 
@@ -43,5 +43,12 @@
 
       <mat-checkbox #checkbox (change)="cbChange($event.checked)" class="mat-menu-item">
          Темная тема </mat-checkbox>
-   </mat-menu>
-</div>
+
+         <button (click)="swappingTheme('deeppurple-amber')" mat-menu-item> deeppurple-amber </button>
+         <button (click)="swappingTheme('pink-bluegrey')" mat-menu-item> pink-bluegrey </button>
+         <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button>
+         <button (click)="swappingTheme('indigo-pink')" mat-menu-item>  indigo-pink </button>
+        
+ </mat-menu>
+
+<!-- </div> -->

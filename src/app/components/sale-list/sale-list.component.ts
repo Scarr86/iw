@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, ViewEncapsulation, HostBinding } from '@angular/core';
 import { SaleStore } from 'src/app/store/sale.store';
 import { SaleEffect } from 'src/app/store/effects/sale.effects';
 import { LogService } from 'src/app/service/log.service';
@@ -10,6 +10,7 @@ import { compareDay } from '../../lib/lib';
 import { ISale } from 'src/app/models/sale.model';
 import { map, filter, skip, tap, withLatestFrom, switchMap, mapTo, finalize } from 'rxjs/operators';
 import { Subject, combineLatest, BehaviorSubject, Observable } from 'rxjs';
+import { ThemeService } from 'src/app/service/theme.service';
 
 
 
@@ -17,8 +18,8 @@ import { Subject, combineLatest, BehaviorSubject, Observable } from 'rxjs';
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
   styleUrls: ['./sale-list.component.scss'],
-  providers: [LogService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush,
+  // encapsulation: ViewEncapsulation.Emulated
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
   // date: Date = new Date();
@@ -33,10 +34,10 @@ export class SaleListComponent implements OnInit, AfterViewInit {
   //   finalize(() => console.log("fin sale "))
   // )
 
-  onSelect(s:ISale){
+  onSelect(s: ISale) {
     this.select.emit(s.id);
   }
-  onDelete(s:ISale){
+  onDelete(s: ISale) {
     this.delete.emit(s.id);
   }
 
@@ -90,7 +91,8 @@ export class SaleListComponent implements OnInit, AfterViewInit {
   //     map(
   //       (s: ISale[]) => s && s.filter(s => !compareDay(s.date, { from: this.date }))
   //     ));
-  constructor(public saleStore: SaleStore, private router: Router, private cdr: ChangeDetectorRef) { }
+  constructor(public saleStore: SaleStore, private router: Router, private cdr: ChangeDetectorRef) {
+  }
 
 
   ngAfterViewInit() {
