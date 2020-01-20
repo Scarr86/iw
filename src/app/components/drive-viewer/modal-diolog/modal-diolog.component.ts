@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 
 
 export interface IDialogData {
-  nameFolder: string;
+  text:string,
+  title:string
 }
 
 @Component({
@@ -18,8 +19,10 @@ export class ModalDialogComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  constructor(public dialogRef: MatDialogRef<ModalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IDialogData) { }
+  constructor(
+    public dialogRef: MatDialogRef<ModalDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IDialogData
+    ) { }
 
   ngOnInit() {
     this.sub = this.dialogRef.afterOpen().subscribe(() => {

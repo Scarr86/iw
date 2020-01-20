@@ -12,7 +12,7 @@
         {{_sale.date | date:"EE, d MMM yyyy"}}
     </div>
 
-    <form class="form" [formGroup]='form' [appConnectFormGroup]="_sale">
+    <form class="form" [formGroup]='form' [appConnectFormGroup]="_sale" (ngSubmit)="save()" #formRef="ngForm" >
         <!-- Discount -->
         <mat-card class="form__discount">
             <mat-form-field class="form__discount-field" color="primary">
@@ -54,6 +54,7 @@
                         <input formControlName="price" autocomplete="off" type="number" matInput placeholder="Цена">
                     </mat-form-field>
                 </div>
+
                 <mat-action-row>
                     <mat-icon>delete</mat-icon>
                     <span> Удалить </span>

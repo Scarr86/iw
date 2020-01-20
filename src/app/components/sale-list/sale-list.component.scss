@@ -1,9 +1,15 @@
- @import '~@angular/material/theming';
- @import '../../../styles.scss';
 
- .sale-item {
-     flex-grow: 1;
+
+
+ @import '~@angular/material/theming';
+//  @import '../../../styles.scss';
+ .more-vert{
+     margin-left: 10px;
  }
+
+//  .sale-item {
+//      flex-grow: 1;
+//  }
   .emty-sale{
       width: 100%;
       text-align: center;
@@ -16,3 +22,24 @@
 //       position: relative;
 //      @include heightContent;
 //   }
+
+.date {
+    // margin-top: 20px;
+    text-align: center;
+    padding: 10px 0;
+    // color: mat-color($iw-primary, text);
+    cursor: pointer;
+    position: relative;
+    input{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        transform: translate(-100%, -50%);
+        visibility: hidden;
+    }
+}
+
+.date-description{
+    // color: mat-color($iw-accent, text);
+ }

@@ -8,6 +8,8 @@
 
 
 <!-- <div class="dark-theme"> -->
+
+    
 <mat-toolbar>
     <button *ngIf="(breadcrumbs$ | async)?.id !== 'root' || isNewFile" mat-icon-button (click)="navigateTo()">
         <mat-icon>arrow_back</mat-icon>

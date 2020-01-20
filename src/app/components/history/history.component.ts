@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GeneratorBase } from '../service/generator-sale.service';
+import { GeneratorBase } from '../../service/generator-sale.service';
 import { from, of } from 'rxjs';
 
 @Component({

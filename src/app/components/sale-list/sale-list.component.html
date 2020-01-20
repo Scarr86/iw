@@ -1,11 +1,21 @@
+<mat-toolbar>
+    <span>Продажи</span>
+</mat-toolbar>
 
-<!-- <ng-container *ngIf="!(loading$ | async)"> -->
-    <mat-action-list>
-        <mat-list-item *ngFor="let s of sales; let i = index">
+<div (click)="picker.open()" matRipple class="mat-h2 date" color='primary'>
+    <input (dateChange)="onDateChange($event)" [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker #picker></mat-datepicker>
+    {{date | date:"EE, d MMM yyyy"}}
+    <div class="mat-body-1 date-description">Сегодня</div>
+</div>
 
-            <app-sale-item class="sale-item" [sale]='s' (click)="onSelect(s)"></app-sale-item>
+<mat-action-list>
+    <div class="item" *ngFor="let s of sales; let i = index">
+        <mat-list-item (click)="onSelect(s)">
 
-            <button class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
+            <app-sale-item class="sale-item" [sale]='s'></app-sale-item>
+
+            <button (click)="$event.stopPropagation()" class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu [xPosition]="'before'" #menu="matMenu">
@@ -13,14 +23,10 @@
             </mat-menu>
 
         </mat-list-item>
-
-    </mat-action-list>
-
-    <div *ngIf="!sales?.length" class="mat-h2 emty-sale">
-        Сегодня небыло продаж
     </div>
 
-<!-- </ng-container> -->
+</mat-action-list>
 
-<!-- <ng-template #emtySales> -->
-<!-- </ng-template> -->
+<div *ngIf="!sales?.length" class="mat-h2 emty-sale">
+    Сегодня небыло продаж
+</div>

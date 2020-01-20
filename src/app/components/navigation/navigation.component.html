@@ -1,0 +1,56 @@
+<!-- <div [ngClass]="{'dark-theme': checkbox.checked}"> -->
+
+<mat-sidenav-container class="sidenav-container ">
+   <mat-sidenav #drawer class="sidenav" 
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false" 
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      fixedInViewport 
+      [autoFocus]='false'
+   >
+      <!-- [mode]="'over'" -->
+      <mat-toolbar>Menu</mat-toolbar>
+      <mat-nav-list>
+         <a *ngFor="let link of links" mat-list-item routerLinkActive="active" routerLink='{{link.patch}}'
+            (click)="drawer.mode === 'over'? drawer.close(): ''">{{link.name}}</a>
+      </mat-nav-list>
+   </mat-sidenav>
+
+
+   <mat-sidenav-content>
+      <mat-toolbar class="header" color="primary">
+         <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="isHandset$ | async"
+            (click)="drawer.toggle()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+         </button>
+         <span class="title">iw</span>
+         <button class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+         </button>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <!-- {{drawer.mode}} -->
+      <router-outlet></router-outlet>
+
+   </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+<mat-menu [xPosition]="'before'" #menu="matMenu">
+   <button (click)="signIn()" *ngIf='!(isSignedIn$ | async)' mat-menu-item> Войти </button>
+   <button (click)="signOut()" *ngIf='isSignedIn$ | async' mat-menu-item> Выйти </button>
+
+   <mat-checkbox #checkbox 
+   (change)="cbChange($event.checked)" 
+   class="mat-menu-item"
+   >
+      Темная тема 
+   </mat-checkbox>
+   <button (click)="swappingTheme('deeppurple-amber')" mat-menu-item> deeppurple-amber </button>
+   <button (click)="swappingTheme('pink-bluegrey')" mat-menu-item> pink-bluegrey </button>
+   <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button>
+   <button (click)="swappingTheme('indigo-pink')" mat-menu-item> indigo-pink </button>
+</mat-menu>
+
+<!-- </div> -->

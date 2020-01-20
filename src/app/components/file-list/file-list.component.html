@@ -1,0 +1,20 @@
+<mat-toolbar>
+    <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Список файлов</span>
+    <button class="btn-create" (click)="create()" mat-flat-button color="primary">
+        Создать
+    </button>
+</mat-toolbar>
+<!-- <app-tool-bar 
+    [btnText]="'Создать'" 
+    (btnClick)="create()" 
+    (arrowClick)="back()"
+>
+</app-tool-bar> -->
+<mat-action-list>
+    <mat-list-item *ngFor="let file of fileList; let i = index" (click)="select(i)">
+        {{file}}
+    </mat-list-item>
+</mat-action-list>

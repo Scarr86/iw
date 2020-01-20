@@ -22,7 +22,9 @@ import { ThemeService } from 'src/app/service/theme.service';
   // encapsulation: ViewEncapsulation.Emulated
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
-  // date: Date = new Date();
+  
+  @Input() date: Date = new Date();
+  @Output() dateChange = new EventEmitter<Date>();
   // loading$ = this.saleStore.selectIsLoading();
   @Input() sales: ISale[] = [];
   @Output() select = new EventEmitter<number>();
@@ -109,10 +111,10 @@ export class SaleListComponent implements OnInit, AfterViewInit {
     // this.saleStore.getSeleList();
   }
 
-  // onDateChange(event: MatDatepickerInputEvent<Date>) {
-  //   this.date = new Date(event.value);
-  //   this.dateChange.emit(this.date);
-  // }
+  onDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.date = new Date(event.value);
+    this.dateChange.emit(this.date);
+  }
 
   // setDate(event: MatDatepickerInputEvent<Date>) {
   //   localStorage.setItem("date-sales", event.value.toString())

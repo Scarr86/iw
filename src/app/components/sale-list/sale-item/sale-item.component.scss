@@ -1,15 +1,17 @@
-.sale__item{
-   width: 100%;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   height: 100%;
-   
-}
-:host{
-   display: inline-block;
-   height: 100%;
-}
+// .item{
+//    width: 100%;
+//    display: flex;
+//    justify-content: space-between;
+//    align-items: center;
+//    height: 100%;
+//    &__name{
+
+//    }
+// }
+// :host{
+//    display: inline-block;
+//    height: 100%;
+// }
 
 // .sale__item_name {
 //    // flex-grow: 2;
@@ -17,12 +19,20 @@
 // .sale__item_num {
 //    // flex-grow: 1;
 // }
-.sale__item_total {
-   text-align: right;
-}
-.sale__item_name, 
-.sale__item_num ,
-.sale__item_total{
-   flex-basis: 33.3333%;
-}
+// .sale__item_total {
+//    text-align: right;
+// }
+// .sale__item_name, 
+// .sale__item_num ,
+// .sale__item_total{
+//    flex-basis: 33.3333%;
+// }
 
+
+
+:host{
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   // height: 100%;
+}

@@ -1,5 +1,6 @@
 
-@import '../../../styles.scss';
+// есди включить не  работет изменения стиля
+//@import '../../../styles.scss'; 
 
 
 // @import '~@angular/material/theming';	
@@ -26,11 +27,11 @@
  }
 
  .form{
-     &__discount-field{
-        width: 225px;
-     }
      &__discount{
          margin-bottom: 15px;
+     }
+     &__discount-field{
+        width: 225px;
      }
     &__product-field{
         display: flex;

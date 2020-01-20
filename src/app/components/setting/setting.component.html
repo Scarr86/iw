@@ -1,0 +1,43 @@
+
+
+<mat-toolbar>
+    <span>Настройки</span>
+</mat-toolbar>
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                {{name}}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item>
+                    <div>
+                        <b>ID: </b> {{ id}}
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <div>
+                        <b>Размер:</b> {{ size}}
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <div>
+                        <b>Создан:</b> {{ dateCreate | date:"dd-MM-yy hh:mm "}}
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <div>
+                        <b>Изменен:</b> {{dateChange | date:"dd-MM-yy hh:mm "}}
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+            <button (click)="onChange()" mat-button> Изменить </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>
+

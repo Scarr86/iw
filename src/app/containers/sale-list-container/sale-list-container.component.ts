@@ -8,21 +8,16 @@ import { SaleStore } from 'src/app/store/sale.store';
   templateUrl: './sale-list-container.component.html',
   styleUrls: ['./sale-list-container.component.scss']
 })
-export class SaleListContainerComponent implements OnInit{
+export class SaleListContainerComponent implements OnInit {
+  date: Date = new Date()
 
-  date = new Date();
   constructor(private router: Router, public saleStore: SaleStore) {
 
-   }
+  }
   sales$ = this.saleStore.selectSaleList();
   loading$ = this.saleStore.selectIsLoading();
 
   ngOnInit() {
-  }
-
-
-  onDateChange(event: MatDatepickerInputEvent<Date>) {
-    this.date = new Date(event.value);
   }
 
   goToProductList(id: number) {
@@ -32,6 +27,11 @@ export class SaleListContainerComponent implements OnInit{
   }
 
   delete(id: number) {
+
+  }
+  onDate(date: Date) {
+    console.log(date);
+    
 
   }
 

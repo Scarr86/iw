@@ -99,7 +99,7 @@ export class DriveViewerComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteFile(file: File) {
     this.driveStore.delete(file.id);
   }
- 
+
   crateFile() {
     this.isNewFile = true;
     this.selectedFile = null;
@@ -142,7 +142,10 @@ export class DriveViewerComponent implements OnInit, AfterViewInit, OnDestroy {
       ModalDialogComponent
       , {
         minWidth: '300px',
-        data: { nameFolder: "Без названия" }
+        data: {
+          text: "Без названия",
+          title: "Новая папка"
+        }
       }
     )
     this.sub.add(

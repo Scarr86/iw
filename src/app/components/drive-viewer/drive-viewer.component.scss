@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-@import '../../../styles.scss';
+// @import '../../../styles.scss';
 
 
 
@@ -83,11 +83,12 @@ textarea.mat-input-element {
     text-decoration: underline;
   }
 }
-@include mat-core();
 
-$candy-app-primary: mat-palette($mat-red);
-$candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent);
+// @include mat-core();
+
+// $candy-app-primary: mat-palette($mat-red);
+// $candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
+// $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent);
 
 // @include mat-button-theme($candy-app-theme);
-@include mat-progress-bar-theme($candy-app-theme);
+// @include mat-progress-bar-theme($candy-app-theme);

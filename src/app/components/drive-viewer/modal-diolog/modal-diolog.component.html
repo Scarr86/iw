@@ -1,15 +1,15 @@
-<h1 class="title" mat-dialog-title>
-    Новая папка
+<div class="mat-h2 title" mat-dialog-title>
+    {{data.title}}
     <button mat-icon-button [mat-dialog-close]="">
         <mat-icon>close</mat-icon>
     </button>
-</h1>
-<div class="content" mat-dialog-content>
+</div>
+<div mat-dialog-content>
     <mat-form-field>
-        <input matInput [(ngModel)]="data.nameFolder" cdkFocusInitial #inputNameFolder>
+        <input matInput [(ngModel)]="data.text" autocomplete="off" cdkFocusInitial #inputNameFolder>
     </mat-form-field>
 </div>
-<div class="actions" mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="data.nameFolder" >Ok</button>
+<div mat-dialog-actions>
+    <button mat-flat-button color="primary" [mat-dialog-close]="data.text" >Создать</button>
+    <button mat-button (click)="onNoClick()">Отмена</button>
 </div>

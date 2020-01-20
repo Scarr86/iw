@@ -14,6 +14,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDi
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
+
+  @ViewChild('formRef',{static:false}) formRef:FormGroupDirective;
   title: string = "";
   form: FormGroup;
   _sale: ISale;
@@ -32,8 +34,8 @@ export class ProductListComponent implements OnInit {
   }
 
 
-  @Output() onSave = new EventEmitter<ISale>();
-  @Output() onArrowBack = new EventEmitter<never>();
+  // @Output() onSave = new EventEmitter<ISale>();
+  // @Output() onArrowBack = new EventEmitter<never>();
   constructor(
     private router: Router,
     private saleStore: SaleStore,
@@ -48,7 +50,8 @@ export class ProductListComponent implements OnInit {
     })
   }
   goBack() {
-    this.onArrowBack.emit();
+    // this.onArrowBack.emit();
+    this.router.navigate(['sale-list'])
   }
   setValue(value: number) {
     this.form.get('discount').setValue(+this.form.get('discount').value + value);
@@ -61,8 +64,14 @@ export class ProductListComponent implements OnInit {
     return this.form.get("productList") as FormArray;
   }
   submit() {
-    this.onSave.emit(this.form.value);
-    this.form.reset();
+    // this.onSave.emit(this.form.value);
+    // this.form.reset();
+    this.formRef.ngSubmit.next(undefined);
+  }
+
+  save(){
+    console.log("onsave!");
+    
   }
 
 }

@@ -7,15 +7,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 import { MaterialModule } from './material/material.module';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { HistoryComponent } from './history/history.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HistoryComponent } from './components/history/history.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { SaleListContainerComponent } from './containers/sale-list-container/sale-list-container.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
 import { SaleItemComponent } from './components/sale-list/sale-item/sale-item.component';
-import { SettingComponent } from './setting/setting.component';
+import { SettingContainerComponent } from './containers/setting/setting-container.component';
 import { Auth2Service } from './service/google-gapi/auth2.service';
 import { DriveViewerComponent } from './components/drive-viewer/drive-viewer.component';
 import { ConnectFormControlDirective } from './components/connect-form.directive';
@@ -26,6 +26,10 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { EasyEnterComponent } from './components/easy-enter/easy-enter.component';
 import { ConnectFormGroupDirective } from './components/product-list/connect-form-group.directive';
 import { ProductListContainerComponent } from './containers/product-list-container/product-list-container.component';
+import { SettingComponent } from './components/setting/setting.component';
+import { FileListContainerComponent } from './containers/file-list-container/file-list-container.component';
+import { FileListComponent } from './components/file-list/file-list.component';
+import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -45,13 +49,17 @@ export function initGapi(gapiSession: Auth2Service) {
     ProductListComponent,
     ProductItemComponent,
     SaleItemComponent,
-    SettingComponent,
+    SettingContainerComponent,
     DriveViewerComponent,
     ConnectFormControlDirective,
     ModalDialogComponent,
     EasyEnterComponent,
     ConnectFormGroupDirective,
-    ProductListContainerComponent
+    ProductListContainerComponent,
+    SettingComponent,
+    FileListContainerComponent,
+    FileListComponent,
+    ToolBarComponent
   ],
   entryComponents:[
     ModalDialogComponent

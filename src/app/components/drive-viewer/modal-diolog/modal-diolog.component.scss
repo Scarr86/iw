@@ -4,11 +4,16 @@
    align-items: center;
 }
 
-.content > *{
-    width: 100%;
-}
+
 .actions{
     display: flex;
     justify-content: flex-end;
     // margin-bottom: 0;
+}
+.mat-form-field{
+    width: 100%;
+}
+
+:host {
+      box-sizing: content-box;
 }

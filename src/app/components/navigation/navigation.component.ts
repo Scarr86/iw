@@ -2,9 +2,9 @@ import { Component, OnInit, HostBinding, AfterViewInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
-import { Auth2Service } from '../service/google-gapi/auth2.service';
+import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService } from '../service/theme.service';
+import { ThemeService } from '../../service/theme.service';
 
 @Component({
    selector: 'app-navigation',
@@ -40,13 +40,13 @@ export class NavigationComponent implements OnInit {
    ngOnInit() {
       this.isSignedIn$ = this.auth.isSignedIn;
       // this.componentCssClass = 'dark-theme';
-      this.theme.isDarkTheme.subscribe((r) => console.log("isDarkTheme", r))
+      // this.theme.isDarkTheme.subscribe((r) => console.log("isDarkTheme", r))
    }
 
 
    cbChange(checked: boolean) {
       this.theme.setDarkTheme(checked);
-      this.componentCssClass = checked?"dark-theme":""
+      //this.componentCssClass = checked ? "dark-theme" : "";
    }
 
    signIn() {
@@ -55,7 +55,7 @@ export class NavigationComponent implements OnInit {
    signOut() {
       this.auth.signOut();
    }
-   swappingTheme(theme){
+   swappingTheme(theme) {
       // document.getElementById('themeAsset').href = `assest/${theme}`
    }
 }

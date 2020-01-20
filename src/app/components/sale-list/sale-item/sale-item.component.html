@@ -10,14 +10,14 @@
    </div>
 </div> -->
 
-<div class="sale__item">
-   <div class="sale__item_name">
+<!-- <div class="item"> -->
+   <div class="item">
       {{sale? sale.id: "Nan"}}
    </div>
-   <div class="sale__item_num">
+   <div class="item">
     {{getNumProducts()}} поз. 
    </div>
-   <div class="sale__item_total">
+   <div class="item">
       {{getTotalPrice() | currency:'RUB':'symbol-narrow'}}
    </div>
-</div>
+<!-- </div> -->
