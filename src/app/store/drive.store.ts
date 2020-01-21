@@ -159,24 +159,7 @@ export class DriveStore {
 
     private _file$: Observable<Action> = this.actions$.pipe(
         ofType(EDriveActions.file),
-        exhaustMap(a =>
-
-
-
-        //     from(this.fileService.file( a.payload.id)).pipe(
-        //     map(payload => (
-
-        //         {
-        //         type: EDriveActions.fileSuccess,
-        //         payload
-        //     }
-        //     )),
-        //     catchError(erorr => of({
-        //         type: EDriveActions.fileError,
-        //         payload: erorr,
-        //     }))
-        // )
-        {
+        exhaustMap(a =>{
             return forkJoin(
                 from(this.fileService.file({ id: a.payload.id })),
                 from(this.fileService.file({ id: a.payload.id, alt: "media" }))
@@ -326,7 +309,7 @@ export class DriveStore {
     */
     //    list(file: File | IBreadcrumbs = { id: "root", name: "root" }) {
     list({ id = "root", q = `'${id}' in parents and trashed = false` } = {}) {
-        this.dispatch({ type: EDriveActions.list, payload: { id, q } });
+        this.dispatch({ type: EDriveActions.list, payload:  q  });
     }
     listClear() {
         this.dispatch({ type: EDriveActions.listClear });

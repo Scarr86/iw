@@ -9,13 +9,13 @@
     <div class="mat-body-1 date-description">Сегодня</div>
 </div>
 
-<mat-action-list>
+<mat-action-list disableRipple="true">
     <div class="item" *ngFor="let s of sales; let i = index">
         <mat-list-item (click)="onSelect(s)">
 
             <app-sale-item class="sale-item" [sale]='s'></app-sale-item>
 
-            <button (click)="$event.stopPropagation()" class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
+            <button disableRipple="true" (click)="$event.stopPropagation()" class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu [xPosition]="'before'" #menu="matMenu">

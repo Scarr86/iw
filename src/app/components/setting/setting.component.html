@@ -1,43 +1,44 @@
-
-
 <mat-toolbar>
     <span>Настройки</span>
 </mat-toolbar>
 <div class="container">
+    <h4>Выбранный файл</h4>
     <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                {{name}}
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-list>
-                <mat-list-item>
-                    <div>
-                        <b>ID: </b> {{ id}}
-                    </div>
-                </mat-list-item>
-                <mat-list-item>
-                    <div>
-                        <b>Размер:</b> {{ size}}
-                    </div>
-                </mat-list-item>
-                <mat-list-item>
-                    <div>
-                        <b>Создан:</b> {{ dateCreate | date:"dd-MM-yy hh:mm "}}
-                    </div>
-                </mat-list-item>
-                <mat-list-item>
-                    <div>
-                        <b>Изменен:</b> {{dateChange | date:"dd-MM-yy hh:mm "}}
-                    </div>
-                </mat-list-item>
-            </mat-list>
-        </mat-card-content>
+        <ng-container *ngIf="(file$ | async) as file">
+            <mat-card-header>
+                <mat-card-title>
+                    {{file.name}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <div>
+                           <b>ID: </b>{{ file.id}}
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div>
+                            <b>Размер:</b> {{ file.size}} byte
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div>
+                            <b>Создан:</b> {{ file.createdTime | date:"dd-MM-yy hh:mm "}}
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div>
+                            <b>Изменен:</b> {{ file.modifiedTime | date:"dd-MM-yy hh:mm "}}
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+
+        </ng-container>
         <mat-card-actions>
             <button (click)="onChange()" mat-button> Изменить </button>
         </mat-card-actions>
     </mat-card>
 
 </div>
-

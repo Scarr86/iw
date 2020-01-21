@@ -22,18 +22,17 @@ export class AppComponent implements AfterViewInit, OnInit {
   ) {
   }
   ngOnInit() {
-    this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
+    // this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
     this.theme.isDarkTheme.subscribe((isDark) => this.componentCssClass = isDark ? "dark-theme" : "")
   }
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.saleStory.getSaleList();
-    }, 0)
-
+    // setTimeout(() => {
+    //   this.saleStory.getSaleList();
+    // }, 0)
   }
 
   onRouterOutletActivate(event: Component) {
-    console.log(event);
+    // console.log(event);
   }
 
 }

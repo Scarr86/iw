@@ -1,6 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
-import { registerLocaleData, APP_BASE_HREF } from '@angular/common';
+
+import { NgxsModule } from "@ngxs/store";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin"
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+
+
+import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -30,6 +36,8 @@ import { SettingComponent } from './components/setting/setting.component';
 import { FileListContainerComponent } from './containers/file-list-container/file-list-container.component';
 import { FileListComponent } from './components/file-list/file-list.component';
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
+import { FileState } from './store/state/file.state';
+import { LoginComponent } from './components/login/login.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -59,9 +67,10 @@ export function initGapi(gapiSession: Auth2Service) {
     SettingComponent,
     FileListContainerComponent,
     FileListComponent,
-    ToolBarComponent
+    ToolBarComponent,
+    LoginComponent
   ],
-  entryComponents:[
+  entryComponents: [
     ModalDialogComponent
   ],
   imports: [
@@ -70,7 +79,15 @@ export function initGapi(gapiSession: Auth2Service) {
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([FileState], {
+      selectorOptions: {
+        suppressErrors: false,
+        injectContainerState: false
+      }
+    }),
+    // NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initGapi, deps: [Auth2Service], multi: true },
@@ -82,8 +99,8 @@ export function initGapi(gapiSession: Auth2Service) {
 })
 export class AppModule {
   constructor(overlayContainer: OverlayContainer, private theme: ThemeService) {
-    theme.isDarkTheme.subscribe((isDark) => isDark ? 
-    overlayContainer.getContainerElement().classList.add('dark-theme') : 
-    overlayContainer.getContainerElement().classList.remove('dark-theme'))
+    theme.isDarkTheme.subscribe((isDark) => isDark ?
+      overlayContainer.getContainerElement().classList.add('dark-theme') :
+      overlayContainer.getContainerElement().classList.remove('dark-theme'))
   }
 }

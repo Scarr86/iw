@@ -8,31 +8,43 @@ export const MIME_TYPE_FILE = "application/vnd.google-apps.file";
     providedIn: "root"
 })
 export class FileService {
+    controller = new AbortController();
+    signal = this.controller.signal;
 
-    constructor(private generatorBase: GeneratorBase) { }
+    constructor(private generatorBase: GeneratorBase) {
+        this.signal.addEventListener("abort", () => alert("abort"));
+        // this.controller.abort();
+        // alert(this.signal.aborted)
 
-    list({ id = 'root', q = "" } = {}) {
-        return new Promise((resove, reject) => {
-            gapi.client.drive.files.list({
-                pageSize: 1000,
-                fields: "nextPageToken, files(id, name,iconLink, size, mimeType, parents, modifiedByMeTime)",
-                q: q,
-                spaces: "drive",
-                orderBy: 'createdTime desc'
-            }).then(resove, reject);
-        })
+
     }
-    file({ id, alt = "" }): Promise<gapi.client.Response<gapi.client.drive.File>> {
 
-        return new Promise((resolve, reject) => {
-            console.log(`[GAPI] Get File ${alt === 'media' ? 'media' : 'info'}`);
+    list(q = "") {
 
-            gapi.client.drive.files.get({
-                fileId: id,
-                alt,
-                fields: "id, name, size, mimeType, modifiedByMeTime"
-            }).then(resolve, reject);
+        // return new Promise<gapi.client.Response<gapi.client.drive.FileList>>((resove, reject) => {
+
+        return gapi.client.drive.files.list({
+            pageSize: 1000,
+            fields: "nextPageToken, files(id, name,iconLink, size, mimeType, parents, modifiedTime, createdTime)",
+            q: q,
+            spaces: "drive",
+            orderBy: 'createdTime desc'
         })
+        //.then(resove, reject);
+        // })
+    }
+    file(id, alt = ""): gapi.client.Request<gapi.client.drive.File> {
+
+        // return new Promise((resolve, reject) => {
+        // console.log(`[GAPI] Get File ${alt === 'media' ? 'media' : 'info'}`);
+
+        return gapi.client.drive.files.get({
+            fileId: id,
+            alt,
+            fields: "id, name, size, mimeType, modifiedByMeTime"
+        })
+        // .then(resolve, reject);
+        // })
     }
     delete(id: string): Promise<gapi.client.Response<void>> {
         return new Promise((resolve, reject) => {
@@ -48,7 +60,7 @@ export class FileService {
     }
 
 
-    createFile({ name, data = {} }) {
+    createFile(name, data = {}) {
 
         const boundary = "-------314159265358979323846";
         const delimiter = "\r\n--" + boundary + "\r\n";

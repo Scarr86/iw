@@ -7,25 +7,26 @@ import { SettingContainerComponent } from './containers/setting/setting-containe
 import { SaleListContainerComponent } from './containers/sale-list-container/sale-list-container.component';
 import { ProductListContainerComponent } from './containers/product-list-container/product-list-container.component';
 import { FileListContainerComponent } from './containers/file-list-container/file-list-container.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routesSection: Routes = [
-   {path: "", redirectTo:"sale-list", pathMatch:"full"},
-   {path:"sale-list", component:SaleListContainerComponent},
-   {path:"history", component:HistoryComponent},
-   {path:"setting", component:SettingContainerComponent},
-   {path:"product-list/:id", component:ProductListContainerComponent},
-   {path:"file-list", component:FileListContainerComponent}
+   { path: "", redirectTo: "sale-list", pathMatch: "full" },
+   { path: "sale-list", component: SaleListContainerComponent },
+   { path: "history", component: HistoryComponent },
+   { path: "setting", component: SettingContainerComponent },
+   { path: "product-list/:id", component: ProductListContainerComponent },
+   { path: "file-list", component: FileListContainerComponent }
 ]
 // children: routesSection
 // component:NavigationComponent
 const routes: Routes = [
-   {path:"", component:NavigationComponent, children: routesSection  },
-
-   {path:"**", component:NotFoundComponent}
+   { path: "", component: NavigationComponent, children: routesSection },
+   { path: "login", component: LoginComponent },
+   { path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forRoot(routes)],
+   exports: [RouterModule]
 })
 export class AppRoutingModule { }

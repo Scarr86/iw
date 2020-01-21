@@ -39,13 +39,13 @@ export class DriveViewerComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog
   ) {
     this.fg = formBuilder.group({
-      name: ["1111", [Validators.required]],
-      text: ["2222"]
+      name: ["", [Validators.required]],
+      text: [""]
     })
   }
 
   ngOnInit() {
-
+    
     this.pre$ = zip(this.driveStore.list$, this.driveStore.file$);
     this.list$ = this.driveStore.list$;
     this.breadcrumbs$ = this.driveStore.breadcrumbs$.pipe(map(bc => bc.length ? bc.slice(-1)[0] : { id: "root", name: "root" }));
@@ -60,6 +60,7 @@ export class DriveViewerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit() {
+
     setTimeout(() => this.driveStore.list());
   }
 
