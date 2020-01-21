@@ -5,6 +5,9 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
+import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
+import { GapiState } from 'src/app/store/state/gapi.state';
+import { SignIn, SignOut } from 'src/app/store/actions/auth2.actions';
 
 @Component({
    selector: 'app-navigation',
@@ -13,7 +16,7 @@ import { ThemeService } from '../../service/theme.service';
 })
 export class NavigationComponent implements OnInit {
 
-   isSignedIn$: Observable<boolean>;
+   @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
 
    @HostBinding('class') componentCssClass;
 
@@ -31,14 +34,19 @@ export class NavigationComponent implements OnInit {
 
    //  isSmallScreen = this.breakpointObserver.isMatched('(max-width: 599px)');
 
-   constructor(private breakpointObserver: BreakpointObserver, private auth: Auth2Service, public overlayContainer: OverlayContainer,
-      private theme: ThemeService
+   constructor(
+      private breakpointObserver: BreakpointObserver,
+      // private auth: Auth2Service,
+      //public overlayContainer: OverlayContainer,
+      private theme: ThemeService,
+      private store: Store,
+      private actions$:Actions
    ) {
 
    }
 
    ngOnInit() {
-      this.isSignedIn$ = this.auth.isSignedIn;
+      //this.isSignedIn$ = this.auth.isSignedIn;
       // this.componentCssClass = 'dark-theme';
       // this.theme.isDarkTheme.subscribe((r) => console.log("isDarkTheme", r))
    }
@@ -50,10 +58,13 @@ export class NavigationComponent implements OnInit {
    }
 
    signIn() {
-      this.auth.signIn();
+      this.store.dispatch(new SignIn())
+      // this.auth.signIn();
    }
    signOut() {
-      this.auth.signOut();
+      this.store.dispatch(new SignOut())
+
+      // this.auth.signOut();
    }
    swappingTheme(theme) {
       // document.getElementById('themeAsset').href = `assest/${theme}`

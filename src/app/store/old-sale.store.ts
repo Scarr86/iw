@@ -1,12 +1,12 @@
 import { Injectable, Optional } from "@angular/core";
 import { Observable, merge, from, empty } from 'rxjs';
-import { ISaleState, initSaleState } from './state/sale.state';
+import { ISaleState, initSaleState } from './state/old-sale.state';
 import { Action, Actions } from './actions/actions';
 import { SaleEffect } from './effects/sale.effects';
 import { startWith, scan, publishReplay, refCount, map, tap, shareReplay, finalize, switchMap, toArray, filter, reduce } from 'rxjs/operators';
 import { saleReducers } from './reducers/sale.reducers';
 import { SaleActions, ESaleActions, GetSaleList } from './actions/sale.actions';
-import { ISale } from '../models/sale.model';
+import { ISale } from '../models/old-sale.model';
 import { SaleDispacher } from './dispatcher/dispatcher.sale';
 import { compareDay } from '../lib/lib';
 

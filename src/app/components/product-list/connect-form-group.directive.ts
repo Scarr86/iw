@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormControlDirective, FormGroupDirective, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { ISale } from 'src/app/models/sale.model';
+import { ISale } from 'src/app/models/old-sale.model';
 @Directive({
   selector: '[appConnectFormGroup]'
 })

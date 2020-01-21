@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, HostBinding } from '@angular/core';
-import { SaleStore } from './store/sale.store';
+import { SaleStore } from './store/old-sale.store';
 import { DriveStore } from './store/drive.store';
 import { merge, Observable } from 'rxjs';
 import { ThemeService } from './service/theme.service';

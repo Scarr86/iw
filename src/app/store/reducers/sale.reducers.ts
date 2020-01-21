@@ -1,4 +1,4 @@
-import { ISaleState } from '../state/sale.state';
+import { ISaleState } from '../state/old-sale.state';
 import { SaleActions, ESaleActions } from '../actions/sale.actions';
 
 export const saleReducers = (state: ISaleState, action: SaleActions): ISaleState => {

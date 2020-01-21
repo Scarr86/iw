@@ -25,7 +25,7 @@ export class FileService {
 
         return gapi.client.drive.files.list({
             pageSize: 1000,
-            fields: "nextPageToken, files(id, name,iconLink, size, mimeType, parents, modifiedTime, createdTime)",
+            fields: "nextPageToken, files(id, name, iconLink, size, mimeType, parents, modifiedTime, createdTime)",
             q: q,
             spaces: "drive",
             orderBy: 'createdTime desc'
@@ -41,7 +41,7 @@ export class FileService {
         return gapi.client.drive.files.get({
             fileId: id,
             alt,
-            fields: "id, name, size, mimeType, modifiedByMeTime"
+            fields: "id, name, iconLink, size, mimeType, parents, modifiedTime, createdTime"
         })
         // .then(resolve, reject);
         // })

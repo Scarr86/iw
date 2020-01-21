@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ISale } from 'src/app/models/sale.model';
-import { SaleStore } from 'src/app/store/sale.store';
+import { ISale } from 'src/app/models/old-sale.model';
+import { SaleStore } from 'src/app/store/old-sale.store';
 import { map } from 'rxjs/operators';
 
 @Component({

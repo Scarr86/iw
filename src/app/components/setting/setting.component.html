@@ -5,34 +5,28 @@
     <h4>Выбранный файл</h4>
     <mat-card>
         <ng-container *ngIf="(file$ | async) as file">
-            <mat-card-header>
-                <mat-card-title>
-                    {{file.name}}
-                </mat-card-title>
-            </mat-card-header>
+            <mat-card-title>
+                <img src="{{file.iconLink}}" alt="iconfile">
+                <span> {{file.name}}</span>
+            </mat-card-title>
             <mat-card-content>
-                <mat-list>
-                    <mat-list-item>
-                        <div>
-                           <b>ID: </b>{{ file.id}}
-                        </div>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <div>
-                            <b>Размер:</b> {{ file.size}} byte
-                        </div>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <div>
-                            <b>Создан:</b> {{ file.createdTime | date:"dd-MM-yy hh:mm "}}
-                        </div>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <div>
-                            <b>Изменен:</b> {{ file.modifiedTime | date:"dd-MM-yy hh:mm "}}
-                        </div>
-                    </mat-list-item>
-                </mat-list>
+                <ul>
+                    <li>
+                        <span class="mat-body-strong">ID:</span>
+                        <span> {{file.id}} </span>
+                    </li>
+                    <li>
+                        <span class="mat-body-strong">Размер:</span>
+                        <span>{{file.size}}</span></li>
+                    <li>
+                        <span class="mat-body-strong">Создан:</span>
+                        <span>{{ file.createdTime | date:"dd-MM-yy hh:mm "}}</span>
+                    </li>
+                    <li>
+                        <span class="mat-body-strong">Изменен:</span>
+                        <span>{{ file.modifiedTime | date:"dd-MM-yy hh:mm "}}</span>
+                    </li>
+                </ul>
             </mat-card-content>
 
         </ng-container>

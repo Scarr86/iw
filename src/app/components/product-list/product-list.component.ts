@@ -4,8 +4,8 @@ import { GeneratorBase } from 'src/app/service/generator-sale.service';
 import { Observable, Subject, from } from 'rxjs';
 import { IProduct } from 'src/app/models/product.model';
 import { map, find, switchMap, pairwise, startWith } from 'rxjs/operators';
-import { SaleStore } from 'src/app/store/sale.store';
-import { ISale } from 'src/app/models/sale.model';
+import { SaleStore } from 'src/app/store/old-sale.store';
+import { ISale } from 'src/app/models/old-sale.model';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective } from '@angular/forms';
 
 @Component({

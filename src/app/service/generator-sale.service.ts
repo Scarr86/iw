@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { interval, range, of, Observable, combineLatest, merge, forkJoin } from 'rxjs';
 
 import { reduce, switchMap, tap, concatMap, map, scan, concatAll, publishReplay, refCount, finalize, shareReplay } from 'rxjs/operators';
-import { Sale } from '../models/sale.model';
+import { Sale } from '../models/old-sale.model';
 import { Product } from '../models/product.model'
 // import { Sale, Product, ISaleBase } from './sales';
 

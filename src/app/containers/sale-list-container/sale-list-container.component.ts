@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding, AfterViewInit } from '@angular/core';
 import { ThemeService } from 'src/app/service/theme.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
-import { SaleStore } from 'src/app/store/sale.store';
+import { SaleStore } from 'src/app/store/old-sale.store';
 
 @Component({
   templateUrl: './sale-list-container.component.html',

@@ -1,31 +1,14 @@
-import { IProduct } from './product.model';
 
-export interface ISale {
+
+export interface Product {
+    name: string;
+    price: number;
+    count: number;
+}
+
+export interface Sale {
     id: number;
     date: Date;
     discount: number;
-    productList: IProduct[];
-}
-
-export class Sale implements ISale {
-    id: number
-    date: Date;
-    discount: number
-    productList: IProduct[];
-
-    constructor({ id,
-        date,
-        discount = 0,
-        productList = []
-    }: ISale) {
-        this.id = id;
-        this.discount = discount;
-        this.date = new Date(date);
-        this.productList = productList;
-    }
-    get total() {
-        return this.productList.reduce((sum, p) => {
-            return sum += p.total;
-        }, 0) - this.discount;
-    }
+    productList: Product[];
 }

@@ -1,6 +1,6 @@
-import { stateSales } from '../sale.store';
+import { stateSales } from '../old-sale.store';
 import { map } from 'rxjs/operators';
-import { ISaleState } from '../state/sale.state';
+import { ISaleState } from '../state/old-sale.state';
 
 
 function createSelector(fn: Function) {

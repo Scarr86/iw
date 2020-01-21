@@ -38,12 +38,15 @@ import { FileListComponent } from './components/file-list/file-list.component';
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { FileState } from './store/state/file.state';
 import { LoginComponent } from './components/login/login.component';
+import { SaleState } from './store/state/sale.state';
+import { GapiState } from './store/state/gapi.state';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiSession: Auth2Service) {
-  return () => gapiSession.initGapi();
+  // return () => gapiSession.initGapi();
+  return () => { }
 }
 
 @NgModule({
@@ -80,7 +83,7 @@ export function initGapi(gapiSession: Auth2Service) {
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([FileState], {
+    NgxsModule.forRoot([FileState, SaleState, GapiState], {
       selectorOptions: {
         suppressErrors: false,
         injectContainerState: false
@@ -90,7 +93,7 @@ export function initGapi(gapiSession: Auth2Service) {
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initGapi, deps: [Auth2Service], multi: true },
+    // { provide: APP_INITIALIZER, useFactory: initGapi, deps: [Auth2Service], multi: true },
 
     { provide: LOCALE_ID, useValue: "ru" }
   ],

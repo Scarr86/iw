@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { ISale } from 'src/app/models/sale.model';
+import { ISale } from 'src/app/models/old-sale.model';
 
 @Component({
    selector: 'app-sale-item',

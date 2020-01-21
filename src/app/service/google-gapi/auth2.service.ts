@@ -59,19 +59,19 @@ export class Auth2Service {
         })
   }
 
-  private loadClient(): Promise<any> {
+   loadClient(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.zone.run(() => {
+      // this.zone.run(() => {
         gapi.load("client:auth2", {
           callback: resolve,
           onerror: reject,
           timeout: 1000, // 5 seconds.
           ontimeout: reject
         });
-      });
+      // });
     });
   }
-  private initClient(): Promise<any> {
+  initClient(): Promise<any> {
     let initObj = {
       apiKey: API_KEY,
       clientId: CLIENT_ID,
@@ -94,10 +94,10 @@ export class Auth2Service {
   signIn() {
     this.googleAuth
       .signIn({ prompt: "select_account" })
-      .catch(err => 
-        console.log(`Auth2Service: signIn  failed ${JSON.stringify(err)}`)
-        // this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
-      );
+      // .catch(err => 
+      //   console.log(`Auth2Service: signIn  failed ${JSON.stringify(err)}`)
+      //   // this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
+      // );
   }
   signOut() {
     this.googleAuth.signOut();

@@ -1,4 +1,4 @@
-import { ISale } from 'src/app/models/sale.model';
+import { ISale } from 'src/app/models/old-sale.model';
 import { Action } from './actions';
 
 

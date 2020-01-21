@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, ViewEncapsulation, HostBinding } from '@angular/core';
-import { SaleStore } from 'src/app/store/sale.store';
+import { SaleStore } from 'src/app/store/old-sale.store';
 import { SaleEffect } from 'src/app/store/effects/sale.effects';
 import { LogService } from 'src/app/service/log.service';
 import { Actions } from 'src/app/store/actions/actions';
@@ -7,7 +7,7 @@ import { isArray } from 'util';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { compareDay } from '../../lib/lib';
-import { ISale } from 'src/app/models/sale.model';
+import { ISale } from 'src/app/models/old-sale.model';
 import { map, filter, skip, tap, withLatestFrom, switchMap, mapTo, finalize } from 'rxjs/operators';
 import { Subject, combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { ThemeService } from 'src/app/service/theme.service';
