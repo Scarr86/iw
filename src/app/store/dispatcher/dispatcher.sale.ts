@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SaleActions } from '../actions/sale.actions';
+import { SaleActions } from '../actions/old-sale.actions';
 import { Actions, Action } from '../actions/actions';
 import { Observable, merge } from 'rxjs';
 import { SaleEffect } from '../effects/sale.effects';

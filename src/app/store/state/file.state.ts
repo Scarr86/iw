@@ -1,6 +1,6 @@
 
 import { State, Action, StateContext, Selector, Actions } from "@ngxs/store";
-import { patch } from '@ngxs/store/operators';
+import { patch, removeItem } from '@ngxs/store/operators';
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { GetFileList, GetFile, CreateFile, DeleteFile, UpdateFile, GetBodyFile } from '../actions/file.actions';
 import { File } from '../../models/file.model';
@@ -52,15 +52,20 @@ export class FileState {
                 ctx.patchState({ body: response.body })
             })
         )
-
-        // return from(this.fileService.file(id, "media"))
     }
 
 
     @Action(DeleteFile)
     deleteFile(ctx: StateContext<FileStateModel>, { id }: DeleteFile) {
         return from(this.fileService.delete(id)).pipe(
-            tap(() => ctx.dispatch(new GetFileList())),
+            tap(() => {
+                ctx.setState(
+                    patch({
+                        files: removeItem<File>(f => f.id === id)
+                    })
+                );
+            })
+            //tap(() => ctx.dispatch(new GetFileList())),
             // mergeMap(() => ctx.dispatch(new GetFileList()))
         );
     }

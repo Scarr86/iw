@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Observable, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
+import { Store } from '@ngxs/store';
 
 const API_KEY: string = "AIzaSyCofOM8sRo0bZRPxjnZxabuOtjuK6xN48o";
 const CLIENT_ID: string =
@@ -13,22 +14,22 @@ const SCOPES: string = "https://www.googleapis.com/auth/drive";
   providedIn: "root"
 })
 export class Auth2Service {
-  private isSignedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private gapiReady$: ReplaySubject<boolean> = new ReplaySubject(1);
-  get isGapiRady() {
-    return this.gapiReady$.asObservable();
-  }
+  // private isSignedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // private gapiReady$: ReplaySubject<boolean> = new ReplaySubject(1);
+  // get isGapiRady() {
+  //   return this.gapiReady$.asObservable();
+  // }
 
-  get isSignedIn(): Observable<boolean> {
-    return this.isSignedIn$.asObservable();
-  }
+  // get isSignedIn(): Observable<boolean> {
+  //   return this.isSignedIn$.asObservable();
+  // }
 
-  private googleAuth: gapi.auth2.GoogleAuth;
-  private googleUser: gapi.auth2.GoogleUser;
-  gapiLoaded = false;
-  gapiReady = false;
+  // private googleAuth: gapi.auth2.GoogleAuth;
+  // private googleUser: gapi.auth2.GoogleUser;
+  // gapiLoaded = false;
+  // gapiReady = false;
 
-  constructor( private zone: NgZone) { }
+  constructor(private store: Store ) { }
 
   initGapi() {
     return this.loadClient()
@@ -38,25 +39,28 @@ export class Auth2Service {
           // this.gapiLoaded = true;
           return this.initClient();
         },
-        err => {
-          console.log("[LOAD GAPI] FAILED",err)
+       // err => {
+          // console.log("[LOAD GAPI] FAILED",err)
 
-          throw new Error(`LOAD FAILED ${err}`);
-        })
+          // throw new Error(`LOAD FAILED ${err}`);
+        //}
+        )
       .then(
         () => {
-          this.googleAuth = gapi.auth2.getAuthInstance();
-          this.isSignedIn$.next(this.googleAuth.isSignedIn.get());
-          this.googleAuth.isSignedIn.listen(this.updateSigninStatus.bind(this));
-          this.gapiReady = true;
+
+          // this.googleAuth = gapi.auth2.getAuthInstance();
+          // this.isSignedIn$.next(this.googleAuth.isSignedIn.get());
+          // this.googleAuth.isSignedIn.listen(this.updateSigninStatus.bind(this));
+          // this.gapiReady = true;
           // this.log.write(`Auth2Service: INIT CLIENT GAPI `);
           // this.gapiReady$.next(true);
           // this.gapiReady$.complete();
         },
-        err => {
-          console.log("[Auth2Service] FAILED",err)
-          throw new Error(`Auth2Service ${err}`);
-        })
+        // err => {
+        //   console.log("[Auth2Service] FAILED",err)
+        //   throw new Error(`Auth2Service ${err}`);
+        // }
+        )
   }
 
    loadClient(): Promise<any> {
@@ -78,28 +82,28 @@ export class Auth2Service {
       discoveryDocs: DISCOVERY_DOCS,
       scope: SCOPES
     };
+    // return new Promise((resolve, reject) => {
+      // this.zone.run(() => {
+      return  gapi.client.init(initObj)
+        //.then(resolve, reject);
+      // });
+    // });
+  }
+  // private updateSigninStatus(isSigninStatus: boolean) {
+  //   this.zone.run(() => {
+  //     this.isSignedIn$.next(isSigninStatus);
+  //   });
+  // }
 
-    return new Promise((resolve, reject) => {
-      this.zone.run(() => {
-        gapi.client.init(initObj).then(resolve, reject);
-      });
-    });
-  }
-  private updateSigninStatus(isSigninStatus: boolean) {
-    this.zone.run(() => {
-      this.isSignedIn$.next(isSigninStatus);
-    });
-  }
-
-  signIn() {
-    this.googleAuth
-      .signIn({ prompt: "select_account" })
-      // .catch(err => 
-      //   console.log(`Auth2Service: signIn  failed ${JSON.stringify(err)}`)
-      //   // this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
-      // );
-  }
-  signOut() {
-    this.googleAuth.signOut();
-  }
+  // signIn() {
+  //   this.googleAuth
+  //     .signIn({ prompt: "select_account" })
+  //     // .catch(err => 
+  //     //   console.log(`Auth2Service: signIn  failed ${JSON.stringify(err)}`)
+  //     //   // this.log.write(`Auth2Service: signIn  failed ${JSON.stringify(err)}`, "warn")
+  //     // );
+  // }
+  // signOut() {
+  //   this.googleAuth.signOut();
+  // }
 }

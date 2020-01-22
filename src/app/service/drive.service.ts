@@ -12,14 +12,14 @@ export class DriveService {
 
   constructor(private auth: Auth2Service, private zone: NgZone, private logger: LogService) { }
 
-  list(folderId = 'root') {
-    return this.auth.isGapiRady.pipe(
-      switchMap(_ => this._list(folderId)),
-      tap(_=>this.log(`list folder id: ${folderId}`))
-    );
-  }
+  // list(folderId = 'root') {
+  //   return this.auth.isGapiRady.pipe(
+  //     switchMap(_ => this._list(folderId)),
+  //     tap(_=>this.log(`list folder id: ${folderId}`))
+  //   );
+  // }
 
-  _list(folderId = 'root'){
+  list(folderId = 'root'){
     return from(new Promise<gapi.client.Response<gapi.client.drive.FileList>>((resolve, reject) => {
       gapi.client.drive.files.list({
         pageSize: 1000,
@@ -32,12 +32,12 @@ export class DriveService {
     }))
   }
 
-  listFolders(folderId) {
-    return this.auth.isGapiRady.pipe(
-      switchMap(_ => this._listFolders(folderId))
-    );
-  }
-  private _listFolders(folderId = 'root') {
+  // listFolders(folderId) {
+  //   return this.auth.isGapiRady.pipe(
+  //     switchMap(_ => this._listFolders(folderId))
+  //   );
+  // }
+  private listFolders(folderId = 'root') {
     return from(new Promise<gapi.client.Response<gapi.client.drive.FileList>>((resolve, reject) => {
       gapi.client.drive.files.list({
         pageSize: 1000,

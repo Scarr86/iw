@@ -10,23 +10,21 @@
 </div>
 
 <mat-action-list disableRipple="true">
-    <div class="item" *ngFor="let s of sales; let i = index">
-        <mat-list-item (click)="onSelect(s)">
+    <mat-list-item (click)="onSelect(s)" *ngFor=" let s of (sales$ | async); let i=index">
 
-            <app-sale-item class="sale-item" [sale]='s'></app-sale-item>
+        <app-sale-item class="sale-item" [sale]='s'></app-sale-item>
 
-            <button disableRipple="true" (click)="$event.stopPropagation()" class="more-vert" mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu [xPosition]="'before'" #menu="matMenu">
-                <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
-            </mat-menu>
+        <button disableRipple="true" (click)="$event.stopPropagation()" class="more-vert" mat-icon-button
+            [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu [xPosition]="'before'" #menu="matMenu">
+            <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
+        </mat-menu>
 
-        </mat-list-item>
-    </div>
-
+    </mat-list-item>
 </mat-action-list>
 
-<div *ngIf="!sales?.length" class="mat-h2 emty-sale">
+<!-- <div *ngIf="!sales?.length" class="mat-h2 emty-sale">
     Сегодня небыло продаж
-</div>
+</div> -->

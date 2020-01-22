@@ -7,6 +7,7 @@ import { GetFileList, GetFile } from 'src/app/store/actions/file.actions';
 import {File} from '../../models/file.model';
 import { FileState } from 'src/app/store/state/file.state';
 import { Observable } from 'rxjs';
+import { SaleState } from 'src/app/store/state/sale.state';
 
 @Component({
   selector: 'app-setting',
@@ -15,7 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class SettingComponent implements OnInit {
 
-  @Select(FileState.file) file$: Observable<File>;
+  @Select(SaleState.baseInfo) baseInfo$: Observable<File>;
 
   constructor(
     private router: Router,
@@ -24,7 +25,7 @@ export class SettingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new GetFile("1KMrG-wt5syMh1o0TkYg_TSpXtPfiJjs9"));
+    // this.store.dispatch(new GetFile("1KMrG-wt5syMh1o0TkYg_TSpXtPfiJjs9"));
     // this.actions$.pipe(ofActionSuccessful(GetList)).subscribe(()=> this.router.navigate(['/file-list']))
   }
 

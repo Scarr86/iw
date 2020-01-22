@@ -5,6 +5,5 @@ export interface File {
     size?:string,
     modifiedTime?:string,
     createdTime?:string,
-    body?:string,
 }
 //files(id, name,iconLink, size, mimeType, parents, modifiedTime)

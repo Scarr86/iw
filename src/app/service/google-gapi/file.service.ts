@@ -33,18 +33,19 @@ export class FileService {
         //.then(resove, reject);
         // })
     }
-    file(id, alt = ""): gapi.client.Request<gapi.client.drive.File> {
+    file(id, alt = ""): Promise<gapi.client.Response<gapi.client.drive.File>> {
 
-        // return new Promise((resolve, reject) => {
-        // console.log(`[GAPI] Get File ${alt === 'media' ? 'media' : 'info'}`);
+        return new Promise((resolve, reject) => {
+            // console.log(`[GAPI] Get File ${alt === 'media' ? 'media' : 'info'}`);
 
-        return gapi.client.drive.files.get({
-            fileId: id,
-            alt,
-            fields: "id, name, iconLink, size, mimeType, parents, modifiedTime, createdTime"
+            gapi.client.drive.files.get({
+                fileId: id,
+                alt,
+                fields: "id, name, iconLink, size, mimeType, parents, modifiedTime, createdTime"
+            })
+                //.execute((response)=> resolve(response))
+                .then(resolve, reject);
         })
-        // .then(resolve, reject);
-        // })
     }
     delete(id: string): Promise<gapi.client.Response<void>> {
         return new Promise((resolve, reject) => {

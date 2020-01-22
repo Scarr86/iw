@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType } from '../actions/actions';
 import { from, of } from 'rxjs';
-import { ESaleActions, GetSaleListSuccess, GetSaleListError } from '../actions/sale.actions';
+import { ESaleActions, GetSaleListSuccess, GetSaleListError } from '../actions/old-sale.actions';
 import { switchMap, map, catchError, pluck, first } from 'rxjs/operators';
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { ISale } from 'src/app/models/old-sale.model';

@@ -2,7 +2,7 @@ import { State, NgxsAfterBootstrap, StateContext, Action, NgxsOnInit, Selector, 
 import { Auth2Service } from 'src/app/service/google-gapi/auth2.service';
 import { from } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { SignIn, SignOut, UpdateSigninStatus } from '../actions/auth2.actions';
+import { SignIn, SignOut, UpdateSigninStatus, InitSession } from '../actions/auth2.actions';
 
 export interface GapiStateMosel {
     googleAuth: gapi.auth2.GoogleAuth | null;
@@ -23,22 +23,20 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
     ngxsAfterBootstrap(ctx: StateContext<GapiStateMosel>) {
 
     }
-    ngxsOnInit(ctx: StateContext<GapiStateMosel>) {
-        this.auth2Service.loadClient()
-            .then(() => {
-                return this.auth2Service.initClient();
-            })
-            .then(() => {
-                let googleAuth = gapi.auth2.getAuthInstance();
-                googleAuth.isSignedIn.listen((isSignedIn) => {
-                    ctx.dispatch(new UpdateSigninStatus(isSignedIn))
-                });
-                ctx.patchState({
-                    googleAuth,
-                    isSignedIn: googleAuth.isSignedIn.get()
-                });
-            })
+    ngxsOnInit(ctx: StateContext<GapiStateMosel>) { }
+
+    @Action(InitSession)
+    initSession(ctx: StateContext<GapiStateMosel>) {
+        let googleAuth = gapi.auth2.getAuthInstance();
+        googleAuth.isSignedIn.listen((isSignedIn) => {
+            ctx.dispatch(new UpdateSigninStatus(isSignedIn))
+        });
+        ctx.patchState({
+            googleAuth,
+            isSignedIn: googleAuth.isSignedIn.get()
+        });
     }
+
     @Action(SignIn)
     signIn(ctx: StateContext<GapiStateMosel>) {
         const googleAuth = ctx.getState().googleAuth;
@@ -52,7 +50,7 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
 
     @Action(SignOut)
     signOut(ctx: StateContext<GapiStateMosel>) {
-        const googleAuth =  ctx.getState().googleAuth;
+        const googleAuth = ctx.getState().googleAuth;
         try {
             googleAuth.signOut();
         }
@@ -65,9 +63,7 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
         ctx.patchState({ isSignedIn });
     }
 
-    // updateSigninStatus(isSignedIn: boolean) {
-    //     this.store.dispatch(new UpdateSigninStatus(isSignedIn))
-    // }
+
 
     @Selector()
     static isSignedIn(state: GapiStateMosel) {
