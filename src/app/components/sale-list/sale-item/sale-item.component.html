@@ -1,6 +1,9 @@
 
    <div class="item">
-      {{sale? sale.id: "Nan"}}
+      {{ sale?.id}}
+   </div>
+   <div class="item">
+      {{ sale?.date | date:"dd-MM-yy"}}
    </div>
    <div class="item">
     {{getNumProducts()}} поз. 

@@ -40,6 +40,7 @@ import { SaleState } from './store/state/sale.state';
 import { GapiState } from './store/state/gapi.state';
 import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
+import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -69,7 +70,8 @@ export function initGapi(gapiService: GapiService) {
     FileListContainerComponent,
     FileListComponent,
     ToolBarComponent,
-    LoginComponent
+    LoginComponent,
+    SaleDetailComponent
   ],
   entryComponents: [
     ModalDialogComponent
@@ -102,8 +104,26 @@ export function initGapi(gapiService: GapiService) {
 })
 export class AppModule {
   constructor(overlayContainer: OverlayContainer, private theme: ThemeService) {
-    theme.isDarkTheme.subscribe((isDark) => isDark ?
-      overlayContainer.getContainerElement().classList.add('dark-theme') :
-      overlayContainer.getContainerElement().classList.remove('dark-theme'))
+    this.theme.theme.subscribe((t) => {
+      console.log(t);
+      let tt = t.split(" ")[0];
+      let ttt = t.split(" ")[1];
+      overlayContainer.getContainerElement().classList.remove('deep-purple')
+      overlayContainer.getContainerElement().classList.remove('dark-theme');
+      if (tt) {
+        overlayContainer.getContainerElement().classList.add(tt);
+      }
+      if (ttt) {
+        overlayContainer.getContainerElement().classList.add(ttt);
+      }
+
+
+
+      // this.componentCssClass= theme.split(" ")[0]+" "+ theme.split(" ")[1];
+    })
+
+    // theme.isDarkTheme.subscribe((isDark) => isDark ?
+    //   overlayContainer.getContainerElement().classList.add('dark-theme') :
+    //   overlayContainer.getContainerElement().classList.remove('dark-theme'))
   }
 }

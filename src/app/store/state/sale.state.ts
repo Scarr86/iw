@@ -76,7 +76,16 @@ export class SaleState implements NgxsOnInit {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales && state.sales.filter(s => ~compareDay(s.date, date, date) )
+                return state.sales && state.sales.filter(s => compareDay(s.date, date, date) === 0)
+            }
+        )
+    }
+
+    static getSaleById(id: number) {
+        return createSelector(
+            [SaleState],
+            (state: SaleStateModel) => {
+                return state.sales && state.sales.find(s => s.id === id)
             }
         )
     }

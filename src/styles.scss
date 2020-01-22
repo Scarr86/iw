@@ -1,28 +1,45 @@
 @import '~@angular/material/theming';
+@import 'theme.scss';
+
 
 // @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 @include mat-core();
 
-
-// Тест кастем тема
-// @mixin candy-carousel-theme($theme) {
-//   $primary: map-get($theme, primary);
-//   $foreground: map-get($theme, foreground);
-//   $background: map-get($theme, background);
-//   .active{
-//     background-color: mat-color($primary, 100);
-//     // background-color: mat-color($background);
-//     // .mat-line{
-//     //   color: mat-color($foreground, text);
-//     // }
-//   }
-// }
-
-
 $iw-primary: mat-palette($mat-indigo);
 $iw-accent: mat-palette($mat-pink, A200, A100, A400);
 $iw-warn: mat-palette($mat-red);
+
+// $iw-primary: mat-palette($mat-indigo);
+// $iw-accent: mat-palette($mat-pink, A200, A100, A400);
+// $iw-warn: mat-palette($mat-red);
+
+
+// Тест кастем тема
+@mixin custom-theme($theme) {
+  $primary: map-get($theme, primary);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .active, .active:focus {
+    background-color: mat-color($primary, 100) !important;
+
+    // background-color: mat-color($background);
+    // .mat-line{
+    //   color: mat-color($foreground, text);
+    // }
+  }
+
+  .text-primary {
+    color: mat-color($primary, 400);
+  }
+}
+
+
+
+// $iw-primary: mat-palette($mat-indigo);
+// $iw-accent: mat-palette($mat-pink, A200, A100, A400);
+// $iw-warn: mat-palette($mat-red);
 
 // $btn-app-primary: mat-palette($mat-indigo, 400);
 // $btn-app-theme:mat-dark-theme($btn-app-primary, $iw-accent, $iw-warn);
@@ -32,7 +49,7 @@ $iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
 // $iw-theme: mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
 
 @include angular-material-theme($iw-theme);
-// @include candy-carousel-theme($iw-theme); 
+@include custom-theme($iw-theme);
 
 // Define an alternate dark theme.
 // $dark-primary: mat-palette($mat-blue-grey);
@@ -46,20 +63,20 @@ $iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
   @include angular-material-theme($iw-theme);
   // @include mat-button-theme($btn-app-theme);
 
-  .mat-stroked-button.mat-primary {
-    color: mat-color($iw-primary, 400);
-  }
-
-
-
-
+  // .mat-stroked-button.mat-primary {
+  //   color: mat-color($iw-primary, 400);
+  // }
   // @include angular-material-theme($dark-theme);
   // @include candy-carousel-theme($dark-theme); 
 }
-
-@mixin heightContent() {
-  min-height: calc(100vh - 64px);
+.deep-purple{
+  @include angular-material-theme($my-custom-light-theme);
+  @include custom-theme($my-custom-light-theme);
 }
+.dark-theme.deep-purple{
+  @include angular-material-theme($my-custom-dark-theme);
+}
+
 
 
 html {
@@ -95,7 +112,7 @@ ul {
 }
 
 .container-page {
-  max-width: 1000px;
+  max-width: 960px;
   height: 100%;
   margin: 0 auto;
   // overflow-x: hidden;

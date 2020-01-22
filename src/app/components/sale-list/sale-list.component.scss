@@ -1,36 +1,29 @@
+//  @import '~@angular/material/theming';
+//   @import '../../../styles.scss';
+//@import "../../../vars";
+
+.more-vert {
+    margin-left: 10px;
+}
 
 
+.emty-sale {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
- @import '~@angular/material/theming';
-//  @import '../../../styles.scss';
- .more-vert{
-     margin-left: 10px;
- }
-
-//  .sale-item {
-//      flex-grow: 1;
-//  }
-  .emty-sale{
-      width: 100%;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-  }
-//   :host{
-//       display: block;
-//       position: relative;
-//      @include heightContent;
-//   }
 
 .date {
-    // margin-top: 20px;
     text-align: center;
-    padding: 10px 0;
-    // color: mat-color($iw-primary, text);
+    margin-top: 30px;
     cursor: pointer;
     position: relative;
-    input{
+    user-select: none;
+
+    input {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -40,6 +33,23 @@
     }
 }
 
-.date-description{
+.date-description {
     // color: mat-color($iw-accent, text);
- }
+    text-align: center;
+    position: relative;
+    top: -15px;
+}
+
+.sale {
+    display: flex;
+    // justify-content: space-between;
+    width: 100%;
+
+    &__item {
+        flex-basis: 33.33333%;
+    }
+
+    &__item:last-child {
+        text-align: right;
+    }
+}

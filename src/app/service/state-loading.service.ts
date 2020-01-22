@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofActionDispatched, ofActionSuccessful, ofActionCompleted } from '@ngxs/store';
 import { Observable, merge, of } from 'rxjs';
 import { GetSales } from '../store/actions/sale.actions';
-import { mapTo, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { mapTo, switchMap, mergeMap, tap, startWith, shareReplay, share } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +20,11 @@ export class StateLoadingService {
 
         this._loadingFalse$ = merge(
             actions$.pipe(ofActionCompleted(GetSales)),
-        ).pipe(mapTo(false));
+        ).pipe(
+            mapTo(false)
+        );
 
 
-        this.isLoading$ = merge(this._loadingFalse$, this._loadingTrue$).pipe(tap(console.log));
+        this.isLoading$ = merge(this._loadingFalse$, this._loadingTrue$).pipe(share(), tap(console.log));
     }
 }

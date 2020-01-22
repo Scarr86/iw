@@ -8,6 +8,7 @@ import {File} from '../../models/file.model';
 import { FileState } from 'src/app/store/state/file.state';
 import { Observable } from 'rxjs';
 import { SaleState } from 'src/app/store/state/sale.state';
+import { GetSales } from 'src/app/store/actions/sale.actions';
 
 @Component({
   selector: 'app-setting',
@@ -30,7 +31,6 @@ export class SettingComponent implements OnInit {
   }
 
   onChange() {
-    // this.store.dispatch(new GetList()).subscribe(res=> console.log("[Gelt LIst ]", res));
     this.router.navigate(['/file-list']);
   }
 

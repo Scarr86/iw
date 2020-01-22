@@ -8,13 +8,14 @@ import { ProductListContainerComponent } from './containers/product-list-contain
 import { FileListContainerComponent } from './containers/file-list-container/file-list-container.component';
 import { LoginComponent } from './components/login/login.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
+import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 
 const routesSection: Routes = [
    { path: "", redirectTo: "sale-list", pathMatch: "full" },
    { path: "sale-list", component: SaleListComponent },
    { path: "history", component: HistoryComponent },
    { path: "setting", component: SettingContainerComponent },
-   { path: "product-list/:id", component: ProductListContainerComponent },
+   { path: "sale-detail/:id", component: SaleDetailComponent },
    { path: "file-list", component: FileListContainerComponent }
 ]
 // children: routesSection

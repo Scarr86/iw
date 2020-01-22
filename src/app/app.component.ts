@@ -12,7 +12,7 @@ import { StateLoadingService } from './service/state-loading.service';
 })
 export class AppComponent implements AfterViewInit, OnInit {
   @HostBinding('class') componentCssClass;
-  
+
   loading$: Observable<boolean> = this.sls.isLoading$;
 
   title = 'iw';
@@ -20,12 +20,15 @@ export class AppComponent implements AfterViewInit, OnInit {
     private saleStory: SaleStore,
     private driveStore: DriveStore,
     private theme: ThemeService,
-    private sls:StateLoadingService
+    private sls: StateLoadingService
   ) {
   }
   ngOnInit() {
     // this.loading$ = merge(this.saleStory.selectIsLoading(), this.driveStore.loading$);
     this.theme.isDarkTheme.subscribe((isDark) => this.componentCssClass = isDark ? "dark-theme" : "")
+    this.theme.theme.subscribe((theme) => {
+      this.componentCssClass= theme.split(" ")[0]+" "+ theme.split(" ")[1];
+    })
   }
   ngAfterViewInit() {
     // setTimeout(() => {

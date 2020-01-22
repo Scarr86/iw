@@ -1,13 +1,9 @@
-<!-- <div [ngClass]="{'dark-theme': checkbox.checked}"> -->
-
 <mat-sidenav-container class="sidenav-container ">
-   <mat-sidenav #drawer class="sidenav" 
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false" 
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      fixedInViewport 
-      [autoFocus]='false'
-   >
+   <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [autoFocus]='false'>
+      <!-- fixedInViewport  -->
+      <!-- [fixedTopGap]="56" -->
       <!-- [mode]="'over'" -->
       <mat-toolbar>Menu</mat-toolbar>
       <mat-nav-list>
@@ -18,7 +14,7 @@
 
 
    <mat-sidenav-content>
-      <mat-toolbar class="header" color="primary">
+      <mat-toolbar class="mat-elevation-z6" color="primary">
          <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="isHandset$ | async"
             (click)="drawer.toggle()">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -30,7 +26,9 @@
       </mat-toolbar>
       <!-- Add Content Here -->
       <!-- {{drawer.mode}} -->
-      <router-outlet></router-outlet>
+      <ng-container *ngIf="(sales$ | async) else loading">
+         <router-outlet></router-outlet>
+      </ng-container>
 
    </mat-sidenav-content>
 </mat-sidenav-container>
@@ -41,16 +39,17 @@
    <button (click)="signIn()" *ngIf='!(isSignedIn$ | async)' mat-menu-item> Войти </button>
    <button (click)="signOut()" *ngIf='isSignedIn$ | async' mat-menu-item> Выйти </button>
 
-   <mat-checkbox #checkbox 
-   (change)="cbChange($event.checked)" 
-   class="mat-menu-item"
-   >
-      Темная тема 
+   <mat-checkbox #checkbox (change)="cbChange($event.checked)" class="mat-menu-item">
+      Темная тема
    </mat-checkbox>
-   <button (click)="swappingTheme('deeppurple-amber')" mat-menu-item> deeppurple-amber </button>
-   <button (click)="swappingTheme('pink-bluegrey')" mat-menu-item> pink-bluegrey </button>
-   <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button>
-   <button (click)="swappingTheme('indigo-pink')" mat-menu-item> indigo-pink </button>
+   <button (click)="swappingTheme('deep-purple')" mat-menu-item> deep-purple </button>
+   <button (click)="swappingTheme('')" mat-menu-item> pink-bluegrey </button>
+   <!-- <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button> -->
+   <!-- <button (click)="swappingTheme('indigo-pink')" mat-menu-item> indigo-pink </button> -->
 </mat-menu>
 
-<!-- </div> -->
+<ng-template #loading>
+   <p>
+      Loading...
+   </p>
+</ng-template>

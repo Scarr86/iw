@@ -7,6 +7,7 @@ import { publishReplay, refCount, delay, finalize, shareReplay, multicast, publi
 })
 export class ThemeService {
   private _darkTheme = new BehaviorSubject<boolean>(false);
+  private _theme = new Subject<string>();
   get isDarkTheme() {
 
     return this._darkTheme.asObservable();
@@ -15,9 +16,15 @@ export class ThemeService {
     //   refCount()
     // )
   }
+  get theme() {
+    return this._theme.asObservable();
+  }
   constructor() { }
 
   setDarkTheme(isDarkTheme: boolean): void {
     this._darkTheme.next(isDarkTheme);
+  }
+  setTheme(theme: string): void {
+    this._theme.next(theme);
   }
 }

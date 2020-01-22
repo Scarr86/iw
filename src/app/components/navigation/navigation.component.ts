@@ -8,6 +8,9 @@ import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
 import { GapiState } from 'src/app/store/state/gapi.state';
 import { SignIn, SignOut } from 'src/app/store/actions/auth2.actions';
+import { StateLoadingService } from 'src/app/service/state-loading.service';
+import { SaleState } from 'src/app/store/state/sale.state';
+import { Sale } from 'src/app/models/sale.model';
 
 @Component({
    selector: 'app-navigation',
@@ -17,8 +20,11 @@ import { SignIn, SignOut } from 'src/app/store/actions/auth2.actions';
 export class NavigationComponent implements OnInit {
 
    @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
-
+   @Select(SaleState.sales) sales$: Observable<Sale[]>;
    @HostBinding('class') componentCssClass;
+
+   isDarkTheme = "";
+   themeStr = '';
 
    links = [
       { name: "Sale", patch: "/sale-list" },
@@ -40,7 +46,7 @@ export class NavigationComponent implements OnInit {
       //public overlayContainer: OverlayContainer,
       private theme: ThemeService,
       private store: Store,
-      private actions$:Actions
+      private actions$: Actions,
    ) {
 
    }
@@ -53,7 +59,9 @@ export class NavigationComponent implements OnInit {
 
 
    cbChange(checked: boolean) {
-      this.theme.setDarkTheme(checked);
+      this.isDarkTheme = checked ? "dark-theme" : "";
+      this.theme.setTheme(this.isDarkTheme + " " + this.themeStr);
+      // this.theme.setDarkTheme(checked);
       //this.componentCssClass = checked ? "dark-theme" : "";
    }
 
@@ -67,6 +75,9 @@ export class NavigationComponent implements OnInit {
       // this.auth.signOut();
    }
    swappingTheme(theme) {
+      this.themeStr = theme;
+
+      this.theme.setTheme(this.isDarkTheme + " " + theme);
       // document.getElementById('themeAsset').href = `assest/${theme}`
    }
 }
