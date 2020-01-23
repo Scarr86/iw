@@ -12,3 +12,5 @@ export interface Sale {
     discount: number;
     productList: Product[];
 }
+
+

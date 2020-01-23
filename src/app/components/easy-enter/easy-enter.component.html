@@ -1,5 +1,41 @@
-<div>
-    <button type="button" mat-stroked-button (click)="onChange( 50)" color="primary">+50</button>
-    <button type="button" mat-stroked-button (click)="onChange(200)" color="primary">+200</button>
-    <button type="button" mat-stroked-button (click)="onChange(500)" color="primary">+500</button>
+<div class="wrapper">
+    <mat-form-field>
+        <input [formControl]="source" autocomplete="off" type="{{ type }}" matInput placeholder="{{ placeholder }}" />
+        <button *ngIf="type != 'count'" type="button" mat-icon-button matSuffix (click)="clear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <ng-container [ngSwitch]="type">
+        <div class="btn-easy" *ngSwitchCase="'number'">
+            <button type="button" mat-stroked-button (click)="set(50)" color="primary">
+                +50
+            </button>
+            <button type="button" mat-stroked-button (click)="set(200)" color="primary">
+                +200
+            </button>
+            <button type="button" mat-stroked-button (click)="set(500)" color="primary">
+                +500
+            </button>
+        </div>
+        <div class="btn-cout" *ngSwitchCase="'count'">
+            <button type="button" mat-stroked-button (click)="set(50)" color="primary">
+                +50
+            </button>
+            <button type="button" mat-stroked-button (click)="set(200)" color="primary">
+                +200
+            </button>
+        </div>
+    </ng-container>
 </div>
+
+<!-- <div *ngIf="type == 'number'">
+  <button type="button" mat-stroked-button (click)="set(50)" color="primary">
+    +50
+  </button>
+  <button type="button" mat-stroked-button (click)="set(200)" color="primary">
+    +200
+  </button>
+  <button type="button" mat-stroked-button (click)="set(500)" color="primary">
+    +500
+  </button> -->

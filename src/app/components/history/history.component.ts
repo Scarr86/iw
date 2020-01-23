@@ -10,17 +10,14 @@ import { from, of } from 'rxjs';
 export class HistoryComponent implements OnInit {
 
   sales$;
-  constructor(private genereteService: GeneratorBase) { }
+  constructor(
+    private genereteService: GeneratorBase,
 
-  ngOnInit() {
+    ) { }
+
+  ngOnInit() {   
   }
   generete() {
-
     let sales = this.genereteService.genereteSale(new Date(2020, 0, 1));
-    console.log(sales);
-    this.sales$ = of(sales);
-    // for (let date of this.genereteService.genDate(new Date(2020, 0, 1))) {
-    //   console.log(date.toLocaleString());
-    // }
   }
 }

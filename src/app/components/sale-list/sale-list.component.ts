@@ -6,6 +6,10 @@ import { Sale } from 'src/app/models/sale.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { DeleteSale } from 'src/app/store/actions/sale.actions';
+
+
+
 
 
 
@@ -53,6 +57,10 @@ export class SaleListComponent implements OnInit {
   }
   getTotalPrice(sale: Sale): number {
     return sale.productList.reduce((sum, p) => sum += p.count * p.price, 0) - sale.discount;
+  }
+
+  onDelete(s: Sale) {
+    this.store.dispatch(new DeleteSale(s.id));
   }
 
 }

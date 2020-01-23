@@ -25,6 +25,6 @@ export class StateLoadingService {
         );
 
 
-        this.isLoading$ = merge(this._loadingFalse$, this._loadingTrue$).pipe(share(), tap(console.log));
+        this.isLoading$ = merge(this._loadingFalse$, this._loadingTrue$).pipe( share(), tap(console.log));
     }
 }

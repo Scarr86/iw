@@ -46,7 +46,8 @@ import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-det
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiService: GapiService) {
-  return () => gapiService.initGapi();
+  // return () => gapiService.initGapi();
+  return ()=>{}
 }
 
 @NgModule({
@@ -83,9 +84,9 @@ export function initGapi(gapiService: GapiService) {
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    // NgxsModule.forRoot(states, { developmentMode: !environment.production })
+    // NgxsModule.forRoot(states, { developmentMode: !environment.production }),
     NgxsModule.forRoot([FileState, SaleState, GapiState], {
-      developmentMode: environment.production,
+      developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
         injectContainerState: false

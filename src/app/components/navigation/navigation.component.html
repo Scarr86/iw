@@ -26,7 +26,7 @@
       </mat-toolbar>
       <!-- Add Content Here -->
       <!-- {{drawer.mode}} -->
-      <ng-container *ngIf="(sales$ | async) else loading">
+      <ng-container *ngIf="!(loading$ | async) else loading">
          <router-outlet></router-outlet>
       </ng-container>
 

@@ -60,11 +60,21 @@ export class GeneratorBase {
       return new Product(this.randomName(), this.random(1, 5) * 1000, this.random(1, 5));
    }
    genereteSale(from: Date, to: Date = new Date()): { sales: Sale[] } {
+
+      let json = localStorage.getItem("mockSales");
+      if (json) {
+         return JSON.parse(json, (key, val) => {
+            if (key == 'date')
+               return new Date(val);
+            return val
+         })
+      }
+
       let sales: Sale[] = [];
       let id = 1;
       for (let date of this.genDate(from, to)) {
          let countSales = this.random(0, 5);
-         while(countSales--){
+         while (countSales--) {
             let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
             let sale: Sale = new Sale({
                id: id++,
@@ -75,6 +85,7 @@ export class GeneratorBase {
             sales.push(sale);
          }
       }
+      localStorage.setItem("mockSales", JSON.stringify({ sales }))
       return { sales };
    }
 

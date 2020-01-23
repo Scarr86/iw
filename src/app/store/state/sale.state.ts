@@ -1,12 +1,19 @@
 import { Sale } from 'src/app/models/sale.model';
 import { State, NgxsOnInit, StateContext, Store, Action, Selector, createSelector } from '@ngxs/store';
+import { patch, removeItem } from '@ngxs/store/operators'
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { from, of } from 'rxjs';
 import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
 import { GapiState } from './gapi.state';
-import { GetSales, SetBaseInfo, DeleteBaseInfo } from '../actions/sale.actions';
+import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
 import { compareDay } from 'src/app/lib/lib';
+
+
+function saveSales(ctx: StateContext<SaleStateModel>) {
+    let sales = ctx.getState().sales;
+    localStorage.setItem('mockSales', JSON.stringify({ sales }));
+}
 
 
 export interface SaleStateModel {
@@ -25,6 +32,10 @@ export class SaleState implements NgxsOnInit {
     constructor(private fileServise: FileService, private store: Store) { }
 
     ngxsOnInit(ctx: StateContext<SaleStateModel>) {
+        let sales = localStorage.getItem('mockSales');
+        ctx.patchState(JSON.parse(sales, (key, val) => {
+            return key == "date" ? new Date(val) : val;
+        }))
         this.store.select(GapiState.isSignedIn)
             .pipe(filter(isSignIn => isSignIn === true))
             .subscribe(() => {
@@ -40,6 +51,7 @@ export class SaleState implements NgxsOnInit {
         }
         return from(this.fileServise.file(baseInfo.id, "media"))
             .pipe(
+
                 map(response => JSON.parse(response.body, (key, val) => {
                     if (key == 'date')
                         return new Date(val);
@@ -60,6 +72,16 @@ export class SaleState implements NgxsOnInit {
     deleteBaseInfo(ctx: StateContext<SaleStateModel>) {
         localStorage.removeItem("baseInfo");
         ctx.patchState({ baseInfo: null });
+    }
+    @Action(DeleteSale)
+    deleteSale(ctx: StateContext<SaleStateModel>, { id }: DeleteSale) {
+        ctx.setState(
+            patch({
+                sales: removeItem<Sale>(s => s.id === id)
+            })
+        )
+        saveSales(ctx);
+        //do api
     }
 
     @Selector()

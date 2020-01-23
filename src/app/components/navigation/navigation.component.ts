@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, AfterViewInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { map, shareReplay, tap, startWith } from 'rxjs/operators';
 import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
@@ -20,7 +20,8 @@ import { Sale } from 'src/app/models/sale.model';
 export class NavigationComponent implements OnInit {
 
    @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
-   @Select(SaleState.sales) sales$: Observable<Sale[]>;
+   // @Select(SaleState.sales) sales$: Observable<Sale[]>;
+   loading$:Observable<boolean> = this.sls.isLoading$;
    @HostBinding('class') componentCssClass;
 
    isDarkTheme = "";
@@ -47,6 +48,7 @@ export class NavigationComponent implements OnInit {
       private theme: ThemeService,
       private store: Store,
       private actions$: Actions,
+      private sls:StateLoadingService
    ) {
 
    }
