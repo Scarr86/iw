@@ -1,11 +1,11 @@
 import { Sale } from 'src/app/models/sale.model';
 import { State, NgxsOnInit, StateContext, Store, Action, Selector, createSelector } from '@ngxs/store';
-import { patch, removeItem } from '@ngxs/store/operators'
+import { patch, removeItem, updateItem } from '@ngxs/store/operators'
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { from, of } from 'rxjs';
 import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
 import { GapiState } from './gapi.state';
-import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale } from '../actions/sale.actions';
+import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
 import { compareDay } from 'src/app/lib/lib';
 
@@ -32,10 +32,10 @@ export class SaleState implements NgxsOnInit {
     constructor(private fileServise: FileService, private store: Store) { }
 
     ngxsOnInit(ctx: StateContext<SaleStateModel>) {
-        let sales = localStorage.getItem('mockSales');
-        ctx.patchState(JSON.parse(sales, (key, val) => {
-            return key == "date" ? new Date(val) : val;
-        }))
+        // let sales = localStorage.getItem('mockSales');
+        // ctx.patchState(JSON.parse(sales, (key, val) => {
+        //     return key == "date" ? new Date(val) : val;
+        // }))
         this.store.select(GapiState.isSignedIn)
             .pipe(filter(isSignIn => isSignIn === true))
             .subscribe(() => {
@@ -80,7 +80,18 @@ export class SaleState implements NgxsOnInit {
                 sales: removeItem<Sale>(s => s.id === id)
             })
         )
-        saveSales(ctx);
+        // saveSales(ctx);
+        //do api
+    }
+
+    @Action(ChangeSale)
+    changeSale(ctx: StateContext<SaleStateModel>, { id, sale }: ChangeSale) {
+        ctx.setState(
+            patch({
+                sales: updateItem<Sale>(s => s.id === id, sale)
+            })
+        )
+        // saveSales(ctx);
         //do api
     }
 

@@ -5,14 +5,14 @@ import { tap } from 'rxjs/operators';
 import { SignIn, SignOut, UpdateSigninStatus, InitSession } from '../actions/auth2.actions';
 
 export interface GapiStateMosel {
-    googleAuth: gapi.auth2.GoogleAuth | null;
+    // googleAuth: gapi.auth2.GoogleAuth | null;
     googleUser: gapi.auth2.GoogleUser | null;
     isSignedIn: boolean
 }
 @State<GapiStateMosel>({
     name: 'gapi',
     defaults: {
-        googleAuth: null,
+        // googleAuth: null,
         googleUser: null,
         isSignedIn: false
     }
@@ -32,14 +32,15 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
             ctx.dispatch(new UpdateSigninStatus(isSignedIn))
         });
         ctx.patchState({
-            googleAuth,
+            // googleAuth,
             isSignedIn: googleAuth.isSignedIn.get()
         });
     }
 
     @Action(SignIn)
     signIn(ctx: StateContext<GapiStateMosel>) {
-        const googleAuth = ctx.getState().googleAuth;
+        let googleAuth = gapi.auth2.getAuthInstance();
+        //const googleAuth = ctx.getState().googleAuth;
         try {
             googleAuth.signIn({ prompt: "select_account" });
         }
@@ -50,7 +51,8 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
 
     @Action(SignOut)
     signOut(ctx: StateContext<GapiStateMosel>) {
-        const googleAuth = ctx.getState().googleAuth;
+        let googleAuth = gapi.auth2.getAuthInstance();
+        //const googleAuth = ctx.getState().googleAuth;
         try {
             googleAuth.signOut();
         }

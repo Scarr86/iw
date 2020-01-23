@@ -24,6 +24,6 @@ export class AddSale {
 }
 
 export class ChangeSale {
-    static readonly type = '[Sale] Delete Sale';
-    constructor(public sale: Sale) { }
+    static readonly type = '[Sale] Change Sale';
+    constructor(public id: number, public sale: Sale) { }
 }

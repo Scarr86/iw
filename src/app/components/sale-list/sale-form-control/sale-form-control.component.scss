@@ -1,0 +1,53 @@
+button {
+    &+button {
+        margin-left: 15px;
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    // flex-direction: column;
+
+}
+
+.btn-easy {
+    width: 100%;
+
+}
+
+.btn-count {
+    flex-grow: 1;
+    margin-left: 20px;
+
+    .mat-button-base {
+        min-width: 50px;
+        max-width: 50px;
+    }
+
+}
+
+.mat-form-field {
+    flex-grow: 1;
+    flex-basis: 90px;
+    min-width: 0;
+}
+
+:host {
+    display: block;
+    margin-bottom: 16px;
+
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

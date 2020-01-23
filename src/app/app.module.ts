@@ -19,19 +19,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
-import { SaleItemComponent } from './components/sale-list/sale-item/sale-item.component';
-import { SettingContainerComponent } from './containers/setting/setting-container.component';
 import { DriveViewerComponent } from './components/drive-viewer/drive-viewer.component';
 import { ConnectFormControlDirective } from './components/connect-form.directive';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from './service/theme.service';
 import { ModalDialogComponent } from './components/drive-viewer/modal-diolog/modal-diolog.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { EasyEnterComponent } from './components/easy-enter/easy-enter.component';
-import { ConnectFormGroupDirective } from './components/product-list/connect-form-group.directive';
-import { ProductListContainerComponent } from './containers/product-list-container/product-list-container.component';
+import { ConnectFormGroupDirective } from './components/connect-form-group.directive';
 import { SettingComponent } from './components/setting/setting.component';
-import { FileListContainerComponent } from './containers/file-list-container/file-list-container.component';
 import { FileListComponent } from './components/file-list/file-list.component';
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { FileState } from './store/state/file.state';
@@ -41,13 +35,14 @@ import { GapiState } from './store/state/gapi.state';
 import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
+import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiService: GapiService) {
-  // return () => gapiService.initGapi();
-  return ()=>{}
+  return () => gapiService.initGapi();
+  // return ()=>{}
 }
 
 @NgModule({
@@ -57,22 +52,17 @@ export function initGapi(gapiService: GapiService) {
     SaleListComponent,
     NotFoundComponent,
     HistoryComponent,
-    ProductListComponent,
     ProductItemComponent,
-    SaleItemComponent,
-    SettingContainerComponent,
     DriveViewerComponent,
     ConnectFormControlDirective,
     ModalDialogComponent,
-    EasyEnterComponent,
     ConnectFormGroupDirective,
-    ProductListContainerComponent,
     SettingComponent,
-    FileListContainerComponent,
     FileListComponent,
     ToolBarComponent,
     LoginComponent,
-    SaleDetailComponent
+    SaleDetailComponent,
+    SaleFormControlComponent
   ],
   entryComponents: [
     ModalDialogComponent

@@ -1,6 +1,6 @@
-import { Directive, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormControlDirective, FormGroupDirective, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { ISale } from 'src/app/models/old-sale.model';
+import { Directive, Input,  } from '@angular/core';
+import { FormGroupDirective, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Sale } from '../models/sale.model';
 @Directive({
   selector: '[appConnectFormGroup]'
 })
@@ -9,7 +9,7 @@ export class ConnectFormGroupDirective {
 
 
   @Input("appConnectFormGroup")
-  set data(value: ISale) {
+  set data(value: Sale) {
 
     if (!value) return;
     this.arrayProduct.clear();
@@ -20,7 +20,10 @@ export class ConnectFormGroupDirective {
         price: ["", [Validators.required]]
       }))
     });
-    this.formGroup.form.patchValue(value);
+    this.formGroup.form.patchValue(value, {
+      // emitEvent: false,
+      // onlySelf: true,
+    });
     this.formGroup.form.markAsPristine();
     this.formGroup.form.markAsUntouched();
   }

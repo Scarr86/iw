@@ -61,14 +61,14 @@ export class GeneratorBase {
    }
    genereteSale(from: Date, to: Date = new Date()): { sales: Sale[] } {
 
-      let json = localStorage.getItem("mockSales");
-      if (json) {
-         return JSON.parse(json, (key, val) => {
-            if (key == 'date')
-               return new Date(val);
-            return val
-         })
-      }
+      // let json = localStorage.getItem("mockSales");
+      // if (json) {
+      //    return JSON.parse(json, (key, val) => {
+      //       if (key == 'date')
+      //          return new Date(val);
+      //       return val
+      //    })
+      // }
 
       let sales: Sale[] = [];
       let id = 1;
@@ -85,7 +85,7 @@ export class GeneratorBase {
             sales.push(sale);
          }
       }
-      localStorage.setItem("mockSales", JSON.stringify({ sales }))
+      // localStorage.setItem("mockSales", JSON.stringify({ sales }))
       return { sales };
    }
 

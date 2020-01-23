@@ -3,99 +3,69 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   <span>{{ title }} </span>
-  <button
-    (click)="submit()"
-    class="save-btn"
-    [disabled]="form.invalid"
-    mat-flat-button
-    color="primary"
-  >
+  <button (click)="save()" class="save-btn" [disabled]="form.invalid" mat-raised-button color="primary">
     Сохранить
   </button>
 </mat-toolbar>
 
-<div class="container">
-  <div class="date mat-h2">
-    <!-- {{_sale.date | date:"EE, d MMM yyyy"}} -->
-  </div>
+<section class="container mat-typography">
+  <h2 class="date">
+    {{(sale$ | async)?.date | date:"EE, d MMM yyyy"}}
+  </h2>
 
-  <form
-    class="form"
-    [formGroup]="form"
-    [appConnectFormGroup]="sale$ | async"
-    (ngSubmit)="save()"
-    #formRef="ngForm"
-  >
+  <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
-      <mat-form-field class="form__discount-field">
-        <input
-          #discount
-          formControlName="discount"
-          autocomplete="off"
-          type="number"
-          matInput
-          placeholder="Скидка"
-        />
-        <button
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="discount.value = ''"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <!-- <app-easy-enter (change)="discount.value = +discount.value + $event"> </app-easy-enter> -->
+      <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
+      </app-sale-form-control>
     </mat-card>
-
     <!--  -->
     <mat-accordion formArrayName="productList" [hideToggle]="true">
-      <!-- Product List -->
-      <mat-expansion-panel
-        *ngFor="let product of arrayProduct.controls; index as i"
-        [formGroupName]="i"
-      >
+      <mat-expansion-panel #accordion *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
+        <!-- Product List Header -->
         <mat-expansion-panel-header>
-          <mat-panel-title> {{ product.get("name").value }} </mat-panel-title>
+          <mat-panel-title *ngIf="!accordion.expanded">
+            <span class="nowrap-hidden-text"> {{ product.get("name").value }} </span>
+          </mat-panel-title>
           <mat-panel-description>
-            <div class="panel-description">
+            <div class="close-panel-description" *ngIf="!accordion.expanded else dsc">
               <span>{{ product.get("count").value }}шт.</span>
-              <span>
+              <span class="nowrap-hidden-text">
                 {{
                   product.get("price").value * product.get("count").value
                     | currency: "RUB":"symbol-narrow"
                 }}
               </span>
             </div>
+            <ng-template #dsc>
+              <span class="open-panel-description"> Подробно </span>
+            </ng-template>
           </mat-panel-description>
           <!-- <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description> -->
         </mat-expansion-panel-header>
+        <!--  -->
+        <!-- Product List Content  -->
+        <app-sale-form-control [source]="arrayProduct.controls[i].controls['name']" type="text" placeholder="Название">
+        </app-sale-form-control>
+        <app-sale-form-control [source]="arrayProduct.controls[i].controls['count']" type="count"
+          placeholder="Количество">
+        </app-sale-form-control>
+        <app-sale-form-control [source]="arrayProduct.controls[i].controls['price']" type="number" placeholder="Цена">
+        </app-sale-form-control>
+        <!--  -->
+        <!-- Product List Action -->
+        
+        <mat-action-row class="btn-actions">
 
-        <app-easy-enter
-          [source]="arrayProduct.controls[i].controls['name']"
-          type="text"
-          placeholder="Название"
-        >
-        </app-easy-enter>
-        <app-easy-enter
-          [source]="arrayProduct.controls[i].controls['count']"
-          type="count"
-          placeholder="Количество"
-        >
-        </app-easy-enter>
-        <app-easy-enter
-          [source]="arrayProduct.controls[i].controls['price']"
-          type="number"
-          placeholder="Цена"
-        >
-        </app-easy-enter>
-        <mat-action-row>
-          <mat-icon>delete</mat-icon>
-          <span> Удалить </span>
+          <button mat-button>
+            <mat-icon>delete</mat-icon>
+            <span> Удалить </span>
+          </button>
+          <!-- <mat-icon>delete</mat-icon>
+          <span> Удалить </span> -->
         </mat-action-row>
+        <!--  -->
       </mat-expansion-panel>
-      <!--  -->
     </mat-accordion>
   </form>
-</div>
+</section>
