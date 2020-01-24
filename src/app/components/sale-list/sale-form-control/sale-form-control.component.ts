@@ -30,9 +30,12 @@ export class SaleFormControlComponent implements OnInit {
       // onlySelf: true,
       // emitEvent: false
     });
+    this.source.markAsTouched();
   }
   set(v: number) {
     this.source.setValue(+this.source.value + v);
+    this.source.markAsTouched();
+
   }
 
 }

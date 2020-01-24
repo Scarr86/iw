@@ -41,7 +41,6 @@
               <span class="open-panel-description"> Подробно </span>
             </ng-template>
           </mat-panel-description>
-          <!-- <mat-panel-description *ngIf='lastItem'> Добавить новый товар </mat-panel-description> -->
         </mat-expansion-panel-header>
         <!--  -->
         <!-- Product List Content  -->
@@ -54,18 +53,42 @@
         </app-sale-form-control>
         <!--  -->
         <!-- Product List Action -->
-        
         <mat-action-row class="btn-actions">
-
-          <button mat-button>
+          <button color="primary" mat-button (click)="delete(i)">
             <mat-icon>delete</mat-icon>
             <span> Удалить </span>
           </button>
-          <!-- <mat-icon>delete</mat-icon>
-          <span> Удалить </span> -->
         </mat-action-row>
         <!--  -->
       </mat-expansion-panel>
+      <!--  -->
+      <!-- New Product -->
+      <mat-expansion-panel>
+        <!-- New Product List Header -->
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <span>+ Добавить продукт</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!--  -->
+        <!-- New Product List Content  -->
+        <app-sale-form-control [source]="formNewProduct.controls['name']" type="text" placeholder="Название">
+        </app-sale-form-control>
+        <app-sale-form-control [source]="formNewProduct.controls['count']" type="count" placeholder="Количество">
+        </app-sale-form-control>
+        <app-sale-form-control [source]="formNewProduct.controls['price']" type="number" placeholder="Цена">
+        </app-sale-form-control>
+        <!--  -->
+        <!-- New Product List Action -->
+        <mat-action-row class="btn-actions">
+          <button mat-button color="accent" [disabled]="formNewProduct.invalid"
+            (click)="add()">
+            <mat-icon>playlist_add</mat-icon>
+            <span> Добавить </span>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <!-- -->
     </mat-accordion>
   </form>
 </section>

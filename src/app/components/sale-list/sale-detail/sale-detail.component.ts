@@ -21,12 +21,13 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   sale$: Observable<Sale>;
   id: number = 0;
-  subscription: Subscription;
+  subscription: Subscription = new Subscription();
 
 
   @ViewChild('formRef', { static: false }) formRef: FormGroupDirective;
   title: string = "";
   form: FormGroup;
+  formNewProduct: FormGroup;
 
 
 
@@ -39,7 +40,6 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private store: Store,
     private activeRoute: ActivatedRoute
   ) { }
-
   ngOnInit() {
     this.title = "Продажа ";
     this.form = this.fb.group({
@@ -48,36 +48,44 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       discount: ["0"],
       productList: this.fb.array([])
     });
+    this.formNewProduct = this.createFormProduct()
 
     this.sale$ = this.activeRoute.paramMap.pipe(
-      switchMap(
-        param => this.store.select(SaleState.getSaleById(+param.get("id")))
-          .pipe(
-            filter(s => !!s),
-            tap(s => this.title = "Продажа " + s.id)
-          )
+      switchMap(param => this.store.select(SaleState.getSaleById(+param.get("id")))
+        .pipe(filter(s => !!s), tap(s => this.title = "Продажа " + s.id))
       ),
       take(1)
     );
 
-
-    this.subscription = this.form.valueChanges
-      .pipe(
+    this.subscription.add(
+      this.form.valueChanges.pipe(
         filter(_ => this.form.valid),
         debounceTime(300),
         distinctUntilChanged(((v1, v2) => JSON.stringify(v1) === JSON.stringify(v2))),
       )
-      .subscribe(v => this.store.dispatch(new ChangeSale(v.id, v)))
+        .subscribe(v => this.store.dispatch(new ChangeSale(v.id, v)))
+    );
+
+    // this.subscription.add(
+    //   this.formNewProduct.valueChanges.subscribe(()=>{
+    //     this.arrayProduct.push(this.formNewProduct);
+    //   })
+    // ) 
 
   }
+
+  createFormProduct(): FormGroup {
+    return this.fb.group({
+      name: ['', [Validators.required]],
+      count: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+    })
+  }
   ngAfterViewInit() {
-
-
   }
   goBack() {
     this.router.navigate(['sale-list'])
   }
-
 
   get arrayProduct(): FormArray {
     return this.form.get("productList") as FormArray;
@@ -88,13 +96,19 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   save() {
     this.formRef.ngSubmit.next(undefined);
-
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
-
+  add() {
+    let newForm = this.createFormProduct();
+    newForm.patchValue(this.formNewProduct.value);
+    this.arrayProduct.push(newForm);
+    this.formNewProduct.reset();
+  }
+  delete(i: number) {
+    this.arrayProduct.removeAt(i)
+  }
 }
 
 

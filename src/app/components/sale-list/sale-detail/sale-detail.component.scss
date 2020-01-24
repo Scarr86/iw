@@ -14,21 +14,6 @@
     margin-bottom: 15px;
 }
 
-// .form {
-//     &__discount {
-//         margin-bottom: 15px;
-//     }
-
-//     &__discount-field {
-//         width: 225px;
-//     }
-
-//     &__product-field {
-//         display: flex;
-//         flex-direction: column;
-//     }
-// }
-
 .close-panel-description {
     text-align: right;
     display: flex;
@@ -41,26 +26,24 @@
     }
 
     &> :last-child {
-        display: inline-block;
-        width: 100%;
-        min-width: 90px;
+        flex-grow: 2;
     }
 }
 
 .nowrap-hidden-text {
-    display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    width: 100%;
 }
 
 .mat-expansion-panel-header-description,
 .mat-expansion-panel-header-title {
     flex-basis: 0;
-    // max-width: calc(50% - 16px);
 }
-
-.btn-actions {
-    // color: rgba(0, 0, 0, .87);
+.mat-expansion-panel-header-description{
+    min-width: 60%;
+    justify-content: center;
+}
+.mat-expansion-panel-header-title{
+    min-width: calc(40% - 16px);
 }
