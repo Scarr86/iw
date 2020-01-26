@@ -112,4 +112,3 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 }
 
 
-

@@ -1,7 +1,7 @@
-import { Component, OnInit, HostBinding, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostBinding, AfterViewInit, AfterContentInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay, tap, startWith } from 'rxjs/operators';
+import { map, shareReplay, tap, startWith, filter } from 'rxjs/operators';
 import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
@@ -11,6 +11,9 @@ import { SignIn, SignOut } from 'src/app/store/actions/auth2.actions';
 import { StateLoadingService } from 'src/app/service/state-loading.service';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { SalesService, IUser } from 'src/app/service/sales.service';
 
 @Component({
    selector: 'app-navigation',
@@ -21,8 +24,10 @@ export class NavigationComponent implements OnInit {
 
    @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
    // @Select(SaleState.sales) sales$: Observable<Sale[]>;
-   loading$:Observable<boolean> = this.sls.isLoading$;
+   loading$: Observable<boolean> = this.sls.isLoading$;
    @HostBinding('class') componentCssClass;
+
+   title: string;
 
    isDarkTheme = "";
    themeStr = '';
@@ -48,15 +53,84 @@ export class NavigationComponent implements OnInit {
       private theme: ThemeService,
       private store: Store,
       private actions$: Actions,
-      private sls:StateLoadingService
-   ) {
+      private sls: StateLoadingService,
+      private router: Router,
+      private titleServise: Title,
+      private fireService: SalesService
+   ) { }
+
+   user: IUser = {
+      name: "bben",
+      age: 30
+   }
+   newUser: IUser = {
+      name: "bben",
+      age: 30,
+      nikname: "nik"
+   }
+
+   users: IUser[] = [];
+
+   add() {
+      this.fireService.create(this.user).subscribe(res => {
+         this.users.push({ ...this.user, id: res.name })
+         console.log("add", res);
+         // this.sales.push()
+      })
+   }
+
+   get() {
+      this.fireService.get().subscribe(res => {
+         this.users = res;
+         console.log("get:", res);
+      });
+   }
+   update() {
+      this.users[0].nikname = "nik";
+      this.fireService.update(this.users[0]).subscribe(console.log)
+
+   }
+   delete() {
+      this.fireService.delete(this.users[0]).subscribe((res) => {
+         this.users.splice(0, 1);
+         console.log("delete", this.users)
+      });
+   }
+   edit() {
+      this.users[0].nikname = "nik!!!";
+      this.fireService.edit(this.users[0]).subscribe(console.log)
+   }
+
+   setTitle(url: string) {
+      switch (url) {
+         case "/sale-list":
+            this.titleServise.setTitle("Продажи");
+            this.title = "Продажи";
+            break;
+         case "/history":
+            this.titleServise.setTitle("История продаж");
+            this.title = "История продаж";
+            break;
+         case "/setting":
+            this.titleServise.setTitle("Настройки");
+            this.title = "Настройки";
+            break;
+         default:
+            this.titleServise.setTitle("iw");
+            this.title = "";
+      }
 
    }
 
    ngOnInit() {
-      //this.isSignedIn$ = this.auth.isSignedIn;
-      // this.componentCssClass = 'dark-theme';
-      // this.theme.isDarkTheme.subscribe((r) => console.log("isDarkTheme", r))
+      this.setTitle(this.router.url)
+      this.router.events
+         .pipe(
+            filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+            map(e => e.url)
+         )
+         .subscribe(url => this.setTitle(url))
+
    }
 
 
@@ -73,6 +147,7 @@ export class NavigationComponent implements OnInit {
    }
    signOut() {
       this.store.dispatch(new SignOut())
+      this.router.navigate(['/login'])
 
       // this.auth.signOut();
    }
@@ -82,4 +157,8 @@ export class NavigationComponent implements OnInit {
       this.theme.setTheme(this.isDarkTheme + " " + theme);
       // document.getElementById('themeAsset').href = `assest/${theme}`
    }
+
+
 }
+
+

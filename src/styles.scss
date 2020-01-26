@@ -83,7 +83,7 @@ html {
   box-sizing: border-box;
 }
 
-.container {
+.container-page {
   display: block;
   padding: 15px 15px 30px;
 }
@@ -111,7 +111,7 @@ ul {
   padding: 0;
 }
 
-.container-page {
+.container {
   max-width: 960px;
   height: 100%;
   margin: 0 auto;
@@ -124,3 +124,4 @@ ul {
   // background-color: mat-color($background, background);
   // min-height: 100vh;
 }
+

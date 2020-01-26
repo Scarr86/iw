@@ -3,6 +3,7 @@ import { Auth2Service } from 'src/app/service/google-gapi/auth2.service';
 import { from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SignIn, SignOut, UpdateSigninStatus, InitSession } from '../actions/auth2.actions';
+import { Router } from '@angular/router';
 
 export interface GapiStateMosel {
     // googleAuth: gapi.auth2.GoogleAuth | null;
@@ -18,7 +19,7 @@ export interface GapiStateMosel {
     }
 })
 export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
-    constructor(private auth2Service: Auth2Service, private store: Store) { }
+    constructor(private auth2Service: Auth2Service, private store: Store, private router:Router) { }
 
     ngxsAfterBootstrap(ctx: StateContext<GapiStateMosel>) {
 

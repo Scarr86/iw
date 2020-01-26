@@ -26,12 +26,35 @@
       </mat-toolbar>
       <!-- Add Content Here -->
       <!-- {{drawer.mode}} -->
-      <ng-container *ngIf="!(loading$ | async) else loading">
-         <router-outlet></router-outlet>
-      </ng-container>
+      <!-- <ng-container *ngIf="!(loading$ | async) else loading"> -->
+      <mat-toolbar>
+         <span>{{title}}</span>
+      </mat-toolbar>
 
+
+      <section class="mat-typography container-page">
+         <router-outlet></router-outlet>
+      </section>
+      <button class="btn-fly" (click)="add()" mat-fab>
+         <mat-icon>add</mat-icon>
+      </button>
+      <button class="btn-fly btn-delete " (click)="delete()" mat-fab>
+         <mat-icon>delete</mat-icon>
+      </button>
+      <button class="btn-fly btn-edit" (click)="edit()" mat-fab>
+         <mat-icon>edit</mat-icon>
+      </button>
+      <button class="btn-fly btn-updata" (click)="update()" mat-fab>
+         <mat-icon>update</mat-icon>
+      </button>
+      <button class="btn-fly btn-get" (click)="get()" mat-fab>
+         <mat-icon>get_app</mat-icon>
+      </button>
+      <!-- </ng-container> -->
    </mat-sidenav-content>
 </mat-sidenav-container>
+
+
 
 
 
@@ -39,7 +62,7 @@
    <button (click)="signIn()" *ngIf='!(isSignedIn$ | async)' mat-menu-item> Войти </button>
    <button (click)="signOut()" *ngIf='isSignedIn$ | async' mat-menu-item> Выйти </button>
 
-   <mat-checkbox #checkbox (change)="cbChange($event.checked)" class="mat-menu-item">
+   <mat-checkbox (change)="cbChange($event.checked)" class="mat-menu-item">
       Темная тема
    </mat-checkbox>
    <button (click)="swappingTheme('deep-purple')" mat-menu-item> deep-purple </button>
@@ -51,5 +74,11 @@
 <ng-template #loading>
    <p>
       Loading...
+   </p>
+</ng-template>
+
+<ng-template #alert>
+   <p>
+      Alert!!!
    </p>
 </ng-template>

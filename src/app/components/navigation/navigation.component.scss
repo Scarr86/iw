@@ -1,5 +1,9 @@
 .sidenav-container {
-  height: 100%;
+  min-height: 100%;
+}
+
+.sidenav {
+  min-height: 100%;
 }
 
 .sidenav {
@@ -16,13 +20,34 @@
   z-index: 1;
 }
 
-.more-vert{
+.more-vert {
   margin-left: auto;
 }
-.title{
+
+.title {
   margin-left: 15px;
 }
 
+.btn-fly {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.btn-delete{
+  right:  150px;
+}
+.btn-edit{
+  right: 300px;
+}
+.btn-updata{
+  right: 450px;
+}
+.btn-get{
+  left: 300px;
+}
 
-
-
+.mat-sidenav-content {
+  min-height: 100vh;
+}

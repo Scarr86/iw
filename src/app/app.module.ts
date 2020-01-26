@@ -36,6 +36,8 @@ import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -62,7 +64,8 @@ export function initGapi(gapiService: GapiService) {
     ToolBarComponent,
     LoginComponent,
     SaleDetailComponent,
-    SaleFormControlComponent
+    SaleFormControlComponent,
+    AlertComponent
   ],
   entryComponents: [
     ModalDialogComponent
@@ -74,6 +77,7 @@ export function initGapi(gapiService: GapiService) {
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     // NgxsModule.forRoot(states, { developmentMode: !environment.production }),
     NgxsModule.forRoot([FileState, SaleState, GapiState], {
       developmentMode: !environment.production,

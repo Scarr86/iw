@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
@@ -8,7 +8,7 @@
   </button>
 </mat-toolbar>
 
-<section class="container mat-typography">
+<section  class="container-page mat-typography mat-app-background">
   <h2 class="date">
     {{(sale$ | async)?.date | date:"EE, d MMM yyyy"}}
   </h2>
@@ -16,6 +16,7 @@
   <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
+      
       <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
       </app-sale-form-control>
     </mat-card>
