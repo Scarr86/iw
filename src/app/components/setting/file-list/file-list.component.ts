@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalDialogComponent } from '../drive-viewer/modal-diolog/modal-diolog.component';
+import { ModalDialogComponent } from '../../drive-viewer/modal-diolog/modal-diolog.component';
 import { Router } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import { FileState } from '../../store/state/file.state';
-import { File } from '../../models/file.model';
+import { FileState } from '../../../store/state/file.state';
+import { File } from '../../../models/file.model';
 import { Store, Select, Actions, ofActionCanceled, ofActionErrored, ofActionCompleted, ofActionSuccessful } from '@ngxs/store';
 import { GetFileList, GetFile, CreateFile, DeleteFile, UpdateFile, GetBodyFile } from 'src/app/store/actions/file.actions';
 import { SaleState } from 'src/app/store/state/sale.state';

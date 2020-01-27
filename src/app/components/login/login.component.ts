@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { SignIn } from 'src/app/store/actions/auth2.actions';
-import { GapiState } from 'src/app/store/state/gapi.state';
+import { SignIn } from 'src/app/store/actions/auth.actions';
+import { GapiState } from 'src/app/store/state/auth.state';
 import { switchMap, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -20,6 +20,6 @@ export class LoginComponent implements OnInit {
     .pipe(
       switchMap(_ => this.store.select(GapiState.isSignedIn)),
     )
-     .subscribe(v => this.router.navigate(["/iw"]))
+     .subscribe(v => this.router.navigate(["/"]))
   }
 }

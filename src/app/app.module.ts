@@ -26,17 +26,15 @@ import { ThemeService } from './service/theme.service';
 import { ModalDialogComponent } from './components/drive-viewer/modal-diolog/modal-diolog.component';
 import { ConnectFormGroupDirective } from './components/connect-form-group.directive';
 import { SettingComponent } from './components/setting/setting.component';
-import { FileListComponent } from './components/file-list/file-list.component';
-import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
+import { FileListComponent } from './components/setting/file-list/file-list.component';
 import { FileState } from './store/state/file.state';
 import { LoginComponent } from './components/login/login.component';
 import { SaleState } from './store/state/sale.state';
-import { GapiState } from './store/state/gapi.state';
+import { GapiState } from './store/state/auth.state';
 import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
-import { AlertComponent } from './components/alert/alert.component';
 import { HttpClientModule } from '@angular/common/http';
 
 // the second parameter 'ru' is optional
@@ -61,11 +59,9 @@ export function initGapi(gapiService: GapiService) {
     ConnectFormGroupDirective,
     SettingComponent,
     FileListComponent,
-    ToolBarComponent,
     LoginComponent,
     SaleDetailComponent,
     SaleFormControlComponent,
-    AlertComponent
   ],
   entryComponents: [
     ModalDialogComponent

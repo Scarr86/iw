@@ -4,10 +4,11 @@ import { patch, removeItem, updateItem } from '@ngxs/store/operators'
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { from, of } from 'rxjs';
 import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
-import { GapiState } from './gapi.state';
+import { GapiState } from './auth.state';
 import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
 import { compareDay } from 'src/app/lib/lib';
+import { SalesService } from 'src/app/service/sales.service';
 
 
 function saveSales(ctx: StateContext<SaleStateModel>) {
@@ -29,7 +30,11 @@ export interface SaleStateModel {
     }
 })
 export class SaleState implements NgxsOnInit {
-    constructor(private fileServise: FileService, private store: Store) { }
+    constructor(
+        private fileServise: FileService,
+        private store: Store,
+        private salesService: SalesService
+    ) { }
 
     ngxsOnInit(ctx: StateContext<SaleStateModel>) {
         // let sales = localStorage.getItem('mockSales');
@@ -45,20 +50,25 @@ export class SaleState implements NgxsOnInit {
 
     @Action(GetSales)
     getSales(ctx: StateContext<SaleStateModel>) {
-        let baseInfo: File = ctx.getState().baseInfo || JSON.parse(localStorage.getItem("baseInfo"))
-        if (!baseInfo) {
-            return;
-        }
-        return from(this.fileServise.file(baseInfo.id, "media"))
-            .pipe(
 
-                map(response => JSON.parse(response.body, (key, val) => {
-                    if (key == 'date')
-                        return new Date(val);
-                    return val;
-                })),
-                tap(body => ctx.patchState({ sales: body["sales"], baseInfo }))
-            )
+
+
+        return this.salesService.getSales().pipe(
+            map(({ sales }) => sales.map(s => ({ ...s, date: new Date(s.date) }))),
+            tap(sales => ctx.patchState({ sales }))
+        )
+
+        // let baseInfo: File = ctx.getState().baseInfo || JSON.parse(localStorage.getItem("baseInfo"))
+        // if (!baseInfo) {
+        //     return;
+        // }
+
+        // return from(this.fileServise.file(baseInfo.id, "media"))
+        //     .pipe(
+        //         pluck('result', 'sales'),
+        //         map((sales) => (sales as Sale[]).map(s => ({ ...s, date: new Date(s.date) }))),
+        //         tap(sales => ctx.patchState({ sales, baseInfo }))
+        //     )
     }
 
     @Action(SetBaseInfo)

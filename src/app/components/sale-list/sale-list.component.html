@@ -1,7 +1,8 @@
 <div (click)="picker.open()" matRipple class="date text-primary">
-    <input (dateChange)="onDateChange($event)" [matDatepicker]="picker" placeholder="Choose a date">
+    <input [formControl]='date' [matDatepicker]="picker" placeholder="Choose a date">
+    <!-- (dateChange)="onDateChange($event)" -->
     <mat-datepicker #picker></mat-datepicker>
-    <h1> {{date$ | async | date:"EE, d MMM yyyy"}}</h1>
+    <h1> {{date.value  | date:"EE, d MMM yyyy"}}</h1>
 </div>
 <p class="date-description">Сегодня</p>
 
@@ -35,5 +36,3 @@
 <!-- <div *ngIf="!(sales$ | async)?.length" class="emty-sale">
         <h1> Сегодня небыло продаж</h1>
     </div> -->
-
-

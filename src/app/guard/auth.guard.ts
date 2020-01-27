@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
-import { GapiState } from '../store/state/gapi.state';
+import { GapiState } from '../store/state/auth.state';
 import { tap, mapTo } from 'rxjs/operators';
 
 @Injectable({
@@ -14,15 +14,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("canActivate");
     let isSignedIn = this.store.selectSnapshot(GapiState.isSignedIn);
     if (!isSignedIn) {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/login']);
+      return false;
     } 
-    //else {
-    //   //if (state.url == "/")
-    //    /// this.router.navigate(['/sale-list'])
-    // }
     return true;
   }
   canActivateChild(

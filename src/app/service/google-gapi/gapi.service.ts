@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Observable, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
 import { Store } from '@ngxs/store';
-import { InitSession } from 'src/app/store/actions/auth2.actions';
+import { InitSession } from 'src/app/store/actions/auth.actions';
 import { resolve } from 'url';
 
 const API_KEY: string = "AIzaSyCofOM8sRo0bZRPxjnZxabuOtjuK6xN48o";

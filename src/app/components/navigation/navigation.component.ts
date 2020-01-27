@@ -6,8 +6,8 @@ import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
-import { GapiState } from 'src/app/store/state/gapi.state';
-import { SignIn, SignOut } from 'src/app/store/actions/auth2.actions';
+import { GapiState } from 'src/app/store/state/auth.state';
+import { SignIn, SignOut } from 'src/app/store/actions/auth.actions';
 import { StateLoadingService } from 'src/app/service/state-loading.service';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
@@ -80,10 +80,12 @@ export class NavigationComponent implements OnInit {
    }
 
    get() {
-      this.fireService.get().subscribe(res => {
-         this.users = res;
-         console.log("get:", res);
-      });
+      this.fireService.getSales().subscribe(console.log);
+
+      // this.fireService.get().subscribe(res => {
+      //    this.users = res;
+      //    console.log("get:", res);
+      // });
    }
    update() {
       this.users[0].nikname = "nik";

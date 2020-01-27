@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import { Sale } from '../models/sale.model';
 
 
 
@@ -19,12 +20,18 @@ export interface IUser {
 
 @Injectable({ providedIn: "root" })
 export class SalesService {
-    static url = "https://quickstart-1564505516527.firebaseio.com/users"
-    static url2 = "https://test-with-auth.firebaseio.com/test"
+    // static url = "https://quickstart-1564505516527.firebaseio.com/users"
+    // static url2 = "https://test-with-auth.firebaseio.com/test";
+    static url = "/assets/data/sales.json";
     constructor(private http: HttpClient) { }
     create(user: IUser) {
         return this.http.post<any>(`${SalesService.url}/${user.name}.json`, user)
     }
+    getSales() {
+        return this.http.get<{ sales: Sale[] }>(`${SalesService.url}`)
+    }
+
+
     get(): Observable<any> {
         return this.http.get<IUser>(`${SalesService.url}.json`)
             .pipe(
