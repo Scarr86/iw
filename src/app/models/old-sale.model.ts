@@ -1,15 +1,15 @@
 import { IProduct } from './product.model';
 
 export interface ISale {
-    id: number;
-    date: Date;
+    id?: number;
+    date:  number;
     discount: number;
     productList: IProduct[];
 }
 
 export class Sale implements ISale {
     id: number
-    date: Date;
+    date: number;
     discount: number
     productList: IProduct[];
 
@@ -20,7 +20,7 @@ export class Sale implements ISale {
     }: ISale) {
         this.id = id;
         this.discount = discount;
-        this.date = new Date(date);
+        this.date = date;// new Date(date);
         this.productList = productList;
     }
     get total() {

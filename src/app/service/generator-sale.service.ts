@@ -78,7 +78,7 @@ export class GeneratorBase {
             let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
             let sale: Sale = new Sale({
                id: id++,
-               date,
+               date: date.getTime() ,
                discount: this.random(1, 3) * 100,
                productList
             });

@@ -7,7 +7,7 @@ export interface Product {
 }
 
 export interface Sale {
-    id: number;
+    id?: number;
     date: Date;
     discount: number;
     productList: Product[];

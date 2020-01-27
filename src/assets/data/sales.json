@@ -1,1513 +1,1804 @@
 {
-    "sales": [
-      {
-        "id": 1,
-        "discount": 100,
-        "date": "2019-12-31T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 2
-          },
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 2
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "discount": 200,
-        "date": "2020-01-02T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "discount": 300,
-        "date": "2020-01-02T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 3000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "discount": 300,
-        "date": "2020-01-02T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 1
-          },
-          {
-            "name": "Штаны",
-            "price": 3000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "discount": 200,
-        "date": "2020-01-02T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "discount": 200,
-        "date": "2020-01-02T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "discount": 100,
-        "date": "2020-01-03T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "discount": 200,
-        "date": "2020-01-04T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 9,
-        "discount": 100,
-        "date": "2020-01-04T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 1
-          },
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 10,
-        "discount": 300,
-        "date": "2020-01-04T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 5
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 1000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 11,
-        "discount": 100,
-        "date": "2020-01-04T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 12,
-        "discount": 100,
-        "date": "2020-01-04T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 4
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 13,
-        "discount": 100,
-        "date": "2020-01-05T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 14,
-        "discount": 300,
-        "date": "2020-01-06T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 15,
-        "discount": 300,
-        "date": "2020-01-06T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 4
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 16,
-        "discount": 300,
-        "date": "2020-01-06T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 17,
-        "discount": 100,
-        "date": "2020-01-06T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 1
-          },
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 18,
-        "discount": 200,
-        "date": "2020-01-08T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 19,
-        "discount": 200,
-        "date": "2020-01-10T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 20,
-        "discount": 300,
-        "date": "2020-01-10T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 21,
-        "discount": 200,
-        "date": "2020-01-10T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 22,
-        "discount": 300,
-        "date": "2020-01-10T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 23,
-        "discount": 300,
-        "date": "2020-01-10T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 24,
-        "discount": 200,
-        "date": "2020-01-11T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 25,
-        "discount": 300,
-        "date": "2020-01-11T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 26,
-        "discount": 300,
-        "date": "2020-01-12T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 27,
-        "discount": 100,
-        "date": "2020-01-12T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 4
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 28,
-        "discount": 300,
-        "date": "2020-01-12T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 4000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 29,
-        "discount": 100,
-        "date": "2020-01-13T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 4
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 1
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 30,
-        "discount": 100,
-        "date": "2020-01-13T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 31,
-        "discount": 200,
-        "date": "2020-01-13T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 32,
-        "discount": 300,
-        "date": "2020-01-14T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 4
-          },
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 33,
-        "discount": 300,
-        "date": "2020-01-14T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 34,
-        "discount": 200,
-        "date": "2020-01-14T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 5
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 35,
-        "discount": 200,
-        "date": "2020-01-14T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 2
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 36,
-        "discount": 200,
-        "date": "2020-01-15T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 1
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 37,
-        "discount": 200,
-        "date": "2020-01-15T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 1
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 38,
-        "discount": 300,
-        "date": "2020-01-15T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 5
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 39,
-        "discount": 100,
-        "date": "2020-01-16T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 40,
-        "discount": 300,
-        "date": "2020-01-16T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 41,
-        "discount": 200,
-        "date": "2020-01-17T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 42,
-        "discount": 200,
-        "date": "2020-01-17T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 43,
-        "discount": 200,
-        "date": "2020-01-18T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 2000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 44,
-        "discount": 200,
-        "date": "2020-01-19T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 45,
-        "discount": 300,
-        "date": "2020-01-19T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Носки",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Футболка",
-            "price": 1000,
-            "count": 2
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 46,
-        "discount": 200,
-        "date": "2020-01-19T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 47,
-        "discount": 200,
-        "date": "2020-01-19T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 48,
-        "discount": 300,
-        "date": "2020-01-19T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Штаны",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 1000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 49,
-        "discount": 300,
-        "date": "2020-01-20T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 3000,
-            "count": 5
-          },
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 50,
-        "discount": 300,
-        "date": "2020-01-20T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 51,
-        "discount": 300,
-        "date": "2020-01-21T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Майка",
-            "price": 2000,
-            "count": 2
-          },
-          {
-            "name": "Носки",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 52,
-        "discount": 200,
-        "date": "2020-01-21T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 5
-          },
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 53,
-        "discount": 300,
-        "date": "2020-01-21T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 5
-          },
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 3000,
-            "count": 4
-          }
-        ]
-      },
-      {
-        "id": 54,
-        "discount": 100,
-        "date": "2020-01-21T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 1000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 55,
-        "discount": 300,
-        "date": "2020-01-22T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 2000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 56,
-        "discount": 300,
-        "date": "2020-01-22T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 4
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 57,
-        "discount": 300,
-        "date": "2020-01-22T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 3000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 58,
-        "discount": 200,
-        "date": "2020-01-23T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 2
-          },
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 59,
-        "discount": 100,
-        "date": "2020-01-23T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 60,
-        "discount": 200,
-        "date": "2020-01-24T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 1
-          },
-          {
-            "name": "Трусы",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 1000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 61,
-        "discount": 100,
-        "date": "2020-01-24T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Майка",
-            "price": 5000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 62,
-        "discount": 200,
-        "date": "2020-01-24T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 4000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 2
-          }
-        ]
-      },
-      {
-        "id": 63,
-        "discount": 100,
-        "date": "2020-01-25T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 2000,
-            "count": 3
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 2
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 64,
-        "discount": 100,
-        "date": "2020-01-25T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Трусы",
-            "price": 1000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 4000,
-            "count": 3
-          },
-          {
-            "name": "Штаны",
-            "price": 3000,
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": 65,
-        "discount": 200,
-        "date": "2020-01-25T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Носки",
-            "price": 3000,
-            "count": 2
-          },
-          {
-            "name": "Футболка",
-            "price": 3000,
-            "count": 5
-          }
-        ]
-      },
-      {
-        "id": 66,
-        "discount": 200,
-        "date": "2020-01-25T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 4
-          },
-          {
-            "name": "Носки",
-            "price": 2000,
-            "count": 4
-          },
-          {
-            "name": "Трусы",
-            "price": 4000,
-            "count": 1
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": 67,
-        "discount": 200,
-        "date": "2020-01-25T17:00:00.000Z",
-        "productList": [
-          {
-            "name": "Штаны",
-            "price": 2000,
-            "count": 5
-          },
-          {
-            "name": "Футболка",
-            "price": 5000,
-            "count": 4
-          },
-          {
-            "name": "Штаны",
-            "price": 5000,
-            "count": 3
-          },
-          {
-            "name": "Майка",
-            "price": 1000,
-            "count": 1
-          }
-        ]
-      }
-    ]
-  }
+  "sales": [
+    {
+      "id": 1,
+      "discount": 100,
+      "date": 1577811600000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "discount": 300,
+      "date": 1577811600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "discount": 100,
+      "date": 1577811600000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "discount": 300,
+      "date": 1577898000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "discount": 100,
+      "date": 1577984400000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 1
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "discount": 200,
+      "date": 1577984400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "discount": 100,
+      "date": 1577984400000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 5
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "discount": 100,
+      "date": 1578070800000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "discount": 200,
+      "date": 1578070800000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "discount": 100,
+      "date": 1578157200000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "discount": 100,
+      "date": 1578157200000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "discount": 300,
+      "date": 1578157200000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "discount": 100,
+      "date": 1578157200000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "discount": 100,
+      "date": 1578157200000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "discount": 100,
+      "date": 1578243600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "discount": 300,
+      "date": 1578243600000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "discount": 100,
+      "date": 1578330000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "discount": 300,
+      "date": 1578330000000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "discount": 300,
+      "date": 1578330000000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "discount": 100,
+      "date": 1578330000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 1000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "discount": 100,
+      "date": 1578416400000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "discount": 300,
+      "date": 1578416400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "discount": 200,
+      "date": 1578416400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "discount": 200,
+      "date": 1578416400000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "discount": 300,
+      "date": 1578416400000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "discount": 100,
+      "date": 1578502800000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "discount": 100,
+      "date": 1578502800000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "discount": 100,
+      "date": 1578675600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 1
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "discount": 300,
+      "date": 1578675600000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "discount": 300,
+      "date": 1578675600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "discount": 200,
+      "date": 1578675600000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "discount": 200,
+      "date": 1578675600000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "discount": 200,
+      "date": 1578762000000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "discount": 300,
+      "date": 1578762000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "discount": 300,
+      "date": 1578762000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "discount": 300,
+      "date": 1578762000000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "discount": 100,
+      "date": 1578848400000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "discount": 300,
+      "date": 1578848400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "discount": 100,
+      "date": 1578848400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "discount": 200,
+      "date": 1578934800000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 1
+        },
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "discount": 200,
+      "date": 1578934800000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "discount": 100,
+      "date": 1578934800000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "discount": 300,
+      "date": 1578934800000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "discount": 200,
+      "date": 1579021200000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "discount": 200,
+      "date": 1579021200000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "discount": 200,
+      "date": 1579021200000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "discount": 200,
+      "date": 1579021200000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "discount": 300,
+      "date": 1579021200000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "discount": 100,
+      "date": 1579107600000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "discount": 300,
+      "date": 1579107600000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "discount": 100,
+      "date": 1579107600000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "discount": 300,
+      "date": 1579107600000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "discount": 300,
+      "date": 1579107600000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "discount": 300,
+      "date": 1579194000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "discount": 300,
+      "date": 1579194000000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "discount": 100,
+      "date": 1579280400000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "discount": 300,
+      "date": 1579280400000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 1000,
+          "count": 5
+        },
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "discount": 200,
+      "date": 1579280400000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "discount": 300,
+      "date": 1579366800000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "discount": 100,
+      "date": 1579453200000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "discount": 300,
+      "date": 1579453200000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "discount": 200,
+      "date": 1579453200000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "discount": 100,
+      "date": 1579453200000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 1000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "discount": 100,
+      "date": 1579539600000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "discount": 200,
+      "date": 1579539600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "discount": 300,
+      "date": 1579626000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "discount": 200,
+      "date": 1579626000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "discount": 200,
+      "date": 1579626000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "discount": 100,
+      "date": 1579626000000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "discount": 200,
+      "date": 1579626000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "discount": 300,
+      "date": 1579798800000,
+      "productList": [
+        {
+          "name": "Штаны",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "discount": 300,
+      "date": 1579971600000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 4
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 4
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "discount": 100,
+      "date": 1579971600000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 1
+        },
+        {
+          "name": "Футболка",
+          "price": 3000,
+          "count": 5
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "discount": 200,
+      "date": 1579971600000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 5000,
+          "count": 4
+        },
+        {
+          "name": "Штаны",
+          "price": 1000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 4000,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "discount": 100,
+      "date": 1579971600000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 4000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "discount": 200,
+      "date": 1580058000000,
+      "productList": [
+        {
+          "name": "Майка",
+          "price": 4000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 4000,
+          "count": 1
+        },
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "discount": 200,
+      "date": 1580058000000,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 4
+        },
+        {
+          "name": "Носки",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Штаны",
+          "price": 5000,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "discount": 200,
+      "date": 1580058000000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 3
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 5
+        },
+        {
+          "name": "Носки",
+          "price": 1000,
+          "count": 2
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 4
+        },
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "discount": 200,
+      "date": 1580058000000,
+      "productList": [
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 2
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 2
+        },
+        {
+          "name": "Трусы",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Носки",
+          "price": 2000,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "discount": 100,
+      "date": 1580058000000,
+      "productList": [
+        {
+          "name": "Трусы",
+          "price": 5000,
+          "count": 5
+        },
+        {
+          "name": "Майка",
+          "price": 3000,
+          "count": 4
+        }
+      ]
+    }
+  ]
+}

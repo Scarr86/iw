@@ -35,16 +35,16 @@
       <section class="mat-typography container-page">
          <router-outlet></router-outlet>
       </section>
-      <button class="btn-fly" (click)="add()" mat-fab>
+      <button class="btn-fly" disabled  (click)="add()" mat-fab>
          <mat-icon>add</mat-icon>
       </button>
-      <button class="btn-fly btn-delete " (click)="delete()" mat-fab>
+      <button class="btn-fly btn-delete " disabled (click)="delete()" mat-fab>
          <mat-icon>delete</mat-icon>
       </button>
       <button class="btn-fly btn-edit" (click)="edit()" mat-fab>
          <mat-icon>edit</mat-icon>
       </button>
-      <button class="btn-fly btn-updata" (click)="update()" mat-fab>
+      <button class="btn-fly btn-updata"  (click)="update()" mat-fab>
          <mat-icon>update</mat-icon>
       </button>
       <button class="btn-fly btn-get" (click)="get()" mat-fab>

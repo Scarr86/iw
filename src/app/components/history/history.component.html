@@ -1,2 +1,5 @@
-<button mat-flat-button color="primary" (click)='generete()'>Generete Sale</button>
+<button mat-flat-button color="primary" (click)='textarea.value = generete()'>Generete Sale</button>
+
+
+<textarea style="display: block; width: 100%;" rows="10"  #textarea ></textarea>
 <pre>{{sales | json}}</pre>

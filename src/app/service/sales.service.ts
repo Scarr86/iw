@@ -18,17 +18,21 @@ export interface IUser {
 
 
 
+const ID_BASE = "-LzaGoezWBQZ3WxQqScQ"
+
 @Injectable({ providedIn: "root" })
 export class SalesService {
     // static url = "https://quickstart-1564505516527.firebaseio.com/users"
     // static url2 = "https://test-with-auth.firebaseio.com/test";
-    static url = "/assets/data/sales.json";
+    static url = "https://irksweekend.firebaseio.com/sales";
+    static localUrl = "/assets/data/sales.json";
     constructor(private http: HttpClient) { }
-    create(user: IUser) {
-        return this.http.post<any>(`${SalesService.url}/${user.name}.json`, user)
+    create(obj: any) {
+        // return this.http.post<any>(`${SalesService.url}/${user.name}.json`, user)
+        return this.http.post<any>(`${SalesService.url}.json`, obj)
     }
     getSales() {
-        return this.http.get<{ sales: Sale[] }>(`${SalesService.url}`)
+        return this.http.get<{ sales: Sale[] }>(`${SalesService.localUrl}`)
     }
 
 
@@ -52,23 +56,15 @@ export class SalesService {
                 })
             )
     }
-    delete(user: IUser) {
-        return this.http.delete(`${SalesService.url}/${user.name}/${user.id}.json`)
+    delete() {
+        return this.http.delete(`${SalesService.url}/${ID_BASE}.json`)
     }
 
-    edit(user: IUser) {
-        return this.http.put(`${SalesService.url}/${user.name}/${user.id}.json`, {
-            nikname: user.nikname
-        })
+    edit(sale: any) {
+        return this.http.put(`${SalesService.url}/${ID_BASE}/3.json`, sale);
     }
-    update(user: IUser) {
-        // return this.http.patch(`${SalesService.url}/${user.name}/${user.id}.json`, {
-        //     nikname: user.nikname
-        // })
-        let key = `${user.name}/${user.id}`;
-
-        return this.http.patch(`${SalesService.url}.json`, {
-            "bben/-LzXDHVCnK_rV-WIggXN": user.nikname
-        })
+    update(sale: any) {
+        return this.http.patch(`${SalesService.url}/${ID_BASE}/4.json`, sale);
+      
     }
 }

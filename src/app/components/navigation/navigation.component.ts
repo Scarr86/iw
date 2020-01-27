@@ -14,6 +14,7 @@ import { Sale } from 'src/app/models/sale.model';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SalesService, IUser } from 'src/app/service/sales.service';
+import { ISale } from 'src/app/models/old-sale.model';
 
 @Component({
    selector: 'app-navigation',
@@ -59,22 +60,19 @@ export class NavigationComponent implements OnInit {
       private fireService: SalesService
    ) { }
 
-   user: IUser = {
-      name: "bben",
-      age: 30
+   sale = {
+      date: Date.now(),
+      discount: 100,
    }
-   newUser: IUser = {
-      name: "bben",
-      age: 30,
-      nikname: "nik"
-   }
-
-   users: IUser[] = [];
 
    add() {
-      this.fireService.create(this.user).subscribe(res => {
-         this.users.push({ ...this.user, id: res.name })
-         console.log("add", res);
+
+      let sales = this.store.selectSnapshot(SaleState.sales);
+      console.log(sales);
+
+      this.fireService.create(sales).subscribe(({ name }) => {
+         //this.users.push({ ...this.user, id: res.name })
+         console.log("add", name);
          // this.sales.push()
       })
    }
@@ -88,19 +86,18 @@ export class NavigationComponent implements OnInit {
       // });
    }
    update() {
-      this.users[0].nikname = "nik";
-      this.fireService.update(this.users[0]).subscribe(console.log)
+      // this.users[0].nikname = "nik";
+      this.fireService.update(this.sale ).subscribe(console.log)
 
    }
    delete() {
-      this.fireService.delete(this.users[0]).subscribe((res) => {
-         this.users.splice(0, 1);
-         console.log("delete", this.users)
+      this.fireService.delete().subscribe((res) => {
+         console.log("delete", res)
       });
    }
    edit() {
-      this.users[0].nikname = "nik!!!";
-      this.fireService.edit(this.users[0]).subscribe(console.log)
+      // this.users[0].nikname = "nik!!!";
+      this.fireService.edit({}).subscribe(console.log)
    }
 
    setTitle(url: string) {

@@ -15,6 +15,7 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
   }
   generete() {
-    this.sales = this.genereteService.genereteSale(new Date(2020, 0, 1));
+     this.sales = this.genereteService.genereteSale(new Date(2020, 0, 1));
+     return  JSON.stringify(this.sales, null, 2);
   }
 }
