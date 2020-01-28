@@ -1,16 +1,13 @@
 import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GeneratorBase } from 'src/app/service/generator-sale.service';
-import { Observable, Subject, from, Subscription } from 'rxjs';
-import { IProduct } from 'src/app/models/product.model';
-import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { SaleStore } from 'src/app/store/old-sale.store';
-import { ISale } from 'src/app/models/old-sale.model';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective } from '@angular/forms';
+import { Observable, Subject, from, Subscription, of } from 'rxjs';
+import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { ChangeSale } from 'src/app/store/actions/sale.actions';
+import { ChangeSale, DeleteSale } from 'src/app/store/actions/sale.actions';
 
 @Component({
   selector: 'app-sale-detail',
@@ -20,7 +17,8 @@ import { ChangeSale } from 'src/app/store/actions/sale.actions';
 export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   sale$: Observable<Sale>;
-  id: number = 0;
+  sale: Sale;
+  // id: number = 0;
   subscription: Subscription = new Subscription();
 
 
@@ -35,7 +33,6 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   // @Output() onArrowBack = new EventEmitter<never>();
   constructor(
     private router: Router,
-    private saleStore: SaleStore,
     private fb: FormBuilder,
     private store: Store,
     private activeRoute: ActivatedRoute
@@ -43,19 +40,29 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.title = "Продажа ";
     this.form = this.fb.group({
-      id: [],
-      date: Date,
       discount: ["0"],
       productList: this.fb.array([])
+    }, {
+      validators: this.formValidator,
+      // asyncValidators: this.asuncFormValidator
     });
-    this.formNewProduct = this.createFormProduct()
 
+
+    this.formNewProduct = this.createFormProduct()
+    // this.subscription.add(
     this.sale$ = this.activeRoute.paramMap.pipe(
-      switchMap(param => this.store.select(SaleState.getSaleById(+param.get("id")))
-        .pipe(filter(s => !!s), tap(s => this.title = "Продажа " + s.id))
+      switchMap(param => this.store.selectOnce(SaleState.getSaleById(+param.get("id")))
+        .pipe(
+          filter(s => !!s),
+          tap(s => {
+            this.title = "Продажа " + s.id;
+            this.sale = s;
+          }))
       ),
       take(1)
-    );
+    )
+    // .subscribe( s => this.sale = s)
+    // )
 
     this.subscription.add(
       this.form.valueChanges.pipe(
@@ -63,7 +70,10 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         debounceTime(300),
         distinctUntilChanged(((v1, v2) => JSON.stringify(v1) === JSON.stringify(v2))),
       )
-        .subscribe(v => this.store.dispatch(new ChangeSale(v.id, v)))
+        .subscribe(form => {
+          let s: Sale = new Sale((form as Sale).discount, (form as Sale).productList, this.sale.timestamp, this.sale.id);
+          this.store.dispatch(new ChangeSale(this.sale.id, s));
+        })
     );
 
     // this.subscription.add(
@@ -74,24 +84,38 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  formValidator(control: FormControl) {
+    let diff = (control.value as Sale).productList.reduce((s, p) => s += p.price * p.count, 0) - (control.value as Sale).discount
+    if (diff <= 0) return { "invalidDiscount": true };
+    return null
+  }
+  asuncFormValidator(control: FormControl) {
+    return of({ "AsyncInvalidForm": true }).pipe(delay(1000))
+  }
+
   createFormProduct(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required]],
       count: ['', [Validators.required]],
       price: ['', [Validators.required]],
+    }, {
+      validators: Validators.required
     })
   }
   ngAfterViewInit() {
+    this.form.statusChanges.subscribe(v => {
+      console.log(v, this.form.errors)
+    });
   }
   goBack() {
     this.router.navigate(['sale-list'])
   }
 
-  get arrayProduct(): FormArray {
+  get arrayProductControl(): FormArray {
     return this.form.get("productList") as FormArray;
   }
   submit() {
-    this.store.dispatch(new ChangeSale(this.id, this.form.value));
+    this.store.dispatch(new ChangeSale(this.sale.id, this.form.value));
   }
 
   save() {
@@ -103,11 +127,13 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   add() {
     let newForm = this.createFormProduct();
     newForm.patchValue(this.formNewProduct.value);
-    this.arrayProduct.push(newForm);
+    this.arrayProductControl.push(newForm);
     this.formNewProduct.reset();
   }
   delete(i: number) {
-    this.arrayProduct.removeAt(i)
+    this.arrayProductControl.removeAt(i);
+    // if (!this.arrayProduct.length)
+    //   this.store.dispatch(new DeleteSale(this.sale.id));
   }
 }
 

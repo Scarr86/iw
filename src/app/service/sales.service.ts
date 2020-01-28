@@ -14,10 +14,6 @@ export interface IUser {
 }
 
 
-
-
-
-
 const ID_BASE = "-LzaGoezWBQZ3WxQqScQ"
 
 @Injectable({ providedIn: "root" })

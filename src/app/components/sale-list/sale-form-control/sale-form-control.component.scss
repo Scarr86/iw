@@ -12,14 +12,15 @@ button {
 
 }
 
-.btn-easy {
+.actions{
     width: 100%;
-
+}
+.actions-inline{
+    flex-grow: 1;
+    margin-left: 20px;
 }
 
 .btn-count {
-    flex-grow: 1;
-    margin-left: 20px;
 
     .mat-button-base {
         min-width: 50px;

@@ -21,7 +21,7 @@ export class ConnectFormGroupDirective {
       }))
     });
     this.formGroup.form.patchValue(value, {
-      // emitEvent: false,
+      emitEvent: false,
       // onlySelf: true,
     });
     this.formGroup.form.markAsPristine();

@@ -2,8 +2,6 @@ import { Injectable } from "@angular/core";
 import { Subject, MonoTypeOperatorFunction, Observable, from, merge, of, concat, forkJoin } from 'rxjs';
 import { filter, exhaustMap, map, startWith, mapTo, tap, scan, catchError, publishReplay, refCount, switchMap, switchAll, first, mergeMap } from 'rxjs/operators';
 import { FileService, MIME_TYPE_FOLDER } from '../service/google-gapi/file.service';
-import { LogService } from '../service/log.service';
-import { Auth2Service } from '../service/google-gapi/auth2.service';
 
 
 type FileList = gapi.client.drive.FileList;
@@ -75,7 +73,7 @@ function ofType<T extends Action>(type: EDriveActions): MonoTypeOperatorFunction
 })
 export class DriveStore {
 
-    constructor(private auth: Auth2Service, private fileService: FileService, private logger: LogService) { }
+    constructor(private fileService: FileService) { }
 
     /**
     * Actions
@@ -342,17 +340,5 @@ export class DriveStore {
         this.actions$.next(action);
     }
 
-
-
-
-
-    private log(msg) {
-        this.logger.write(`${msg}`)
-    }
-    private accentLog(msg) {
-        this.logger.write(msg, 'accent')
-    }
-    private warn(msg) {
-        this.logger.write(`${msg}`, 'warn');
-    }
+   
 }

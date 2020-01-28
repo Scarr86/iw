@@ -1,17 +1,30 @@
 <div class="wrapper">
-    <mat-form-field>
-        <input [formControl]="source" autocomplete="off" type="{{ type == 'count'? 'number': type}}" matInput
-            placeholder="{{ placeholder }}" />
+    <mat-form-field [style.fontSize.px]="16" >
+        <input #input 
+            [formControl]="source" 
+            autocomplete="off" 
+            type="{{ type == 'count'? 'number': type}}" 
+            matInput
+            placeholder="{{ placeholder }}" 
+            [required]='false'
+        />
+        <mat-error *ngIf="true">
+            Email is <strong>required</strong>
+        </mat-error>
         <button *ngIf="type != 'count'" type="button" mat-icon-button matSuffix (click)="clear()">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
+    <!-- <input #input formControlName="name" type="text"> -->
+    <div *ngIf="type == 'text'" class="actions">
+        {{input.value | search:' suffix' }}
+    </div>
 
     <ng-container [ngSwitch]="type">
-        <div class="btn-easy" *ngSwitchCase="'number'">
-            <button type="button" mat-stroked-button (click)="set(50)" color="primary">
+        <div  class="actions" *ngSwitchCase="'number'">
+            <button  type="button" mat-stroked-button (click)="set(50)" color="primary">
                 +50
-            </button>
+            </button >
             <button type="button" mat-stroked-button (click)="set(200)" color="primary">
                 +200
             </button>
@@ -19,7 +32,7 @@
                 +500
             </button>
         </div>
-        <div class="btn-count" *ngSwitchCase="'count'">
+        <div class="btn-count actions-inline" *ngSwitchCase="'count'">
             <button type="button" mat-stroked-button color="primary" (click)="set(-1)" color="primary">
                 <mat-icon>remove</mat-icon>
             </button>

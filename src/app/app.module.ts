@@ -18,7 +18,6 @@ import { MaterialModule } from './material/material.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
-import { ProductItemComponent } from './product-list/product-item/product-item.component';
 import { DriveViewerComponent } from './components/drive-viewer/drive-viewer.component';
 import { ConnectFormControlDirective } from './components/connect-form.directive';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -36,6 +35,8 @@ import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchProductComponent } from './components/sale-list/search-product/search-product.component';
+import { SearchPipe } from './components/sale-list/search.pipe';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -52,7 +53,6 @@ export function initGapi(gapiService: GapiService) {
     SaleListComponent,
     NotFoundComponent,
     HistoryComponent,
-    ProductItemComponent,
     DriveViewerComponent,
     ConnectFormControlDirective,
     ModalDialogComponent,
@@ -62,6 +62,8 @@ export function initGapi(gapiService: GapiService) {
     LoginComponent,
     SaleDetailComponent,
     SaleFormControlComponent,
+    SearchProductComponent,
+    SearchPipe,
   ],
   entryComponents: [
     ModalDialogComponent
@@ -86,7 +88,7 @@ export function initGapi(gapiService: GapiService) {
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initGapi, deps: [GapiService], multi: true },
+    // { provide: APP_INITIALIZER, useFactory: initGapi, deps: [GapiService], multi: true },
 
     { provide: LOCALE_ID, useValue: "ru" }
   ],

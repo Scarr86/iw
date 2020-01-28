@@ -54,7 +54,7 @@ export class SaleState implements NgxsOnInit {
 
 
         return this.salesService.getSales().pipe(
-            map(({ sales }) => sales.map(s => ({ ...s, date: new Date(s.date) }))),
+            map(({ sales }) => sales.map(s => (new Sale(s.discount, s.productList, s.timestamp, s.id)))),
             tap(sales => ctx.patchState({ sales }))
         )
 
@@ -66,8 +66,12 @@ export class SaleState implements NgxsOnInit {
         // return from(this.fileServise.file(baseInfo.id, "media"))
         //     .pipe(
         //         pluck('result', 'sales'),
-        //         map((sales) => (sales as Sale[]).map(s => ({ ...s, date: new Date(s.date) }))),
-        //         tap(sales => ctx.patchState({ sales, baseInfo }))
+        //         map((sales) => (sales as Sale[]).map(s => (new Sale(s.id, s.timestamp, s.discount, s.productList)))),
+        //         tap(sales => {
+        //             console.log(sales);
+
+        //             ctx.patchState({ sales, baseInfo })
+        //         })
         //     )
     }
 
@@ -96,13 +100,20 @@ export class SaleState implements NgxsOnInit {
 
     @Action(ChangeSale)
     changeSale(ctx: StateContext<SaleStateModel>, { id, sale }: ChangeSale) {
+        let salepre = ctx.getState().sales.find(s => s.id == id);
+        // console.log("salepre", salepre);
+        // console.log("id: ", id);
+
         ctx.setState(
             patch({
                 sales: updateItem<Sale>(s => s.id === id, sale)
             })
         )
-        // saveSales(ctx);
+        // let salepost = ctx.getState().sales.find(s => s.id == id);
+        // console.log("salepost", salepost, sale);
+
         //do api
+        // saveSales(ctx);
     }
 
     @Selector()

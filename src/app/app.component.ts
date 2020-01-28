@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, HostBinding } from '@angular/core';
-import { SaleStore } from './store/old-sale.store';
 import { DriveStore } from './store/drive.store';
 import { merge, Observable } from 'rxjs';
 import { ThemeService } from './service/theme.service';
@@ -17,7 +16,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   title = 'iw';
   constructor(
-    private saleStory: SaleStore,
     private driveStore: DriveStore,
     private theme: ThemeService,
     private sls: StateLoadingService

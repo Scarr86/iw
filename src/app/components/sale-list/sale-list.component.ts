@@ -42,7 +42,7 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       delay(1),
       tap(d => sessionStorage.setItem("sessionDate", d.toString())),
       switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
-    ); 
+    );
   }
   onSelect(sale: Sale) {
     this.router.navigate(['/sale-detail', sale.id])
@@ -58,6 +58,8 @@ export class SaleListComponent implements OnInit, AfterViewInit {
     return sale.productList.length;
   }
   getTotalPrice(sale: Sale): number {
+    console.log(sale.total);
+
     return sale.productList.reduce((sum, p) => sum += p.count * p.price, 0) - sale.discount;
   }
 

@@ -19,10 +19,11 @@
       
       <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
       </app-sale-form-control>
+     
     </mat-card>
     <!--  -->
     <mat-accordion formArrayName="productList" [hideToggle]="true">
-      <mat-expansion-panel #accordion *ngFor="let product of arrayProduct.controls; index as i" [formGroupName]="i">
+      <mat-expansion-panel #accordion *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
         <mat-expansion-panel-header>
           <mat-panel-title *ngIf="!accordion.expanded">
@@ -45,13 +46,20 @@
         </mat-expansion-panel-header>
         <!--  -->
         <!-- Product List Content  -->
-        <app-sale-form-control [source]="arrayProduct.controls[i].controls['name']" type="text" placeholder="Название">
+        <!-- <app-search-product></app-search-product> -->
+     
+        
+        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['name']" type="text" placeholder="Название">
         </app-sale-form-control>
-        <app-sale-form-control [source]="arrayProduct.controls[i].controls['count']" type="count"
+
+
+        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['count']" type="count"
           placeholder="Количество">
         </app-sale-form-control>
-        <app-sale-form-control [source]="arrayProduct.controls[i].controls['price']" type="number" placeholder="Цена">
+        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['price']" type="number" placeholder="Цена">
         </app-sale-form-control>
+
+
         <!--  -->
         <!-- Product List Action -->
         <mat-action-row class="btn-actions">
@@ -63,6 +71,8 @@
         <!--  -->
       </mat-expansion-panel>
       <!--  -->
+
+      
       <!-- New Product -->
       <mat-expansion-panel>
         <!-- New Product List Header -->

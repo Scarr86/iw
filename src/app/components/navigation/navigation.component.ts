@@ -2,7 +2,6 @@ import { Component, OnInit, HostBinding, AfterViewInit, AfterContentInit } from 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap, startWith, filter } from 'rxjs/operators';
-import { Auth2Service } from '../../service/google-gapi/auth2.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
@@ -14,7 +13,6 @@ import { Sale } from 'src/app/models/sale.model';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SalesService, IUser } from 'src/app/service/sales.service';
-import { ISale } from 'src/app/models/old-sale.model';
 
 @Component({
    selector: 'app-navigation',

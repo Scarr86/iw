@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { interval, range, of, Observable, combineLatest, merge, forkJoin } from 'rxjs';
 
 import { reduce, switchMap, tap, concatMap, map, scan, concatAll, publishReplay, refCount, finalize, shareReplay } from 'rxjs/operators';
-import { Sale } from '../models/old-sale.model';
-import { Product } from '../models/product.model'
+import { Product, Sale } from '../models/sale.model';
 // import { Sale, Product, ISaleBase } from './sales';
 
 
@@ -76,12 +75,12 @@ export class GeneratorBase {
          let countSales = this.random(0, 5);
          while (countSales--) {
             let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
-            let sale: Sale = new Sale({
-               id: id++,
-               date: date.getTime() ,
-               discount: this.random(1, 3) * 100,
-               productList
-            });
+            let sale: Sale = new Sale(
+               this.random(1, 3) * 100,
+               productList,
+               date.getTime() ,
+               id++,
+            );
             sales.push(sale);
          }
       }
