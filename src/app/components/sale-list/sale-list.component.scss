@@ -4,7 +4,7 @@
 
 
 .expand-page{
-    margin: 0 -15px;
+    // margin: 0 -15px;
 }
 .more-vert {
     margin-left: 10px;
@@ -59,3 +59,10 @@
     }
 }
 
+.btn-fly {
+    position: fixed;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }

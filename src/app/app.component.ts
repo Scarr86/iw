@@ -3,6 +3,8 @@ import { DriveStore } from './store/drive.store';
 import { merge, Observable } from 'rxjs';
 import { ThemeService } from './service/theme.service';
 import { StateLoadingService } from './service/state-loading.service';
+import { Store } from '@ngxs/store';
+import { GetSales } from './store/actions/sale.actions';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   constructor(
     private driveStore: DriveStore,
     private theme: ThemeService,
-    private sls: StateLoadingService
+    private sls: StateLoadingService,
+    private store:Store
   ) {
   }
   ngOnInit() {

@@ -8,7 +8,7 @@
   </button>
 </mat-toolbar>
 
-<section  class="container-page mat-typography mat-app-background">
+<section class="container-page mat-typography mat-app-background">
   <h2 class="date">
     {{(sale$ | async)?.date | date:"EE, d MMM yyyy"}}
   </h2>
@@ -16,16 +16,18 @@
   <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
-      
+
       <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
       </app-sale-form-control>
-     
+
     </mat-card>
     <!--  -->
     <mat-accordion formArrayName="productList" [hideToggle]="true">
-      <mat-expansion-panel #accordion *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
+      <mat-expansion-panel (afterExpand)="test(accordion)" #accordion
+        *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
         <mat-expansion-panel-header>
+          <!-- {{test(expansionheadr)}} -->
           <mat-panel-title *ngIf="!accordion.expanded">
             <span class="nowrap-hidden-text"> {{ product.get("name").value }} </span>
           </mat-panel-title>
@@ -33,10 +35,7 @@
             <div class="close-panel-description" *ngIf="!accordion.expanded else dsc">
               <span>{{ product.get("count").value }}шт.</span>
               <span class="nowrap-hidden-text">
-                {{
-                  product.get("price").value * product.get("count").value
-                    | currency: "RUB":"symbol-narrow"
-                }}
+                {{product.get("price").value * product.get("count").value | currency: "RUB":"symbol-narrow"}}
               </span>
             </div>
             <ng-template #dsc>
@@ -47,17 +46,19 @@
         <!--  -->
         <!-- Product List Content  -->
         <!-- <app-search-product></app-search-product> -->
-     
-        
-        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['name']" type="text" placeholder="Название">
+
+        <app-form-products [formGroup]="arrayProductControl.controls[i]"></app-form-products>
+        <!-- <app-sale-form-control [source]="arrayProductControl.controls[i].controls['name']" type="text"
+          placeholder="Название">
         </app-sale-form-control>
 
 
         <app-sale-form-control [source]="arrayProductControl.controls[i].controls['count']" type="count"
           placeholder="Количество">
         </app-sale-form-control>
-        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['price']" type="number" placeholder="Цена">
-        </app-sale-form-control>
+        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['price']" type="number"
+          placeholder="Цена">
+        </app-sale-form-control> -->
 
 
         <!--  -->
@@ -72,9 +73,9 @@
       </mat-expansion-panel>
       <!--  -->
 
-      
+
       <!-- New Product -->
-      <mat-expansion-panel>
+      <mat-expansion-panel #expansionheadr (afterExpand)="test(expansionheadr)">
         <!-- New Product List Header -->
         <mat-expansion-panel-header>
           <mat-panel-description>
@@ -83,17 +84,11 @@
         </mat-expansion-panel-header>
         <!--  -->
         <!-- New Product List Content  -->
-        <app-sale-form-control [source]="formNewProduct.controls['name']" type="text" placeholder="Название">
-        </app-sale-form-control>
-        <app-sale-form-control [source]="formNewProduct.controls['count']" type="count" placeholder="Количество">
-        </app-sale-form-control>
-        <app-sale-form-control [source]="formNewProduct.controls['price']" type="number" placeholder="Цена">
-        </app-sale-form-control>
+        <app-form-products [formGroup]="formNewProduct"></app-form-products>
         <!--  -->
         <!-- New Product List Action -->
         <mat-action-row class="btn-actions">
-          <button mat-button color="accent" [disabled]="formNewProduct.invalid"
-            (click)="add()">
+          <button mat-button color="accent" [disabled]="formNewProduct.invalid" (click)="add()">
             <mat-icon>playlist_add</mat-icon>
             <span> Добавить </span>
           </button>

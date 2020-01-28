@@ -23,7 +23,7 @@ import { ConnectFormControlDirective } from './components/connect-form.directive
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from './service/theme.service';
 import { ModalDialogComponent } from './components/drive-viewer/modal-diolog/modal-diolog.component';
-import { ConnectFormGroupDirective } from './components/connect-form-group.directive';
+import { ConnectFormGroupDirective } from './components/sale-list/sale-detail/connect-form-group.directive';
 import { SettingComponent } from './components/setting/setting.component';
 import { FileListComponent } from './components/setting/file-list/file-list.component';
 import { FileState } from './store/state/file.state';
@@ -37,6 +37,7 @@ import { SaleFormControlComponent } from './components/sale-list/sale-form-contr
 import { HttpClientModule } from '@angular/common/http';
 import { SearchProductComponent } from './components/sale-list/search-product/search-product.component';
 import { SearchPipe } from './components/sale-list/search.pipe';
+import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -64,6 +65,7 @@ export function initGapi(gapiService: GapiService) {
     SaleFormControlComponent,
     SearchProductComponent,
     SearchPipe,
+    FormProductsComponent,
   ],
   entryComponents: [
     ModalDialogComponent

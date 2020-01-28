@@ -44,8 +44,12 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
     );
   }
-  onSelect(sale: Sale) {
-    this.router.navigate(['/sale-detail', sale.id])
+  onSelect(sale: Sale | undefined) {
+    if (sale instanceof Sale)
+      this.router.navigate(['/sale-detail', sale.id]);
+    else
+      this.router.navigate(['/sale-detail', "new-sale"]);
+
   }
 
   // onDateChange(event: MatDatepickerInputEvent<Date>) {

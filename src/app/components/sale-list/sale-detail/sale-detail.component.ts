@@ -1,36 +1,50 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GeneratorBase } from 'src/app/service/generator-sale.service';
-import { Observable, Subject, from, Subscription, of } from 'rxjs';
-import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay } from 'rxjs/operators';
+import { Observable, Subject, from, Subscription, of, interval } from 'rxjs';
+import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { ChangeSale, DeleteSale } from 'src/app/store/actions/sale.actions';
+import { ChangeSale, DeleteSale, GetSales } from 'src/app/store/actions/sale.actions';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-sale-detail',
   templateUrl: './sale-detail.component.html',
-  styleUrls: ['./sale-detail.component.scss']
+  styleUrls: ['./sale-detail.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  sale$: Observable<Sale>;
+  sale$: Observable<Sale> = this.activeRoute.paramMap.pipe(
+    switchMap(param => this.store.select(SaleState.getSaleById(+param.get("id")))
+      .pipe(
+        filter(s => !!s),
+        tap(s => {
+          this.title = "Продажа " + (s ? s.id : "");
+          this.sale = s ? s : null;
+        }),
+        take(1),
+        timeout(1000),
+      )
+    ),
+    // take(1)
+  )
+
+
+
+
   sale: Sale;
-  // id: number = 0;
   subscription: Subscription = new Subscription();
-
-
   @ViewChild('formRef', { static: false }) formRef: FormGroupDirective;
   title: string = "";
   form: FormGroup;
+
+  newSale: Sale = new Sale(0, []);
   formNewProduct: FormGroup;
 
-
-
-  // @Output() onSave = new EventEmitter<ISale>();
-  // @Output() onArrowBack = new EventEmitter<never>();
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -38,31 +52,18 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private activeRoute: ActivatedRoute
   ) { }
   ngOnInit() {
+
+
     this.title = "Продажа ";
     this.form = this.fb.group({
       discount: ["0"],
       productList: this.fb.array([])
     }, {
-      validators: this.formValidator,
+      // validators: this.formValidator,
       // asyncValidators: this.asuncFormValidator
     });
 
-
     this.formNewProduct = this.createFormProduct()
-    // this.subscription.add(
-    this.sale$ = this.activeRoute.paramMap.pipe(
-      switchMap(param => this.store.selectOnce(SaleState.getSaleById(+param.get("id")))
-        .pipe(
-          filter(s => !!s),
-          tap(s => {
-            this.title = "Продажа " + s.id;
-            this.sale = s;
-          }))
-      ),
-      take(1)
-    )
-    // .subscribe( s => this.sale = s)
-    // )
 
     this.subscription.add(
       this.form.valueChanges.pipe(
@@ -70,9 +71,14 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         debounceTime(300),
         distinctUntilChanged(((v1, v2) => JSON.stringify(v1) === JSON.stringify(v2))),
       )
-        .subscribe(form => {
-          let s: Sale = new Sale((form as Sale).discount, (form as Sale).productList, this.sale.timestamp, this.sale.id);
-          this.store.dispatch(new ChangeSale(this.sale.id, s));
+        .subscribe((value) => {
+          if (this.sale) {
+            let s: Sale = new Sale((value as Sale).discount, (value as Sale).productList, this.sale.timestamp, this.sale.id);
+            this.store.dispatch(new ChangeSale(s.id, s));
+          }
+          else {
+          }
+          // let s: Sale = new Sale((form as Sale).discount, (form as Sale).productList, this.sale.timestamp, this.sale.id);
         })
     );
 
@@ -95,9 +101,9 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createFormProduct(): FormGroup {
     return this.fb.group({
-      name: ['', [Validators.required]],
-      count: ['', [Validators.required]],
-      price: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      count: ['', [Validators.required, Validators.min(0)]],
+      price: ['', [Validators.required, Validators.min(0)]],
     }, {
       validators: Validators.required
     })
@@ -119,6 +125,9 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   save() {
+    // console.log();
+
+    window.scrollBy(0, 10);
     this.formRef.ngSubmit.next(undefined);
   }
   ngOnDestroy() {
@@ -134,6 +143,15 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.arrayProductControl.removeAt(i);
     // if (!this.arrayProduct.length)
     //   this.store.dispatch(new DeleteSale(this.sale.id));
+  }
+  test(el: MatExpansionPanel) {
+    let nativEl: HTMLElement = document.querySelector(`[aria-controls=${el.id}]`);
+    let bottom = nativEl.getBoundingClientRect().bottom
+    console.log("[test SALE DETAIL]", Math.min(0, bottom) * -1);
+
+    // nativEl.scrollBy(0, Math.min(0, bottom) * -1);
+    // nativEl.scrollIntoView();
+    // window.scrollBy(0, 20);
   }
 }
 

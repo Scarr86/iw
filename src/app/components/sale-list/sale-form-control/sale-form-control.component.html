@@ -2,8 +2,8 @@
     <mat-form-field [style.fontSize.px]="16" >
         <input #input 
             [formControl]="source" 
-            autocomplete="off" 
             type="{{ type == 'count'? 'number': type}}" 
+            autocomplete="off" 
             matInput
             placeholder="{{ placeholder }}" 
             [required]='false'
@@ -43,13 +43,3 @@
     </ng-container>
 </div>
 
-<!-- <div *ngIf="type == 'number'">
-  <button type="button" mat-stroked-button (click)="set(50)" color="primary">
-    +50
-  </button>
-  <button type="button" mat-stroked-button (click)="set(200)" color="primary">
-    +200
-  </button>
-  <button type="button" mat-stroked-button (click)="set(500)" color="primary">
-    +500
-  </button> -->

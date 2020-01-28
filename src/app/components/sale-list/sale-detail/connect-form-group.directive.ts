@@ -1,6 +1,6 @@
-import { Directive, Input,  } from '@angular/core';
+import { Directive, Input, } from '@angular/core';
 import { FormGroupDirective, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Sale } from '../models/sale.model';
+import { Sale } from '../../../models/sale.model';
 @Directive({
   selector: '[appConnectFormGroup]'
 })
@@ -10,14 +10,17 @@ export class ConnectFormGroupDirective {
 
   @Input("appConnectFormGroup")
   set data(value: Sale) {
-
+    console.log(value);
+    
     if (!value) return;
+
+    
     this.arrayProduct.clear();
     value.productList.forEach(_ => {
       this.arrayProduct.push(this.fb.group({
-        name: ["", [Validators.required]],
-        count: ["", [Validators.required]],
-        price: ["", [Validators.required]]
+        name: ["", [Validators.required, Validators.minLength(3)]],
+        count: ["0", [Validators.required, Validators.min(0)]],
+        price: ["0", [Validators.required, Validators.min(0)]]
       }))
     });
     this.formGroup.form.patchValue(value, {

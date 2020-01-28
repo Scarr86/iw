@@ -19,12 +19,10 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-
     &>* {
         flex-basis: 0;
         flex-grow: 1;
     }
-
     &> :last-child {
         flex-grow: 2;
     }
@@ -47,3 +45,4 @@
 .mat-expansion-panel-header-title{
     min-width: calc(40% - 16px);
 }
+

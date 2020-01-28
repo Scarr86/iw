@@ -139,7 +139,7 @@ export class SaleState implements NgxsOnInit {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales && state.sales.find(s => s.id === id)
+                return  state.sales && state.sales.find(s => s.id === id)
             }
         )
     }
