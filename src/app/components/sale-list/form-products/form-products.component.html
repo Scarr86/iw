@@ -1,44 +1,52 @@
 <div class="form-product" [formGroup]="formGroup" [style.fontSize.px]="18">
-
+    <!-- Name -->
     <mat-form-field class="form-product__name">
-        <input formControlName="name" type="text" autocomplete="off" matInput placeholder="Название" required />
+        <input #nameInput="matInput" (keypress)="handleInput($event)" formControlName="name" type="text" autocomplete="off" matInput placeholder="Название"
+            required />
         <button type="button" mat-icon-button matSuffix (click)="clear(name)">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
+    <!--  -->
+    <!-- Count  -->
 
+    <ng-container *ngIf="!nameInput.focused">
 
+        <mat-form-field class="form-product__count">
+            <input formControlName="count" type="number" min="0" autocomplete="off" matInput placeholder="Количество"
+                required />
+        </mat-form-field>
+        <div class="form-product__count-actions">
+            <button type="button" mat-stroked-button color="primary" (click)="onChange(count,-1)" color="primary">
+                <mat-icon inline>remove</mat-icon>
+            </button>
+            <button type="button" mat-stroked-button color="primary" (click)="onChange(count, 1)" color="primary">
+                <mat-icon inline>add</mat-icon>
+            </button>
+        </div>
+        <!--  -->
+        <!-- Price -->
+        <mat-form-field class="form-product__price">
+            <input formControlName="price" type="number" min="0" autocomplete="off" matInput placeholder="Цена"
+                required />
+            <button type="button" mat-icon-button matSuffix (click)="clear(price)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <div class="form-product__price-actions">
+            <button type="button" mat-stroked-button (click)="onChange(price, 50)" color="primary">
+                +50
+            </button>
+            <button type="button" mat-stroked-button (click)="onChange(price, 200)" color="primary">
+                +200
+            </button>
+            <button type="button" mat-stroked-button (click)="onChange(price, 500)" color="primary">
+                +500
+            </button>
+        </div>
+    </ng-container>
 
-    <mat-form-field class="form-product__count">
-        <input formControlName="count" type="number"  min="0" autocomplete="off" matInput placeholder="Количество" required />
-      
-    </mat-form-field>
-    <div class="form-product__count-actions">
-        <button type="button" mat-stroked-button color="primary" (click)="onChange(count,-1)" color="primary">
-            <mat-icon inline>remove</mat-icon>
-        </button>
-        <button type="button" mat-stroked-button color="primary" (click)="onChange(count, 1)" color="primary">
-            <mat-icon inline>add</mat-icon>
-        </button>
-    </div>
-
-    <mat-form-field class="form-product__price">
-        <input formControlName="price" type="number"  min="0" autocomplete="off" matInput placeholder="Цена" required />
-        <button type="button" mat-icon-button matSuffix (click)="clear(price)">
-            <mat-icon>close</mat-icon>
-        </button>
-    </mat-form-field>
-    <div class="form-product__price-actions">
-        <button type="button" mat-stroked-button (click)="onChange(price, 50)" color="primary">
-            +50
-        </button>
-        <button type="button" mat-stroked-button (click)="onChange(price, 200)" color="primary">
-            +200
-        </button>
-        <button type="button" mat-stroked-button (click)="onChange(price, 500)" color="primary">
-            +500
-        </button>
-    </div>
+    <!--  -->
 
 
 

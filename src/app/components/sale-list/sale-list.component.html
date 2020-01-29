@@ -9,10 +9,10 @@
     <p class="date-description">Сегодня</p>
 
     <mat-action-list disableRipple="true" color="primary">
-        <mat-list-item (click)="onSelect(s)" *ngFor=" let s of (sales$ | async); let i=index">
+        <mat-list-item (click)="onSelect(s, i + 1)" *ngFor=" let s of (sales$ | async); let i=index">
             <div class="sale text-primary">
                 <div class="sale__item">
-                    {{s.id}}
+                    {{i + 1}}
                 </div>
                 <div class="sale__item">
                     {{s.count}} поз.

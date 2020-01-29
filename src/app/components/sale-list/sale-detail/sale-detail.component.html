@@ -2,7 +2,7 @@
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <span>{{ title }} </span>
+  <span>{{ title$ | async }} </span>
   <button (click)="save()" class="save-btn" [disabled]="form.invalid" mat-raised-button color="primary">
     Сохранить
   </button>
@@ -16,13 +16,12 @@
   <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
-
       <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
       </app-sale-form-control>
-
     </mat-card>
     <!--  -->
-    <mat-accordion formArrayName="productList" [hideToggle]="true">
+    <!-- Accordion -->
+    <mat-accordion formArrayName="productList" [hideToggle]="true" [multi]="true">
       <mat-expansion-panel (afterExpand)="test(accordion)" #accordion
         *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
@@ -45,26 +44,11 @@
         </mat-expansion-panel-header>
         <!--  -->
         <!-- Product List Content  -->
-        <!-- <app-search-product></app-search-product> -->
-
         <app-form-products [formGroup]="arrayProductControl.controls[i]"></app-form-products>
-        <!-- <app-sale-form-control [source]="arrayProductControl.controls[i].controls['name']" type="text"
-          placeholder="Название">
-        </app-sale-form-control>
-
-
-        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['count']" type="count"
-          placeholder="Количество">
-        </app-sale-form-control>
-        <app-sale-form-control [source]="arrayProductControl.controls[i].controls['price']" type="number"
-          placeholder="Цена">
-        </app-sale-form-control> -->
-
-
         <!--  -->
         <!-- Product List Action -->
         <mat-action-row class="btn-actions">
-          <button color="primary" mat-button (click)="delete(i)">
+          <button type="button" color="primary" mat-button (click)="delete(i)">
             <mat-icon>delete</mat-icon>
             <span> Удалить </span>
           </button>
@@ -72,7 +56,6 @@
         <!--  -->
       </mat-expansion-panel>
       <!--  -->
-
 
       <!-- New Product -->
       <mat-expansion-panel #expansionheadr (afterExpand)="test(expansionheadr)">
@@ -96,5 +79,6 @@
       </mat-expansion-panel>
       <!-- -->
     </mat-accordion>
+    <!--  -->
   </form>
 </section>

@@ -44,11 +44,15 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
     );
   }
-  onSelect(sale: Sale | undefined) {
+  onSelect(sale: Sale | undefined = null, indx: number | string = "new-sale") {
     if (sale instanceof Sale)
-      this.router.navigate(['/sale-detail', sale.id]);
+      this.router.navigate(['/sale-detail', indx], {
+        queryParams: {
+          id: sale.id
+        }
+      });
     else
-      this.router.navigate(['/sale-detail', "new-sale"]);
+      this.router.navigate(['/sale-detail', indx]);
 
   }
 
