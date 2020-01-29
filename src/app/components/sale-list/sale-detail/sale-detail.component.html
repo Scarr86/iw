@@ -16,8 +16,23 @@
   <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
-      <app-sale-form-control [source]="form.controls['discount']" type="number" placeholder="Скидка">
-      </app-sale-form-control>
+      <mat-form-field class="form__discount-input">
+        <input   formControlName="discount" type="number" min="0" autocomplete="off" matInput placeholder="Скидка"/>
+        <button type="button" mat-icon-button matSuffix (click)="clear(price)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div class="form__discount-actions">
+        <button type="button" mat-stroked-button (click)="discount = 50" color="primary">
+          +50
+        </button>
+        <button type="button" mat-stroked-button (click)="discount = 200" color="primary">
+          +200
+        </button>
+        <button type="button" mat-stroked-button (click)="discount = 500" color="primary">
+          +500
+        </button>
+      </div>
     </mat-card>
     <!--  -->
     <!-- Accordion -->
@@ -26,7 +41,6 @@
         *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
         <mat-expansion-panel-header>
-          <!-- {{test(expansionheadr)}} -->
           <mat-panel-title *ngIf="!accordion.expanded">
             <span class="nowrap-hidden-text"> {{ product.get("name").value }} </span>
           </mat-panel-title>
@@ -38,7 +52,7 @@
               </span>
             </div>
             <ng-template #dsc>
-              <span class="open-panel-description"> Подробно </span>
+              <span> Подробно </span>
             </ng-template>
           </mat-panel-description>
         </mat-expansion-panel-header>
@@ -81,4 +95,8 @@
     </mat-accordion>
     <!--  -->
   </form>
+
+  <button class="btn-fly" (click)="onSelect()" mat-fab>
+    <mat-icon>save</mat-icon>
+</button>
 </section>

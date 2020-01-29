@@ -25,6 +25,7 @@ export class FormProductsComponent implements OnInit {
     return this.formGroup.get('price')
   }
   onChange(ctr: FormControl, value) {
+    console.log(ctr);
     ctr.setValue(+ctr.value + value)
   }
   clear(ctr: FormControl) {
@@ -32,7 +33,7 @@ export class FormProductsComponent implements OnInit {
   }
 
   handleInput(ev:Event){
-    console.log(ev.code)
+    console.log(ev)
   }
 
 

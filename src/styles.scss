@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-@import 'theme.scss';
+// @import 'theme.scss';
 
 
 // @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
@@ -70,11 +70,11 @@ $iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
   // @include candy-carousel-theme($dark-theme); 
 }
 .deep-purple{
-  @include angular-material-theme($my-custom-light-theme);
-  @include custom-theme($my-custom-light-theme);
+  // @include angular-material-theme($my-custom-light-theme);
+  // @include custom-theme($my-custom-light-theme);
 }
 .dark-theme.deep-purple{
-  @include angular-material-theme($my-custom-dark-theme);
+  // @include angular-material-theme($my-custom-dark-theme);
 }
 
 
@@ -124,4 +124,12 @@ ul {
   // background-color: mat-color($background, background);
   // min-height: 100vh;
 }
+.btn-fly {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
 

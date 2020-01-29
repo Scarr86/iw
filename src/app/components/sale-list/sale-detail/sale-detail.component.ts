@@ -136,7 +136,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   delete(i: number) {
     console.log("delete product", i);
-    
+
     this.arrayProductControl.removeAt(i);
     // if (!this.arrayProduct.length)
     //   this.store.dispatch(new DeleteSale(this.sale.id));
@@ -149,6 +149,20 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     // nativEl.scrollBy(0, Math.min(0, bottom) * -1);
     // nativEl.scrollIntoView();
     // window.scrollBy(0, 20);
+  }
+
+  onChange(ctr: FormControl, value) {
+    console.log(ctr);
+    
+    ctr.setValue(+ctr.value + value)
+  }
+
+  get discount(){
+    return this.form.get('discount')
+  }
+  set discount(v ){
+    this.form.get("discount").setValue(this.discount.value + v)
+
   }
 }
 

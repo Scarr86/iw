@@ -6,7 +6,7 @@ import { publishReplay, refCount, delay, finalize, shareReplay, multicast, publi
   providedIn: 'root'
 })
 export class ThemeService {
-  private _darkTheme = new BehaviorSubject<boolean>(false);
+  private _darkTheme = new BehaviorSubject<boolean>(true);
   private _theme = new Subject<string>();
   get isDarkTheme() {
 
