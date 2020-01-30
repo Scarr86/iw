@@ -1,1 +1,8 @@
-<p>search-product works!</p>
+
+
+<mat-action-list>
+    <mat-list-item *ngFor="let name of (nameProduct$ | async)">
+        {{name}}
+
+    </mat-list-item>
+</mat-action-list>

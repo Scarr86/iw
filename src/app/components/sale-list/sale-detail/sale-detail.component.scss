@@ -1,5 +1,8 @@
-@import '../../../../vars';
 
+
+.mat-expansion-panel-body{
+    min-height: 270px !important;
+}
 .save-btn {
     margin-left: auto;
 }

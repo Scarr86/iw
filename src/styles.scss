@@ -125,11 +125,11 @@ ul {
   // min-height: 100vh;
 }
 .btn-fly {
-  position: fixed;
-  bottom: 0;
+  position: fixed !important;
+  margin: 0 auto !important;
+  bottom: 15px;
   left: 0;
   right: 0;
-  margin: 0 auto;
 }
 
 

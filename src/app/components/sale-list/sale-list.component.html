@@ -1,4 +1,4 @@
-<section class="expand-page">
+<section>
 
     <div (click)="picker.open()" matRipple class="date text-primary">
         <input [formControl]='date' [matDatepicker]="picker" placeholder="Choose a date">
@@ -8,8 +8,8 @@
     </div>
     <p class="date-description">Сегодня</p>
 
-    <mat-action-list disableRipple="true" color="primary">
-        <mat-list-item (click)="onSelect(s, i + 1)" *ngFor=" let s of (sales$ | async); let i=index">
+    <mat-action-list >
+        <mat-list-item (click)="onSelect(s.id, i + 1)" *ngFor=" let s of (sales$ | async); let i=index">
             <div class="sale text-primary">
                 <div class="sale__item">
                     {{i + 1}}
@@ -26,7 +26,7 @@
 
             <button disableRipple="true" (click)="$event.stopPropagation()" class="more-vert" mat-icon-button
                 [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
+                <mat-icon class="text-primary" >more_vert</mat-icon>
             </button>
             <mat-menu [xPosition]="'before'" #menu="matMenu">
                 <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
@@ -34,7 +34,7 @@
         </mat-list-item>
     </mat-action-list>
 
-    <button class="btn-fly" (click)="onSelect()" mat-fab>
+    <button class="btn-fly" (click)="addSale()" mat-fab>
         <mat-icon>add</mat-icon>
     </button>
 </section>

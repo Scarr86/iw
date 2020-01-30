@@ -18,18 +18,18 @@
     <mat-card class="form__discount">
       <mat-form-field class="form__discount-input">
         <input   formControlName="discount" type="number" min="0" autocomplete="off" matInput placeholder="Скидка"/>
-        <button type="button" mat-icon-button matSuffix (click)="clear(price)">
+        <button type="button" mat-icon-button matSuffix (click)="discount = 0">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
       <div class="form__discount-actions">
-        <button type="button" mat-stroked-button (click)="discount = 50" color="primary">
+        <button type="button" mat-stroked-button (click)="discount = discount + 50" color="primary">
           +50
         </button>
-        <button type="button" mat-stroked-button (click)="discount = 200" color="primary">
+        <button type="button" mat-stroked-button (click)="discount = discount + 200" color="primary">
           +200
         </button>
-        <button type="button" mat-stroked-button (click)="discount = 500" color="primary">
+        <button type="button" mat-stroked-button (click)="discount = discount + 500" color="primary">
           +500
         </button>
       </div>
@@ -95,8 +95,4 @@
     </mat-accordion>
     <!--  -->
   </form>
-
-  <button class="btn-fly" (click)="onSelect()" mat-fab>
-    <mat-icon>save</mat-icon>
-</button>
 </section>

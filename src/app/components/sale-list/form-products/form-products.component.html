@@ -10,8 +10,7 @@
     <!--  -->
     <!-- Count  -->
 
-    <ng-container *ngIf="!nameInput.focused">
-
+    <ng-container *ngIf="!nameInput.focused else search">
         <mat-form-field class="form-product__count">
             <input formControlName="count" type="number" min="0" autocomplete="off" matInput placeholder="Количество"
                 required />
@@ -45,31 +44,8 @@
             </button>
         </div>
     </ng-container>
-
     <!--  -->
-
-
-
-
-    <!-- <ng-container [ngSwitch]="type">
-        <div class="actions" *ngSwitchCase="'number'">
-            <button type="button" mat-stroked-button (click)="set(50)" color="primary">
-                +50
-            </button>
-            <button type="button" mat-stroked-button (click)="set(200)" color="primary">
-                +200
-            </button>
-            <button type="button" mat-stroked-button (click)="set(500)" color="primary">
-                +500
-            </button>
-        </div>
-        <div class="btn-count actions-inline" *ngSwitchCase="'count'">
-            <button type="button" mat-stroked-button color="primary" (click)="set(-1)" color="primary">
-                <mat-icon>remove</mat-icon>
-            </button>
-            <button type="button" mat-stroked-button color="primary" (click)="set(+1)" color="primary">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-    </ng-container> -->
+    <ng-template #search>
+        <app-search-product></app-search-product>
+    </ng-template>
 </div>

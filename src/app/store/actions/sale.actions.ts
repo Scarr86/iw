@@ -4,6 +4,10 @@ export class GetSales {
     static readonly type = '[Sale] Get sales';
 }
 
+export class UploadSales{
+    static readonly type = '[Sale] Upload Sale';
+}
+
 export class SetBaseInfo {
     static readonly type = '[Sale] Set Base Info';
     constructor(public baseInfo: File) { }
@@ -19,7 +23,7 @@ export class DeleteSale {
 }
 
 export class AddSale {
-    static readonly type = '[Sale] Delete Sale';
+    static readonly type = '[Sale] Add Sale';
     constructor(public sale: Sale) { }
 }
 

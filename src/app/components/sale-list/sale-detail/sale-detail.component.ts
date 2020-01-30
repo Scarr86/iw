@@ -1,13 +1,12 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GeneratorBase } from 'src/app/service/generator-sale.service';
-import { Observable, Subject, from, Subscription, of, interval, iif } from 'rxjs';
+import { Subscription, of, iif } from 'rxjs';
 import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { ChangeSale, DeleteSale, GetSales } from 'src/app/store/actions/sale.actions';
+import { ChangeSale, DeleteSale, GetSales, AddSale, UploadSales } from 'src/app/store/actions/sale.actions';
 import { MatExpansionPanel } from '@angular/material/expansion';
 
 @Component({
@@ -20,8 +19,10 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('formRef', { static: false }) formRef: FormGroupDirective;
 
+  sale: Sale = new Sale(0, [], Date.now());
+
   id$ = this.activeRoute.queryParamMap.pipe(
-    map((param) => param.get('id')),
+    pluck("params", "id"),
   );
 
   title$ = this.activeRoute.paramMap.pipe(
@@ -34,25 +35,21 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     tap(s => this.sale = s),
   );
 
-  newSale$ = of(new Sale(0, [], Date.now()));
+  newSale = () => this.store.dispatch(new AddSale(this.sale)).pipe(tap(console.log));
 
   sale$ = this.id$.pipe(
-    switchMap(id => iif(() => isNaN(+id), this.newSale$, this.saleById(id))),
+    switchMap(id => iif(() => isNaN(+id), this.newSale(), this.saleById(id))),
     take(1)
   )
 
-  sale: Sale;
   form: FormGroup;
   formNewProduct: FormGroup;
   subscription: Subscription = new Subscription();
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private store: Store,
-    private activeRoute: ActivatedRoute
-  ) { }
+  constructor(private router: Router, private fb: FormBuilder, private store: Store, private activeRoute: ActivatedRoute) { }
   ngOnInit() {
+
+
     this.form = this.fb.group({
       discount: ["0"],
       productList: this.fb.array([])
@@ -70,12 +67,8 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         distinctUntilChanged(((v1, v2) => JSON.stringify(v1) === JSON.stringify(v2))),
       )
         .subscribe((value) => {
-          if (this.sale) {
-            let s: Sale = new Sale((value as Sale).discount, (value as Sale).productList, this.sale.timestamp, this.sale.id);
-            this.store.dispatch(new ChangeSale(s.id, s));
-          }
-          else {
-          }
+          let s: Sale = new Sale(this.discount, this.arrayProductControl.value, this.sale.timestamp, this.sale.id);
+          this.store.dispatch(new ChangeSale(s.id, s));
           // let s: Sale = new Sale((form as Sale).discount, (form as Sale).productList, this.sale.timestamp, this.sale.id);
         })
     );
@@ -119,11 +112,14 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submit() {
-    this.store.dispatch(new ChangeSale(this.sale.id, this.form.value));
+    let sale = new Sale(this.discount, this.arrayProductControl.value, this.sale.timestamp, this.sale.id);
+    this.store.dispatch(new ChangeSale(sale.id, sale));
+    // this.form.untouched
   }
 
   save() {
-    this.formRef.ngSubmit.next(undefined);
+    this.store.dispatch(new UploadSales());
+    //this.formRef.ngSubmit.next(undefined);
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -151,19 +147,13 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     // window.scrollBy(0, 20);
   }
 
-  onChange(ctr: FormControl, value) {
-    console.log(ctr);
-    
-    ctr.setValue(+ctr.value + value)
+  get discount() {
+    return this.form.get('discount').value
+  }
+  set discount(v) {
+    this.form.get('discount').setValue(+v);
   }
 
-  get discount(){
-    return this.form.get('discount')
-  }
-  set discount(v ){
-    this.form.get("discount").setValue(this.discount.value + v)
-
-  }
 }
 
 

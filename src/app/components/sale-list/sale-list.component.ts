@@ -10,11 +10,6 @@ import { DeleteSale } from 'src/app/store/actions/sale.actions';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 
-
-
-
-
-
 @Component({
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
@@ -44,33 +39,38 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
     );
   }
-  onSelect(sale: Sale | undefined = null, indx: number | string = "new-sale") {
-    if (sale instanceof Sale)
-      this.router.navigate(['/sale-detail', indx], {
-        queryParams: {
-          id: sale.id
-        }
-      });
-    else
-      this.router.navigate(['/sale-detail', indx]);
+  // onSelect(sale: Sale | undefined = null, indx: number | string = "new-sale") {
+  //   if (sale instanceof Sale)
+  //     this.router.navigate(['/sale-detail', indx], {
+  //       queryParams: {
+  //         id: sale.id
+  //       }
+  //     });
+  //   else
+  //     this.router.navigate(['/sale-detail', indx]);
 
+  // }
+
+  onSelect(id: any, indx: number) {
+    this.router.navigate(['/sale-detail', indx], {
+      queryParams: { id }
+    });
   }
-
+  addSale() {
+    this.router.navigate(['/sale-detail', 'newsale']);
+  }
   // onDateChange(event: MatDatepickerInputEvent<Date>) {
   //   sessionStorage.setItem("sessionDate", event.value.toString());
   //   this.date$.next(event.value)
   // }
-
 
   getNumProducts(sale: Sale): number {
     return sale.productList.length;
   }
   getTotalPrice(sale: Sale): number {
     console.log(sale.total);
-
     return sale.productList.reduce((sum, p) => sum += p.count * p.price, 0) - sale.discount;
   }
-
   onDelete(s: Sale) {
     this.store.dispatch(new DeleteSale(s.id));
   }
