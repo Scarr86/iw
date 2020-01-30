@@ -1,10 +1,10 @@
 import { File } from '../../models/file.model'
-import { Sale } from 'src/app/models/sale.model';
+import { Sale, Product } from 'src/app/models/sale.model';
 export class GetSales {
-    static readonly type = '[Sale] Get sales';
+    static readonly type = '[Sale] Get Sales list';
 }
 
-export class UploadSales{
+export class UploadSales {
     static readonly type = '[Sale] Upload Sale';
 }
 
@@ -19,16 +19,33 @@ export class DeleteBaseInfo {
 
 export class DeleteSale {
     static readonly type = '[Sale] Delete Sale';
-    constructor(public id: number) { }
+    constructor(public id: any) { }
 }
 
-export class AddSale {
-    static readonly type = '[Sale] Add Sale';
-    constructor(public sale: Sale) { }
+
+export class GetSale {
+    static readonly type = '[Sale] Get Sale';
+    constructor(public id: any) { }
 }
+
+export class NewSale {
+    static readonly type = '[Sale] New Sale';
+}
+
+export class SaveSale {
+    static readonly type = '[Sale] Save Sale';
+}
+
+
+
+// export class ChangeSale {
+//     static readonly type = '[Sale] Change Sale';
+//     constructor(public id: number, public sale: Sale) {
+//      }
+// }
 
 export class ChangeSale {
     static readonly type = '[Sale] Change Sale';
-    constructor(public id: number, public sale: Sale) {
-     }
+    constructor(public discount: number, public productList: Product[]) {
+    }
 }

@@ -30,6 +30,12 @@ export class SalesService {
     getSales() {
         return this.http.get<{ sales: Sale[] }>(`${SalesService.localUrl}`)
     }
+    getSale(id: any) {
+        // времменно
+        return this.getSales().pipe(
+            map(httpSale => httpSale.sales.find(s => s.id == id)),
+        )
+    }
 
 
     get(): Observable<any> {
@@ -61,6 +67,6 @@ export class SalesService {
     }
     update(sale: any) {
         return this.http.patch(`${SalesService.url}/${ID_BASE}/4.json`, sale);
-      
+
     }
 }

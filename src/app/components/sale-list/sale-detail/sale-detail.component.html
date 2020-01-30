@@ -3,21 +3,22 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   <span>{{ title$ | async }} </span>
-  <button (click)="save()" class="save-btn" [disabled]="form.invalid" mat-raised-button color="primary">
+  <button (click)="save()" class="save-btn" [disabled]="formSale.invalid" mat-raised-button color="primary">
     Сохранить
   </button>
 </mat-toolbar>
 
 <section class="container-page mat-typography mat-app-background">
   <h2 class="date">
-    {{(sale$ | async)?.date | date:"EE, d MMM yyyy"}}
+    {{date$ | async | date:"EE, d MMM yyyy"}}
   </h2>
 
-  <form class="form" [formGroup]="form" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()" #formRef="ngForm">
+  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()"
+    #formRef="ngForm">
     <!-- Discount -->
     <mat-card class="form__discount">
       <mat-form-field class="form__discount-input">
-        <input   formControlName="discount" type="number" min="0" autocomplete="off" matInput placeholder="Скидка"/>
+        <input formControlName="discount" type="number" min="0" autocomplete="off" matInput placeholder="Скидка" />
         <button type="button" mat-icon-button matSuffix (click)="discount = 0">
           <mat-icon>close</mat-icon>
         </button>

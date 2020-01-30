@@ -1,11 +1,11 @@
 import { Sale } from 'src/app/models/sale.model';
 import { State, NgxsOnInit, StateContext, Store, Action, Selector, createSelector } from '@ngxs/store';
-import { patch, removeItem, updateItem, append } from '@ngxs/store/operators'
+import { patch, removeItem, updateItem, append, iif, insertItem } from '@ngxs/store/operators'
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { from, of } from 'rxjs';
 import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
 import { GapiState } from './auth.state';
-import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale, AddSale, UploadSales } from '../actions/sale.actions';
+import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale, UploadSales, GetSale, NewSale, SaveSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
 import { compareDay } from 'src/app/lib/lib';
 import { SalesService } from 'src/app/service/sales.service';
@@ -16,17 +16,27 @@ function saveSales(ctx: StateContext<SaleStateModel>) {
     localStorage.setItem('mockSales', JSON.stringify({ sales }));
 }
 
+function insertOrUpdateSale(id: any, loadedSale?: Sale) {
+    return iif<Sale[]>(
+        sales => sales.some(s => s.id == id),
+        updateItem(sale => sale.id == id, patch(loadedSale)),
+        insertItem(loadedSale)
+    )
+}
+
 
 export interface SaleStateModel {
-    sales: Sale[] | null;
+    sales: Sale[];
+    select: Sale,
     nameProduct: string[],
-    baseInfo: File | null
+    baseInfo: File
 }
 
 @State<SaleStateModel>({
     name: "SaleStore",
     defaults: {
-        sales: null,
+        sales: [],
+        select: null,
         nameProduct: [
             "Футболка",
             "Майка",
@@ -62,8 +72,8 @@ export class SaleState implements NgxsOnInit {
 
 
         return this.salesService.getSales().pipe(
-            map(({ sales }) => sales.map(s => (new Sale(s.discount, s.productList, s.timestamp, s.id)))),
-            tap(sales => ctx.patchState({ sales }))
+            // map(({ sales }) => sales.map(s => (new Sale(s.discount, s.productList, s.timestamp, s.id)))),
+            tap(({ sales }) => ctx.patchState({ sales }))
         )
 
         // let baseInfo: File = ctx.getState().baseInfo || JSON.parse(localStorage.getItem("baseInfo"))
@@ -83,8 +93,8 @@ export class SaleState implements NgxsOnInit {
         //     )
     }
     @Action(UploadSales)
-    uploadSales(ctx: StateContext<SaleStateModel>){
-        
+    uploadSales(ctx: StateContext<SaleStateModel>) {
+
     }
 
     @Action(SetBaseInfo)
@@ -111,34 +121,66 @@ export class SaleState implements NgxsOnInit {
         //do api
     }
 
-    @Action(AddSale)
-    addSale(ctx: StateContext<SaleStateModel>, { sale }: AddSale) {
-        let maxId = Math.max(...ctx.getState().sales.map(s => s.id));
-        sale.id = maxId + 1;
-        ctx.setState(
-            patch({
-                sales: append([sale])
-            })
-        )
-        return of(sale);
+    // @Action(AddSale)
+    // addSale(ctx: StateContext<SaleStateModel>, { sale }: AddSale) {
+    //     let maxId = Math.max(...ctx.getState().sales.map(s => s.id)) || 0;
+
+    //     sale.id = maxId + 1;
+    //     ctx.setState(
+    //         patch({
+    //             sales: append([sale])
+    //         })
+    //     )
+    //     return of(sale);
+    // }
+    @Action(NewSale)
+    newSale(ctx: StateContext<SaleStateModel>) {
+        let id = Math.max(...ctx.getState().sales.map(s => s.id)) + 1;
+        let newSale: Sale = {
+            discount: 0,
+            productList: [],
+            timestamp: Date.now(),
+            id
+        }
+        ctx.patchState({ select: newSale });
     }
 
-    @Action(ChangeSale)
-    changeSale(ctx: StateContext<SaleStateModel>, { id, sale }: ChangeSale) {
-        let salepre = ctx.getState().sales.find(s => s.id == id);
-        // console.log("salepre", salepre);
-        // console.log("id: ", id);
 
+
+    @Action(GetSale)
+    getSale(ctx: StateContext<SaleStateModel>, { id }: GetSale) {
+        let state = ctx.getState();
+        let sale;
+        if (sale = state.sales.find(s => s.id === id))
+            ctx.patchState({ select: sale });
+        else
+            return this.salesService.getSale(id).pipe(
+                tap(sale => ctx.patchState({ select: sale }))
+            );
+    }
+    @Action(ChangeSale)
+    changeSale(ctx: StateContext<SaleStateModel>, { discount, productList }: ChangeSale) {
         ctx.setState(
             patch({
-                sales: updateItem<Sale>(s => s.id === id, sale)
+                select: patch({
+                    discount,
+                    productList
+                })
             })
         )
-        // let salepost = ctx.getState().sales.find(s => s.id == id);
-        // console.log("salepost", salepost, sale);
+        console.log(ctx.getState().select);
 
-        //do api
-        // saveSales(ctx);
+    }
+
+    @Action(SaveSale)
+    saveSale(ctx: StateContext<SaleStateModel>) {
+        let select = ctx.getState().select;
+        ctx.setState(
+            patch({
+                sales: insertOrUpdateSale(select.id, select)
+            })
+        )
+
     }
 
 
@@ -151,6 +193,10 @@ export class SaleState implements NgxsOnInit {
     static sales(state: SaleStateModel) {
         return state.sales;
     }
+    @Selector()
+    static select(state: SaleStateModel) {
+        return state.select;
+    }
 
     @Selector()
     static nameProduct(state: SaleStateModel) {
@@ -161,7 +207,7 @@ export class SaleState implements NgxsOnInit {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales && state.sales.filter(s => compareDay(s.date, date, date) === 0)
+                return state.sales && state.sales.filter(s => compareDay(new Date(s.timestamp), date, date) === 0)
             }
         )
     }

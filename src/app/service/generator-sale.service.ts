@@ -55,8 +55,12 @@ export class GeneratorBase {
    }
 
    id: number = 1;
-   randomProduct() {
-      return new Product(this.randomName(), this.random(1, 5) * 1000, this.random(1, 5));
+   randomProduct(): Product {
+      return {
+         name: this.randomName(),
+         count: this.random(1, 5) * 1000,
+         price: this.random(1, 5)
+      }
    }
    genereteSale(from: Date, to: Date = new Date()): { sales: Sale[] } {
 
@@ -75,12 +79,18 @@ export class GeneratorBase {
          let countSales = this.random(0, 5);
          while (countSales--) {
             let productList: Product[] = Array.from({ length: this.random(1, namesProduct.length) }, () => this.randomProduct());
-            let sale: Sale = new Sale(
-               this.random(1, 3) * 100,
+            // let sale: Sale = new Sale(
+            //    this.random(1, 3) * 100,
+            //    productList,
+            //    date.getTime(),
+            //    id++,
+            // );
+            let sale: Sale = {
+               discount: this.random(1, 3) * 100,
                productList,
-               date.getTime() ,
-               id++,
-            );
+               timestamp: date.getTime(),
+               id: id++
+            }
             sales.push(sale);
          }
       }

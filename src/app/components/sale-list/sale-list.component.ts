@@ -68,7 +68,6 @@ export class SaleListComponent implements OnInit, AfterViewInit {
     return sale.productList.length;
   }
   getTotalPrice(sale: Sale): number {
-    console.log(sale.total);
     return sale.productList.reduce((sum, p) => sum += p.count * p.price, 0) - sale.discount;
   }
   onDelete(s: Sale) {
