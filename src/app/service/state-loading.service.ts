@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofActionDispatched, ofActionSuccessful, ofActionCompleted } from '@ngxs/store';
-import { Observable, merge, of } from 'rxjs';
+import { Observable, merge, of, Subject, BehaviorSubject } from 'rxjs';
 import { GetSales } from '../store/actions/sale.actions';
 import { mapTo, switchMap, mergeMap, tap, startWith, shareReplay, share } from 'rxjs/operators';
 
@@ -9,9 +9,14 @@ import { mapTo, switchMap, mergeMap, tap, startWith, shareReplay, share } from '
 })
 export class StateLoadingService {
 
-    isLoading$: Observable<boolean>;
+    private _isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     private _loadingTrue$: Observable<boolean>;
     private _loadingFalse$: Observable<boolean>;
+
+    get loading$() {
+        return this._isLoading$.asObservable();
+    }
+
     constructor(private actions$: Actions) {
 
         this._loadingTrue$ = merge(
@@ -24,7 +29,8 @@ export class StateLoadingService {
             mapTo(false)
         );
 
-
-        this.isLoading$ = merge(this._loadingFalse$, this._loadingTrue$).pipe(share(), tap((v) => console.log('[StateLoadingService]', v)));
+        merge(this._loadingFalse$, this._loadingTrue$)
+            .pipe(tap(v => console.log("[loading :]", v)))
+            .subscribe(this._isLoading$);
     }
 }

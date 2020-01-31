@@ -14,7 +14,6 @@ import { GetSales } from './store/actions/sale.actions';
 export class AppComponent implements AfterViewInit, OnInit {
   @HostBinding('class') componentCssClass;
 
-  loading$: Observable<boolean> = this.sls.isLoading$;
 
   title = 'iw';
   constructor(

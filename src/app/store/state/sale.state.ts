@@ -24,7 +24,6 @@ function insertOrUpdateSale(id: any, loadedSale?: Sale) {
     )
 }
 
-
 export interface SaleStateModel {
     sales: Sale[];
     select: Sale,
@@ -135,7 +134,7 @@ export class SaleState implements NgxsOnInit {
     // }
     @Action(NewSale)
     newSale(ctx: StateContext<SaleStateModel>) {
-        let id = Math.max(...ctx.getState().sales.map(s => s.id)) + 1;
+        let id = Math.max(...ctx.getState().sales.map(s => s.id), 0) + 1;
         let newSale: Sale = {
             discount: 0,
             productList: [],
@@ -150,13 +149,8 @@ export class SaleState implements NgxsOnInit {
     @Action(GetSale)
     getSale(ctx: StateContext<SaleStateModel>, { id }: GetSale) {
         let state = ctx.getState();
-        let sale;
-        if (sale = state.sales.find(s => s.id === id))
-            ctx.patchState({ select: sale });
-        else
-            return this.salesService.getSale(id).pipe(
-                tap(sale => ctx.patchState({ select: sale }))
-            );
+        let sale = state.sales.find(s => s.id == id)
+        ctx.patchState({ select: sale });
     }
     @Action(ChangeSale)
     changeSale(ctx: StateContext<SaleStateModel>, { discount, productList }: ChangeSale) {

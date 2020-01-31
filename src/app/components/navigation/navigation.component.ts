@@ -23,8 +23,7 @@ export class NavigationComponent implements OnInit {
 
    @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
    // @Select(SaleState.sales) sales$: Observable<Sale[]>;
-   loading$: Observable<boolean> = this.sls.isLoading$;
-   @HostBinding('class') componentCssClass;
+     @HostBinding('class') componentCssClass;
 
    title: string;
 
@@ -52,7 +51,7 @@ export class NavigationComponent implements OnInit {
       private theme: ThemeService,
       private store: Store,
       private actions$: Actions,
-      private sls: StateLoadingService,
+      public sls: StateLoadingService,
       private router: Router,
       private titleServise: Title,
       private fireService: SalesService
@@ -120,6 +119,7 @@ export class NavigationComponent implements OnInit {
    }
 
    ngOnInit() {
+
       this.setTitle(this.router.url)
       this.router.events
          .pipe(

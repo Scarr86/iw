@@ -26,11 +26,10 @@
       </mat-toolbar>
       <!-- Add Content Here -->
       <!-- {{drawer.mode}} -->
-      <!-- <ng-container *ngIf="!(loading$ | async) else loading"> -->
       <mat-toolbar>
          <span>{{title}}</span>
       </mat-toolbar>
-      <section class="mat-typography container-page">
+      <section *ngIf="!(sls.loading$ | async) else loading" class="mat-typography container-page">
          <router-outlet></router-outlet>
       </section>
       <!--  -->
@@ -50,7 +49,6 @@
       <button class="btn-fly btn-get" (click)="get()" mat-fab>
          <mat-icon>get_app</mat-icon>
       </button> -->
-      <!-- </ng-container> -->
    </mat-sidenav-content>
 </mat-sidenav-container>
 
@@ -74,11 +72,5 @@
 <ng-template #loading>
    <p>
       Loading...
-   </p>
-</ng-template>
-
-<ng-template #alert>
-   <p>
-      Alert!!!
    </p>
 </ng-template>

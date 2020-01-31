@@ -11,7 +11,7 @@ export class ConnectFormGroupDirective {
   @Input("appConnectFormGroup")
   set data(value: Sale) {
     
-    // console.log(value);
+    console.log(value);
     if (!value) return;
     this.arrayProduct.clear();
     value.productList.forEach((_, i) => {

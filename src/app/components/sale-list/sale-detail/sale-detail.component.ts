@@ -1,13 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, of, iif, Observable } from 'rxjs';
-import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck, publishReplay, takeWhile, shareReplay } from 'rxjs/operators';
+import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck, publishReplay, takeWhile, shareReplay, mergeMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
 import { ChangeSale, DeleteSale, GetSales, UploadSales, NewSale, SaveSale, GetSale } from 'src/app/store/actions/sale.actions';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { StateLoadingService } from 'src/app/service/state-loading.service';
 
 @Component({
   selector: 'app-sale-detail',
@@ -37,28 +38,32 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.formSale.get("productList") as FormArray;
   }
 
-  constructor(private router: Router, private fb: FormBuilder, private store: Store, private activeRoute: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private store: Store,
+    private activeRoute: ActivatedRoute,
+    public sls: StateLoadingService,
+  ) { }
   ngOnInit() {
     this.title$ = this.activeRoute.paramMap.pipe(
       pluck("params", "id"),
       map(id => isNaN(+id) ? "Новая продажа" : "Продажа N " + id)
     );
 
-    this.sale$ = this.store.select(SaleState.select).pipe(
-      takeWhile(s => !s, true),
-      share(),
-    );
-    this.date$ = this.sale$.pipe(
-      map(s => new Date(s.timestamp)),
-      tap(console.log),
-    )
-
-    let id = this.activeRoute.snapshot.queryParams["id"];
-    if (isNaN(+id))
-      this.store.dispatch(new NewSale());
-    else
-      this.store.dispatch(new GetSale(id))
-
+    let newSale = () => this.store.dispatch(new NewSale());
+    let editSale = (id) => this.store.dispatch(new GetSale(id));
+    this.sale$ =
+      this.activeRoute.queryParamMap
+        .pipe(
+          pluck("params", "id"),
+          mergeMap(id => {
+            if (isNaN(+id))
+              return newSale();
+            return editSale(id);
+          }),
+          mergeMap(() => this.store.selectOnce(SaleState.select))
+        )
 
     this.formSale = this.fb.group({
       discount: ["0"],
@@ -71,6 +76,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.formNewProduct = this.createFormProduct()
 
     this.subscription.add(
+
       this.formSale.valueChanges.pipe(
         filter(_ => this.formSale.valid),
         debounceTime(300),
@@ -79,6 +85,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe((value) => {
           this.store.dispatch(new ChangeSale(this.discount, this.arrayProductControl.value));
         })
+
     );
 
     // this.subscription.add(

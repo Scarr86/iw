@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, delay } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { Sale } from '../models/sale.model';
 
@@ -28,7 +28,7 @@ export class SalesService {
         return this.http.post<any>(`${SalesService.url}.json`, obj)
     }
     getSales() {
-        return this.http.get<{ sales: Sale[] }>(`${SalesService.localUrl}`)
+        return this.http.get<{ sales: Sale[] }>(`${SalesService.localUrl}`).pipe(delay(1000))
     }
     getSale(id: any) {
         // времменно

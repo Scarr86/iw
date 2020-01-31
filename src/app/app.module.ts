@@ -38,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchProductComponent } from './components/sale-list/search-product/search-product.component';
 import { SearchPipe } from './components/sale-list/search.pipe';
 import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
+import { StateLoadingService } from './service/state-loading.service';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -45,6 +46,9 @@ registerLocaleData(localeRu, 'ru');
 export function initGapi(gapiService: GapiService) {
   return () => gapiService.initGapi();
   // return ()=>{}
+}
+export function noop(){
+  return function(){};
 }
 
 @NgModule({
@@ -90,7 +94,16 @@ export function initGapi(gapiService: GapiService) {
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    // { provide: APP_INITIALIZER, useFactory: initGapi, deps: [GapiService], multi: true },
+    // { provide: APP_INITIALIZER, 
+    //   useFactory: initGapi, 
+    //   deps: [GapiService], 
+    //   multi: true 
+    // }, 
+    { provide: APP_INITIALIZER, 
+      useFactory: noop, 
+      deps: [StateLoadingService], 
+      multi: true 
+    },
 
     { provide: LOCALE_ID, useValue: "ru" }
   ],

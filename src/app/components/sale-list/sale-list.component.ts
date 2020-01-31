@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
@@ -9,47 +9,36 @@ import { Router } from '@angular/router';
 import { DeleteSale } from 'src/app/store/actions/sale.actions';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
+import { StateLoadingService } from 'src/app/service/state-loading.service';
 
 @Component({
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
   styleUrls: ['./sale-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
-  // date: Date = new Date();
-  // date$: BehaviorSubject<Date>;
   date: FormControl = new FormControl(new Date());
-
-
-  //@Select(SaleState.getSaleByDate(new Date(2020, 0, 13))) 
   sales$: Observable<Sale[]>
   constructor(
     private store: Store,
-    private router: Router
+    private router: Router,
+    public sls: StateLoadingService,
   ) { }
-  ngAfterViewInit() {
-    let sessionDate = sessionStorage.getItem("sessionDate");
-    this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
-  }
+
 
   ngOnInit() {
     this.sales$ = this.date.valueChanges.pipe(
-      delay(1),
+      delay(0),
       tap(d => sessionStorage.setItem("sessionDate", d.toString())),
       switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
     );
   }
-  // onSelect(sale: Sale | undefined = null, indx: number | string = "new-sale") {
-  //   if (sale instanceof Sale)
-  //     this.router.navigate(['/sale-detail', indx], {
-  //       queryParams: {
-  //         id: sale.id
-  //       }
-  //     });
-  //   else
-  //     this.router.navigate(['/sale-detail', indx]);
-
-  // }
+  ngAfterViewInit() {
+    let sessionDate = sessionStorage.getItem("sessionDate");
+    this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
+    
+  }
 
   onSelect(id: any, indx: number) {
     this.router.navigate(['/sale-detail', indx], {
@@ -59,11 +48,6 @@ export class SaleListComponent implements OnInit, AfterViewInit {
   addSale() {
     this.router.navigate(['/sale-detail', 'newsale']);
   }
-  // onDateChange(event: MatDatepickerInputEvent<Date>) {
-  //   sessionStorage.setItem("sessionDate", event.value.toString());
-  //   this.date$.next(event.value)
-  // }
-
   getNumProducts(sale: Sale): number {
     return sale.productList.length;
   }
