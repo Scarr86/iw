@@ -1,25 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { SignIn } from 'src/app/store/actions/auth.actions';
-import { GapiState } from 'src/app/store/state/auth.state';
-import { switchMap, filter } from 'rxjs/operators';
+import { AuthState } from 'src/app/store/state/auth.state';
+import { switchMap, filter, tap, pluck } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  // @Select(GapiState.isSignedIn)
+export class LoginComponent implements OnInit, OnDestroy {
+  @Select(AuthState.isSignedIn) isSignedIn$: Observable<boolean>
+
+  sub: Subscription
+
   constructor(private store: Store, private router: Router) { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
   signin() {
-    this.store.dispatch(new SignIn())
-    .pipe(
-      switchMap(_ => this.store.select(GapiState.isSignedIn)),
-    )
-     .subscribe(v => this.router.navigate(["/"]))
+    this.sub = this.store.dispatch(new SignIn())
+      .pipe(
+        switchMap(() => this.isSignedIn$),
+        filter(v => v)
+      )
+      .subscribe(v => this.router.navigate(["/"]))
+  }
+  ngOnDestroy(){
+    if(this.sub) this.sub.unsubscribe();
   }
 }

@@ -3,41 +3,50 @@ import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { switchMap, tap, shareReplay, share, buffer, bufferCount, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { DeleteSale } from 'src/app/store/actions/sale.actions';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
-import { StateLoadingService } from 'src/app/service/state-loading.service';
+
+import * as moment from "moment";
 
 @Component({
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
   styleUrls: ['./sale-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
+
+  @Select(SaleState.loading) loading$: Observable<boolean>;
   date: FormControl = new FormControl(new Date());
-  sales$: Observable<Sale[]>
+  sales$: Observable<Sale[]>;
+  isSameDate: boolean;
+  descriptionDate: string;
+
+
   constructor(
     private store: Store,
     private router: Router,
-    public sls: StateLoadingService,
+    // public sls: StateLoadingService,
   ) { }
 
 
   ngOnInit() {
+    moment.locale('ru')
     this.sales$ = this.date.valueChanges.pipe(
       delay(0),
-      tap(d => sessionStorage.setItem("sessionDate", d.toString())),
-      switchMap(d => this.store.select(SaleState.getSaleByDate(d))),
+      tap(d => {
+        this.isSameDate = !moment(d).isSame(moment(), 'day');
+        this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня" ;
+      }),
+      tap(d => sessionStorage.setItem("sessionDate", d)),
+      switchMap(d => this.store.select(SaleState.getSaleByDate(moment(d)))),
     );
   }
   ngAfterViewInit() {
     let sessionDate = sessionStorage.getItem("sessionDate");
     this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
-    
   }
 
   onSelect(id: any, indx: number) {

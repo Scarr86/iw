@@ -1,7 +1,7 @@
 <div class="form-product" [formGroup]="formGroup" [style.fontSize.px]="18">
     <!-- Name -->
     <mat-form-field class="form-product__name">
-        <input #nameInput="matInput" (keypress)="handleInput($event)" formControlName="name" type="text" autocomplete="off" matInput placeholder="Название"
+        <input  #nameInput="matInput" (keypress)="handleInput($event, nameInput)" formControlName="name" type="text" autocomplete="off" matInput placeholder="Название"
             required />
         <button type="button" mat-icon-button matSuffix (click)="clear(name)">
             <mat-icon>close</mat-icon>
@@ -46,6 +46,11 @@
     </ng-container>
     <!--  -->
     <ng-template #search>
-        <app-search-product></app-search-product>
+        <mat-action-list class="search">
+            <mat-list-item *ngFor="let name of (nameInput.value | search | async)" (mousedown)="setName(name)">
+                {{name}}
+            </mat-list-item>
+        </mat-action-list>
+        <!-- <app-search-product></app-search-product> -->
     </ng-template>
 </div>

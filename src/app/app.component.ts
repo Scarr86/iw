@@ -2,9 +2,9 @@ import { Component, OnInit, AfterViewInit, HostBinding } from '@angular/core';
 import { DriveStore } from './store/drive.store';
 import { merge, Observable } from 'rxjs';
 import { ThemeService } from './service/theme.service';
-import { StateLoadingService } from './service/state-loading.service';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { GetSales } from './store/actions/sale.actions';
+import { SaleState } from './store/state/sale.state';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,13 @@ import { GetSales } from './store/actions/sale.actions';
 })
 export class AppComponent implements AfterViewInit, OnInit {
   @HostBinding('class') componentCssClass;
+  @Select(SaleState.loading) loading$:Observable<boolean>;
 
 
   title = 'iw';
   constructor(
     private driveStore: DriveStore,
     private theme: ThemeService,
-    private sls: StateLoadingService,
     private store:Store
   ) {
   }

@@ -20,11 +20,8 @@ export class GapiService {
 
     initGapi() {
         return this.loadClient()
-            .then(() => this.initClient())
-            .then(() => { 
-                this.store.dispatch(new InitSession()); 
-            })
-            // .catch(err => console.log("catch error", err))
+            .then(() => this.initClient(), (err) => {console.error("Loading Failed", err); throw err})
+            .then(() => this.store.dispatch(new InitSession()), (err) => console.error("Init Client Failed", err))
     }
     loadClient(): Promise<any> {
         return new Promise((resolve, reject) => {

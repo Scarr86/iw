@@ -10,8 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class SearchProductComponent implements OnInit {
 
-
-
   @Select(SaleState.nameProduct) nameProduct$:Observable<string[]>
   constructor(private store:Store) { }
 

@@ -1,11 +1,11 @@
-<section *ngIf="!(sls.isLoading$ | async) else loading">
+<section>
 
     <div (click)="picker.open()" matRipple class="date text-primary">
-        <input [formControl]='date' [matDatepicker]="picker" placeholder="Choose a date">
-        <mat-datepicker #picker></mat-datepicker>
-        <h1> {{date.value  | date:"EE, d MMM yyyy"}}</h1>
+        <input [formControl]='date' [matDatepicker]="picker" autocomplete="off" placeholder="Choose a date">
+        <mat-datepicker #picker [startAt]="date.value | date"></mat-datepicker>
+        <h1> {{date.value | date:"EE, d MMM yyyy"}}</h1>
     </div>
-    <p class="date-description">Сегодня</p>
+    <p class="date-description" [class.text-accent]="isSameDate">{{descriptionDate}}</p>
 
     <mat-action-list>
         <mat-list-item (click)="onSelect(s.id, i + 1)" *ngFor=" let s of (sales$ | async); let i=index">
@@ -20,26 +20,21 @@
                     {{getTotalPrice(s) | currency:'RUB':'symbol-narrow'}}
                 </div>
             </div>
-            <button disableRipple="true" (click)="$event.stopPropagation()" class="more-vert" mat-icon-button
+            <button  disableRipple="true" (click)="$event.stopPropagation()" class="icon-more-vert" mat-icon-button
                 [matMenuTriggerFor]="menu">
                 <mat-icon class="text-primary">more_vert</mat-icon>
             </button>
-            <mat-menu [xPosition]="'before'" #menu="matMenu">
-                <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
-            </mat-menu>
         </mat-list-item>
     </mat-action-list>
+    <mat-menu [xPosition]="'before'" #menu="matMenu">
+        <button (click)="onDelete(s)" mat-menu-item> Удалить </button>
+    </mat-menu>
 
     <button class="btn-fly" (click)="addSale()" mat-fab>
         <mat-icon>add</mat-icon>
     </button>
+    <div *ngIf="!(sales$ | async)?.length" class="emty-sale">
+        <h1> Сегодня небыло продаж</h1>
+    </div>
 </section>
 
-<ng-template #loading>
-    <p>
-       Loading...
-    </p>
- </ng-template>
-<!-- <div *ngIf="!(sales$ | async)?.length" class="emty-sale">
-        <h1> Сегодня небыло продаж</h1>
-    </div> -->

@@ -1,7 +1,8 @@
-<mat-sidenav-container class="sidenav-container ">
+<mat-sidenav-container>
    <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [autoFocus]='false'>
+      [autoFocus]='false'
+      >
       <!-- fixedInViewport  -->
       <!-- [fixedTopGap]="56" -->
       <!-- [mode]="'over'" -->
@@ -29,8 +30,15 @@
       <mat-toolbar>
          <span>{{title}}</span>
       </mat-toolbar>
-      <section *ngIf="!(sls.loading$ | async) else loading" class="mat-typography container-page">
-         <router-outlet></router-outlet>
+      <section class="mat-typography container-page">
+         <ng-container *ngIf="!(loading$ | async) else loading">
+            <router-outlet></router-outlet>
+         </ng-container>
+         <ng-template #loading>
+            <p>
+               Loading...
+            </p>
+         </ng-template>
       </section>
       <!--  -->
 
@@ -68,9 +76,3 @@
    <!-- <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button> -->
    <!-- <button (click)="swappingTheme('indigo-pink')" mat-menu-item> indigo-pink </button> -->
 </mat-menu>
-
-<ng-template #loading>
-   <p>
-      Loading...
-   </p>
-</ng-template>

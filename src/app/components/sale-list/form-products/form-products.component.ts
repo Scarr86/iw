@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { NameProductsSate } from 'src/app/store/state/name-products.state';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-form-products',
@@ -25,15 +28,18 @@ export class FormProductsComponent implements OnInit {
     return this.formGroup.get('price')
   }
   onChange(ctr: FormControl, value) {
-    console.log(ctr);
     ctr.setValue(+ctr.value + value)
   }
   clear(ctr: FormControl) {
     ctr.reset();
   }
 
-  handleInput(ev:Event){
-    console.log(ev)
+  handleInput(ev: Event, nameInput:MatInput) {
+    console.log(nameInput)
+  }
+
+  setName(name: string, ) {
+    this.name.setValue(name);
   }
 
 

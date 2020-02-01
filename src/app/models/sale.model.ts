@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 
 
 export interface Product {
@@ -18,7 +19,7 @@ export interface Product {
 export interface Sale {
     discount: number,
     productList: Product[],
-    timestamp: number,
+    timestamp?: number,
     id?: any,
     // constructor(
     //     public discount: number,

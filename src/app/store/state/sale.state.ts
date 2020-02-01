@@ -4,11 +4,14 @@ import { patch, removeItem, updateItem, append, iif, insertItem } from '@ngxs/st
 import { FileService } from 'src/app/service/google-gapi/file.service';
 import { from, of } from 'rxjs';
 import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
-import { GapiState } from './auth.state';
+import { AuthState } from './auth.state';
 import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale, UploadSales, GetSale, NewSale, SaveSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
 import { compareDay } from 'src/app/lib/lib';
 import { SalesService } from 'src/app/service/sales.service';
+
+import * as moment from "moment";
+import { Moment } from 'moment';
 
 
 function saveSales(ctx: StateContext<SaleStateModel>) {
@@ -17,10 +20,11 @@ function saveSales(ctx: StateContext<SaleStateModel>) {
 }
 
 function insertOrUpdateSale(id: any, loadedSale?: Sale) {
+    console.log(loadedSale);
     return iif<Sale[]>(
         sales => sales.some(s => s.id == id),
         updateItem(sale => sale.id == id, patch(loadedSale)),
-        insertItem(loadedSale)
+        append([loadedSale])
     )
 }
 
@@ -28,13 +32,16 @@ export interface SaleStateModel {
     sales: Sale[];
     select: Sale,
     nameProduct: string[],
-    baseInfo: File
+    baseInfo: File,
+    loading: boolean
 }
+
 
 @State<SaleStateModel>({
     name: "SaleStore",
     defaults: {
         sales: [],
+        loading: false,
         select: null,
         nameProduct: [
             "Футболка",
@@ -58,7 +65,7 @@ export class SaleState implements NgxsOnInit {
         // ctx.patchState(JSON.parse(sales, (key, val) => {
         //     return key == "date" ? new Date(val) : val;
         // }))
-        this.store.select(GapiState.isSignedIn)
+        this.store.select(AuthState.isSignedIn)
             .pipe(filter(isSignIn => isSignIn === true))
             .subscribe(() => {
                 ctx.dispatch(new GetSales());
@@ -67,12 +74,9 @@ export class SaleState implements NgxsOnInit {
 
     @Action(GetSales)
     getSales(ctx: StateContext<SaleStateModel>) {
-
-
-
+        ctx.patchState({ loading: true })
         return this.salesService.getSales().pipe(
-            // map(({ sales }) => sales.map(s => (new Sale(s.discount, s.productList, s.timestamp, s.id)))),
-            tap(({ sales }) => ctx.patchState({ sales }))
+            tap(({ sales }) => ctx.patchState({ sales, loading: false }))
         )
 
         // let baseInfo: File = ctx.getState().baseInfo || JSON.parse(localStorage.getItem("baseInfo"))
@@ -120,32 +124,16 @@ export class SaleState implements NgxsOnInit {
         //do api
     }
 
-    // @Action(AddSale)
-    // addSale(ctx: StateContext<SaleStateModel>, { sale }: AddSale) {
-    //     let maxId = Math.max(...ctx.getState().sales.map(s => s.id)) || 0;
-
-    //     sale.id = maxId + 1;
-    //     ctx.setState(
-    //         patch({
-    //             sales: append([sale])
-    //         })
-    //     )
-    //     return of(sale);
-    // }
     @Action(NewSale)
     newSale(ctx: StateContext<SaleStateModel>) {
-        let id = Math.max(...ctx.getState().sales.map(s => s.id), 0) + 1;
         let newSale: Sale = {
             discount: 0,
             productList: [],
-            timestamp: Date.now(),
-            id
+            timestamp: null,
+            id: null
         }
         ctx.patchState({ select: newSale });
     }
-
-
-
     @Action(GetSale)
     getSale(ctx: StateContext<SaleStateModel>, { id }: GetSale) {
         let state = ctx.getState();
@@ -162,33 +150,39 @@ export class SaleState implements NgxsOnInit {
                 })
             })
         )
-        console.log(ctx.getState().select);
-
     }
-
     @Action(SaveSale)
     saveSale(ctx: StateContext<SaleStateModel>) {
         let select = ctx.getState().select;
+        if (!select.id) {
+            let id = Math.max(...ctx.getState().sales.map(s => s.id), 0) + 1;
+            select = {
+                ...select,
+                timestamp: moment().valueOf(),
+                id
+            }
+        }
         ctx.setState(
             patch({
                 sales: insertOrUpdateSale(select.id, select)
             })
         )
-
     }
-
-
+    @Selector()
+    static loading(state: SaleStateModel) {
+        return state.loading;
+    }
     @Selector()
     static baseInfo(state: SaleStateModel) {
         return state.baseInfo;
     }
-
     @Selector()
     static sales(state: SaleStateModel) {
         return state.sales;
     }
     @Selector()
     static select(state: SaleStateModel) {
+
         return state.select;
     }
 
@@ -196,16 +190,14 @@ export class SaleState implements NgxsOnInit {
     static nameProduct(state: SaleStateModel) {
         return state.nameProduct;
     }
-
-    static getSaleByDate(date: Date) {
+    static getSaleByDate(date: Moment) {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales && state.sales.filter(s => compareDay(new Date(s.timestamp), date, date) === 0)
+                return state.sales ? state.sales.filter(s => date.isSame(moment(s.timestamp), 'days')) : [];
             }
         )
     }
-
     static getSaleById(id: number) {
         return createSelector(
             [SaleState],

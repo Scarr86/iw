@@ -8,7 +8,6 @@ import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
 import { ChangeSale, DeleteSale, GetSales, UploadSales, NewSale, SaveSale, GetSale } from 'src/app/store/actions/sale.actions';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { StateLoadingService } from 'src/app/service/state-loading.service';
 
 @Component({
   selector: 'app-sale-detail',
@@ -19,10 +18,11 @@ import { StateLoadingService } from 'src/app/service/state-loading.service';
 export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('formRef', { static: false }) formRef: FormGroupDirective;
+  @Select(SaleState.loading) loading$: Observable<boolean>;
 
   title$: Observable<string>;
   sale$: Observable<Sale>;
-  date$: Observable<Date>;
+  date$: Observable<Date | number>;
 
   formSale: FormGroup;
   formNewProduct: FormGroup;
@@ -43,7 +43,6 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private fb: FormBuilder,
     private store: Store,
     private activeRoute: ActivatedRoute,
-    public sls: StateLoadingService,
   ) { }
   ngOnInit() {
     this.title$ = this.activeRoute.paramMap.pipe(
@@ -51,19 +50,15 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       map(id => isNaN(+id) ? "Новая продажа" : "Продажа N " + id)
     );
 
-    let newSale = () => this.store.dispatch(new NewSale());
-    let editSale = (id) => this.store.dispatch(new GetSale(id));
-    this.sale$ =
-      this.activeRoute.queryParamMap
-        .pipe(
-          pluck("params", "id"),
-          mergeMap(id => {
-            if (isNaN(+id))
-              return newSale();
-            return editSale(id);
-          }),
-          mergeMap(() => this.store.selectOnce(SaleState.select))
-        )
+    this.sale$ = this.activeRoute.queryParamMap
+      .pipe(
+        pluck("params", "id"),
+        mergeMap(id => isNaN(+id) ? this.store.dispatch(new NewSale()) : this.store.dispatch(new GetSale(id))),
+        mergeMap(() => this.store.selectOnce(SaleState.select)),
+        publishReplay(1),
+        refCount()
+      );
+    this.date$ = this.sale$.pipe(pluck('timestamp'))
 
     this.formSale = this.fb.group({
       discount: ["0"],
@@ -87,19 +82,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         })
 
     );
-
-    // this.subscription.add(
-    //   this.formNewProduct.valueChanges.subscribe(()=>{
-    //     this.arrayProduct.push(this.formNewProduct);
-    //   })
-    // ) 
-
   }
-
-  createForm() {
-
-  }
-
   formValidator(control: FormControl) {
     let diff = (control.value as Sale).productList.reduce((s, p) => s += p.price * p.count, 0) - (control.value as Sale).discount
     if (diff <= 0) return { "invalidDiscount": true };
@@ -127,33 +110,23 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['sale-list'])
   }
 
-
-  submit() {
-    // let sale = new Sale(this.discount, this.arrayProductControl.value, this.sale.timestamp, this.sale.id);
-    // this.store.dispatch(new ChangeSale(sale.id, sale));
-    // this.form.untouched
-  }
-
   save() {
     this.store.dispatch(new SaveSale());
-    //this.formRef.ngSubmit.next(undefined);
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
   add() {
-    let newForm = this.createFormProduct();
-    newForm.patchValue(this.formNewProduct.value);
-    this.arrayProductControl.push(newForm);
+    let form = this.createFormProduct();
+    form.patchValue(this.formNewProduct.value);
+    this.arrayProductControl.push(form);
     this.formNewProduct.reset();
   }
   delete(i: number) {
-    console.log("delete product", i);
-
     this.arrayProductControl.removeAt(i);
-    // if (!this.arrayProduct.length)
-    //   this.store.dispatch(new DeleteSale(this.sale.id));
   }
+
+  
   test(el: MatExpansionPanel) {
     let nativEl: HTMLElement = document.querySelector(`[aria-controls=${el.id}]`);
     let bottom = nativEl.getBoundingClientRect().bottom
@@ -163,9 +136,6 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     // nativEl.scrollIntoView();
     // window.scrollBy(0, 20);
   }
-
-
-
 }
 
 

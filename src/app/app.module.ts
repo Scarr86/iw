@@ -29,23 +29,23 @@ import { FileListComponent } from './components/setting/file-list/file-list.comp
 import { FileState } from './store/state/file.state';
 import { LoginComponent } from './components/login/login.component';
 import { SaleState } from './store/state/sale.state';
-import { GapiState } from './store/state/auth.state';
+import { AuthState } from './store/state/auth.state';
 import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
 import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchProductComponent } from './components/sale-list/search-product/search-product.component';
-import { SearchPipe } from './components/sale-list/search.pipe';
+import { SearchPipe } from './components/sale-list/form-products/search.pipe';
 import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
-import { StateLoadingService } from './service/state-loading.service';
+import { NameProductsSate } from './store/state/name-products.state';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiService: GapiService) {
-  return () => gapiService.initGapi();
-  // return ()=>{}
+  // return () => gapiService.initGapi();
+  return ()=>{}
 }
 export function noop(){
   return function(){};
@@ -83,7 +83,7 @@ export function noop(){
     ReactiveFormsModule,
     HttpClientModule,
     // NgxsModule.forRoot(states, { developmentMode: !environment.production }),
-    NgxsModule.forRoot([FileState, SaleState, GapiState], {
+    NgxsModule.forRoot([FileState, NameProductsSate, SaleState, AuthState], {
       developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
@@ -94,17 +94,11 @@ export function noop(){
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    // { provide: APP_INITIALIZER, 
-    //   useFactory: initGapi, 
-    //   deps: [GapiService], 
-    //   multi: true 
-    // }, 
     { provide: APP_INITIALIZER, 
-      useFactory: noop, 
-      deps: [StateLoadingService], 
+      useFactory: initGapi, 
+      deps: [GapiService], 
       multi: true 
-    },
-
+    }, 
     { provide: LOCALE_ID, useValue: "ru" }
   ],
   bootstrap: [AppComponent]

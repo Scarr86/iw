@@ -1,8 +1,19 @@
+:host {
+    display: block;
+    height: 100vh;
+    overflow-y: auto;
+}
 
+.mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-.mat-expansion-panel-body{
+.mat-expansion-panel-body {
     min-height: 270px !important;
 }
+
 .save-btn {
     margin-left: auto;
 }

@@ -5,9 +5,8 @@ import { map, shareReplay, tap, startWith, filter } from 'rxjs/operators';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
-import { GapiState } from 'src/app/store/state/auth.state';
+import { AuthState } from 'src/app/store/state/auth.state';
 import { SignIn, SignOut } from 'src/app/store/actions/auth.actions';
-import { StateLoadingService } from 'src/app/service/state-loading.service';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
@@ -20,8 +19,8 @@ import { SalesService, IUser } from 'src/app/service/sales.service';
    styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-
-   @Select(GapiState.isSignedIn) isSignedIn$: Observable<boolean>;
+   @Select(SaleState.loading) loading$:Observable<boolean>;
+   @Select(AuthState.isSignedIn) isSignedIn$: Observable<boolean>;
    // @Select(SaleState.sales) sales$: Observable<Sale[]>;
      @HostBinding('class') componentCssClass;
 
@@ -51,7 +50,6 @@ export class NavigationComponent implements OnInit {
       private theme: ThemeService,
       private store: Store,
       private actions$: Actions,
-      public sls: StateLoadingService,
       private router: Router,
       private titleServise: Title,
       private fireService: SalesService

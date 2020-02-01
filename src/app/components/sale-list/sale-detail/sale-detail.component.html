@@ -1,8 +1,5 @@
 
-
-
-
-<mat-toolbar color="primary">
+<mat-toolbar  class="mat-elevation-z6">
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
@@ -12,13 +9,13 @@
   </button>
 </mat-toolbar>
 
-<section *ngIf="!(sls.loading$ | async) else loading"  class="container-page mat-typography mat-app-background">
+
+<section *ngIf="!(loading$ | async) else loading"  class="container-page ">
   <h2 class="date">
     {{date$ | async | date:"EE, d MMM yyyy"}}
   </h2>
 
-  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async" (ngSubmit)="submit()"
-    #formRef="ngForm">
+  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async">
     <!-- Discount -->
     <mat-card class="form__discount">
       <mat-form-field class="form__discount-input">
@@ -104,7 +101,7 @@
 
 
 <ng-template #loading>
-  <p>
+  <p class="container-page">
      Loading...
   </p>
 </ng-template>

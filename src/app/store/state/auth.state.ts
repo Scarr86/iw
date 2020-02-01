@@ -8,18 +8,16 @@ export interface GapiStateModel {
     isSignedIn: boolean
 }
 @State<GapiStateModel>({
-    name: 'gapi',
+    name: 'authorization',
     defaults: {
         // googleAuth: null,
         googleUser: null,
-        isSignedIn:  true//false
+        isSignedIn: true// false
     }
 })
-export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
+export class AuthState implements NgxsAfterBootstrap, NgxsOnInit {
 
-    ngxsAfterBootstrap(ctx: StateContext<GapiStateModel>) {
-
-    }
+    ngxsAfterBootstrap(ctx: StateContext<GapiStateModel>) { }
     ngxsOnInit(ctx: StateContext<GapiStateModel>) { }
 
     @Action(InitSession)
@@ -39,7 +37,7 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
         let googleAuth = gapi.auth2.getAuthInstance();
         //const googleAuth = ctx.getState().googleAuth;
         try {
-            googleAuth.signIn({ prompt: "select_account" });
+          return googleAuth.signIn({ prompt: "select_account" });
         }
         catch{
             throw new Error("googleAuth is unset")
@@ -61,9 +59,6 @@ export class GapiState implements NgxsAfterBootstrap, NgxsOnInit {
     updateSigninStatus(ctx: StateContext<GapiStateModel>, { isSignedIn }) {
         ctx.patchState({ isSignedIn });
     }
-
-
-
     @Selector()
     static isSignedIn(state: GapiStateModel) {
         return state.isSignedIn;
