@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, HostBinding } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostBinding, HostListener } from '@angular/core';
 import { DriveStore } from './store/drive.store';
 import { merge, Observable } from 'rxjs';
 import { ThemeService } from './service/theme.service';
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   @HostBinding('class') componentCssClass;
   @Select(SaleState.loading) loading$:Observable<boolean>;
 
-
+ 
   title = 'iw';
   constructor(
     private driveStore: DriveStore,

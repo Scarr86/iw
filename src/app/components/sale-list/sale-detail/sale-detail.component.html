@@ -1,5 +1,4 @@
-
-<mat-toolbar  class="mat-elevation-z6">
+<mat-toolbar [class.mat-elevation-z6]="isShodow$ | async">
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
@@ -10,7 +9,7 @@
 </mat-toolbar>
 
 
-<section *ngIf="!(loading$ | async) else loading"  class="container-page ">
+<section *ngIf="!(loading$ | async) else loading" class="container-page ">
   <h2 class="date">
     {{date$ | async | date:"EE, d MMM yyyy"}}
   </h2>
@@ -102,6 +101,6 @@
 
 <ng-template #loading>
   <p class="container-page">
-     Loading...
+    Loading...
   </p>
 </ng-template>

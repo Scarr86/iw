@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, AfterViewInit, AfterContentInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay, tap, startWith, filter } from 'rxjs/operators';
+import { map, shareReplay, tap, startWith, filter, retry } from 'rxjs/operators';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
@@ -12,6 +12,7 @@ import { Sale } from 'src/app/models/sale.model';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SalesService, IUser } from 'src/app/service/sales.service';
+import { GetSales } from 'src/app/store/actions/sale.actions';
 
 @Component({
    selector: 'app-navigation',
@@ -20,6 +21,7 @@ import { SalesService, IUser } from 'src/app/service/sales.service';
 })
 export class NavigationComponent implements OnInit {
    @Select(SaleState.loading) loading$:Observable<boolean>;
+   @Select(SaleState.error) error$:Observable<boolean>;
    @Select(AuthState.isSignedIn) isSignedIn$: Observable<boolean>;
    // @Select(SaleState.sales) sales$: Observable<Sale[]>;
      @HostBinding('class') componentCssClass;
@@ -73,7 +75,7 @@ export class NavigationComponent implements OnInit {
    }
 
    get() {
-      this.fireService.getSales().subscribe(console.log);
+      // this.fireService.getSales().subscribe(console.log);
 
       // this.fireService.get().subscribe(res => {
       //    this.users = res;
@@ -151,6 +153,10 @@ export class NavigationComponent implements OnInit {
 
       this.theme.setTheme(this.isDarkTheme + " " + theme);
       // document.getElementById('themeAsset').href = `assest/${theme}`
+   }
+
+   getSales(){
+      this.store.dispatch(new GetSales());
    }
 
 

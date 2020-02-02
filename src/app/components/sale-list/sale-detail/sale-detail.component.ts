@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy, HostListener, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription, of, iif, Observable } from 'rxjs';
-import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck, publishReplay, takeWhile, shareReplay, mergeMap } from 'rxjs/operators';
+import { Subscription, of, iif, Observable, fromEvent } from 'rxjs';
+import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck, publishReplay, takeWhile, shareReplay, mergeMap, distinct } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
@@ -37,14 +37,32 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   get arrayProductControl(): FormArray {
     return this.formSale.get("productList") as FormArray;
   }
+  // @HostListener('scroll',["$event"])
+  // onScroll(e,){
+  //   console.log((this.el.nativeElement as HTMLElement ).scrollTop, e );
+
+  // }
+  isShodow$: Observable<boolean>
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private store: Store,
     private activeRoute: ActivatedRoute,
+    private el: ElementRef
   ) { }
+
   ngOnInit() {
+
+    this.isShodow$ = fromEvent(this.el.nativeElement, "scroll")
+      .pipe(
+        map((ev: Event) => (ev.target as HTMLElement).scrollTop),
+        map(top => top > 10 ? true : false),
+        distinctUntilChanged(),
+        tap(console.log)
+      )
+    // .subscribe(v => console.log(v))
+
     this.title$ = this.activeRoute.paramMap.pipe(
       pluck("params", "id"),
       map(id => isNaN(+id) ? "Новая продажа" : "Продажа N " + id)
@@ -126,7 +144,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.arrayProductControl.removeAt(i);
   }
 
-  
+
   test(el: MatExpansionPanel) {
     let nativEl: HTMLElement = document.querySelector(`[aria-controls=${el.id}]`);
     let bottom = nativEl.getBoundingClientRect().bottom

@@ -33,9 +33,7 @@ import { AuthState } from './store/state/auth.state';
 import { GapiService } from './service/google-gapi/gapi.service';
 import { environment } from 'src/environments/environment';
 import { SaleDetailComponent } from './components/sale-list/sale-detail/sale-detail.component';
-import { SaleFormControlComponent } from './components/sale-list/sale-form-control/sale-form-control.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SearchProductComponent } from './components/sale-list/search-product/search-product.component';
 import { SearchPipe } from './components/sale-list/form-products/search.pipe';
 import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
 import { NameProductsSate } from './store/state/name-products.state';
@@ -66,8 +64,6 @@ export function noop(){
     FileListComponent,
     LoginComponent,
     SaleDetailComponent,
-    SaleFormControlComponent,
-    SearchProductComponent,
     SearchPipe,
     FormProductsComponent,
   ],

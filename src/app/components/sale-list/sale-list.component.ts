@@ -39,8 +39,8 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       tap(d => {
         this.isSameDate = !moment(d).isSame(moment(), 'day');
         this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня" ;
+        sessionStorage.setItem("sessionDate", d)
       }),
-      tap(d => sessionStorage.setItem("sessionDate", d)),
       switchMap(d => this.store.select(SaleState.getSaleByDate(moment(d)))),
     );
   }

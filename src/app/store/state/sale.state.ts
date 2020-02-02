@@ -2,8 +2,8 @@ import { Sale } from 'src/app/models/sale.model';
 import { State, NgxsOnInit, StateContext, Store, Action, Selector, createSelector } from '@ngxs/store';
 import { patch, removeItem, updateItem, append, iif, insertItem } from '@ngxs/store/operators'
 import { FileService } from 'src/app/service/google-gapi/file.service';
-import { from, of } from 'rxjs';
-import { pluck, tap, filter, switchMap, map, mergeMap, catchError } from 'rxjs/operators';
+import { from, of, empty } from 'rxjs';
+import { pluck, tap, filter, switchMap, map, mergeMap, catchError, take, retry } from 'rxjs/operators';
 import { AuthState } from './auth.state';
 import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale, UploadSales, GetSale, NewSale, SaveSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
@@ -30,8 +30,8 @@ function insertOrUpdateSale(id: any, loadedSale?: Sale) {
 
 export interface SaleStateModel {
     sales: Sale[];
+    error: any,
     select: Sale,
-    nameProduct: string[],
     baseInfo: File,
     loading: boolean
 }
@@ -41,15 +41,9 @@ export interface SaleStateModel {
     name: "SaleStore",
     defaults: {
         sales: [],
+        error: null,
         loading: false,
         select: null,
-        nameProduct: [
-            "Футболка",
-            "Майка",
-            "Трусы",
-            "Носки",
-            "Штаны",
-        ],
         baseInfo: null
     }
 })
@@ -74,9 +68,12 @@ export class SaleState implements NgxsOnInit {
 
     @Action(GetSales)
     getSales(ctx: StateContext<SaleStateModel>) {
-        ctx.patchState({ loading: true })
+        ctx.patchState({ loading: true, error: null })
         return this.salesService.getSales().pipe(
-            tap(({ sales }) => ctx.patchState({ sales, loading: false }))
+            tap(
+                ({ sales }) => ctx.patchState({ sales, loading: false }),
+                err => ctx.patchState({ loading: false, error: err, sales: [] })
+            ),
         )
 
         // let baseInfo: File = ctx.getState().baseInfo || JSON.parse(localStorage.getItem("baseInfo"))
@@ -173,6 +170,10 @@ export class SaleState implements NgxsOnInit {
         return state.loading;
     }
     @Selector()
+    static error(state: SaleStateModel) {
+        return state.error;
+    }
+    @Selector()
     static baseInfo(state: SaleStateModel) {
         return state.baseInfo;
     }
@@ -186,15 +187,12 @@ export class SaleState implements NgxsOnInit {
         return state.select;
     }
 
-    @Selector()
-    static nameProduct(state: SaleStateModel) {
-        return state.nameProduct;
-    }
+
     static getSaleByDate(date: Moment) {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales ? state.sales.filter(s => date.isSame(moment(s.timestamp), 'days')) : [];
+                return state.sales ? state.sales.filter(s =>date.isSame(moment(s.timestamp), 'days')) : [];
             }
         )
     }

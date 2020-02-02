@@ -1,6 +1,31 @@
+<mat-action-list>
+    <mat-list-item (click)='pickerFrom.open()'>
+        <input class="hidden" [max]="maxDate" [formControl]='dateFrom' [matDatepicker]="pickerFrom" autocomplete="off">
+        <mat-datepicker #pickerFrom [startAt]="dateFrom.value | date"></mat-datepicker>
+        <span>От:</span>
+        <span> {{dateFrom.value | date:"EE, d MMM yyyy"}}</span>
+    </mat-list-item>
+    <mat-list-item (click)='pickerTo.open()'>
+        <input class="hidden" [min]="minDate" [formControl]='dateTo' [matDatepicker]="pickerTo" autocomplete="off">
+        <mat-datepicker #pickerTo [startAt]="dateTo.value | date"></mat-datepicker>
+        <span>До:</span>
+        <span> {{dateTo.value | date:"EE, d MMM yyyy"}}</span>
+    </mat-list-item>
+</mat-action-list>
+
+    <div *ngFor="let d of (range$ | async)">
+        {{d}}
+    </div>
+
+
+<div (click)="picker.open()" matRipple class="date">
+
+</div>
+
+
 <button mat-flat-button color="primary" (click)='textarea.value = generete()'>Generete Sale</button>
 
 
-<textarea style="display: block; width: 100%;" rows="10"  #textarea ></textarea>
+<textarea style="display: block; width: 100%;" rows="10" #textarea></textarea>
 <pre>{{sales | json}}</pre>
 <pre>{{name$ | async | json}}</pre>
