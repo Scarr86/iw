@@ -9,7 +9,7 @@
         </button>
     </mat-form-field>
     <!--  -->
-    <!-- Count  -->
+    <!-- start Count  -->
 
     <ng-container *ngIf="!nameInput.focused else search">
         <mat-form-field class="form-product__count">
@@ -19,14 +19,14 @@
             </mat-form-field>
         <div class="form-product__count-actions">
             <button type="button" mat-stroked-button color="primary" (click)="onChange(count,-1)" color="primary">
-                <mat-icon inline>remove</mat-icon>
+                <mat-icon >remove</mat-icon>
             </button>
             <button type="button" mat-stroked-button color="primary" (click)="onChange(count, 1)" color="primary">
-                <mat-icon inline>add</mat-icon>
+                <mat-icon >add</mat-icon>
             </button>
         </div>
-        <!--  -->
-        <!-- Price -->
+        <!-- end Count -->
+        <!-- start Price -->
         <mat-form-field class="form-product__price">
             <input formControlName="price" type="number" min="0" autocomplete="off" matInput placeholder="Цена"
                 required />
@@ -46,7 +46,7 @@
             </button>
         </div>
     </ng-container>
-    <!--  -->
+    <!-- end Price -->
     <ng-template #search>
         <mat-action-list class="search">
             <mat-list-item *ngFor="let name of (nameInput.value | search | async)" (mousedown)="setName(name)">
