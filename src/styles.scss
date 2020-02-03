@@ -1,85 +1,46 @@
 @import '~@angular/material/theming';
-// @import 'theme.scss';
-
-
-// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-
 @include mat-core();
+
+
+
+@import 'vars';
+
+$custom-typography: mat-typography-config(
+  $button:        mat-typography-level(18px, 24px, 500),
+);
+
+@include mat-core($custom-typography);
+
 
 $iw-primary: mat-palette($mat-indigo);
 $iw-accent: mat-palette($mat-pink, A200, A100, A400);
 $iw-warn: mat-palette($mat-red);
 
-// $iw-primary: mat-palette($mat-indigo);
-// $iw-accent: mat-palette($mat-pink, A200, A100, A400);
-// $iw-warn: mat-palette($mat-red);
-
-
-// Тест кастем тема
-@mixin custom-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
-
-  .active, .active:focus {
-    background-color: mat-color($primary, 100) !important;
-
-    // background-color: mat-color($background);
-    // .mat-line{
-    //   color: mat-color($foreground, text);
-    // }
-  }
-
-  .text-primary {
-    color: mat-color($primary, 500);
-  }
-  .text-accent{
-    color:  mat-color($accent);
-  }
-}
-
-
-
-// $iw-primary: mat-palette($mat-indigo);
-// $iw-accent: mat-palette($mat-pink, A200, A100, A400);
-// $iw-warn: mat-palette($mat-red);
-
-// $btn-app-primary: mat-palette($mat-indigo, 400);
-// $btn-app-theme:mat-dark-theme($btn-app-primary, $iw-accent, $iw-warn);
-
 // Create the theme object (a Sass map containing all of the palettes).
-$iw-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
+$iw-light-theme: mat-light-theme($iw-primary, $iw-accent, $iw-warn);
+$iw-dark-theme: mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
 // $iw-theme: mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
 
-@include angular-material-theme($iw-theme);
-@include custom-theme($iw-theme);
+@include angular-material-theme($iw-light-theme);
+@include custom-theme($iw-light-theme);
 
-// Define an alternate dark theme.
-// $dark-primary: mat-palette($mat-blue-grey);
-// $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-// $dark-warn:    mat-palette($mat-deep-orange);
-// $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-//$dark-theme:   mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
 
 .dark-theme {
-  $iw-theme: mat-dark-theme($iw-primary, $iw-accent, $iw-warn);
-  @include angular-material-theme($iw-theme);
-  // @include mat-button-theme($btn-app-theme);
+  
+  @include angular-material-theme($iw-dark-theme);
+  @include custom-theme($iw-dark-theme);
 
-  // .mat-stroked-button.mat-primary {
-  //   color: mat-color($iw-primary, 400);
-  // }
-  // @include angular-material-theme($dark-theme);
-  // @include candy-carousel-theme($dark-theme); 
+  // $btn-app-primary: mat-palette($mat-indigo, 400);
+  // $btn-app-theme: mat-dark-theme($btn-app-primary, $iw-accent, $iw-warn);
+  // @include mat-button-theme($btn-app-theme);
 }
-.deep-purple{
-  // @include angular-material-theme($my-custom-light-theme);
-  // @include custom-theme($my-custom-light-theme);
-}
-.dark-theme.deep-purple{
-  // @include angular-material-theme($my-custom-dark-theme);
-}
+// .deep-purple{
+//   // @include angular-material-theme($my-custom-light-theme);
+//   // @include custom-theme($my-custom-light-theme);
+// }
+// .dark-theme.deep-purple{
+//   // @include angular-material-theme($my-custom-dark-theme);
+// }
 
 
 

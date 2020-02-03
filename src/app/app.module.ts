@@ -37,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchPipe } from './components/sale-list/form-products/search.pipe';
 import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
 import { NameProductsSate } from './store/state/name-products.state';
+import { ConfigState } from './store/state/config.state';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -79,7 +80,7 @@ export function noop(){
     ReactiveFormsModule,
     HttpClientModule,
     // NgxsModule.forRoot(states, { developmentMode: !environment.production }),
-    NgxsModule.forRoot([FileState, NameProductsSate, SaleState, AuthState], {
+    NgxsModule.forRoot([FileState, NameProductsSate, SaleState, AuthState, ConfigState], {
       developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
@@ -103,7 +104,7 @@ export function noop(){
 export class AppModule {
   constructor(overlayContainer: OverlayContainer, private theme: ThemeService) {
     this.theme.theme.subscribe((t) => {
-      console.log(t);
+      // console.log(t);
       let tt = t.split(" ")[0];
       let ttt = t.split(" ")[1];
       overlayContainer.getContainerElement().classList.remove('deep-purple')
@@ -114,6 +115,7 @@ export class AppModule {
       if (ttt) {
         overlayContainer.getContainerElement().classList.add(ttt);
       }
+      
 
 
 

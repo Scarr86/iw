@@ -1,7 +1,7 @@
-import { Component, OnInit, HostBinding, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, HostBinding, AfterViewInit, AfterContentInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay, tap, startWith, filter, retry } from 'rxjs/operators';
+import { Observable, Subject, pipe } from 'rxjs';
+import { map, shareReplay, tap, startWith, filter, retry, takeUntil, switchMapTo, switchMap, delay } from 'rxjs/operators';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../../service/theme.service';
 import { Select, Store, Actions, ofActionErrored, ofActionCompleted } from '@ngxs/store';
@@ -13,23 +13,23 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SalesService, IUser } from 'src/app/service/sales.service';
 import { GetSales } from 'src/app/store/actions/sale.actions';
+import { ToggleDarkTheme, SetTheme } from 'src/app/store/actions/config.action';
+import { THEME, ConfigState } from 'src/app/store/state/config.state';
+import { FormControl } from '@angular/forms';
 
 @Component({
    selector: 'app-navigation',
    templateUrl: './navigation.component.html',
    styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
-   @Select(SaleState.loading) loading$:Observable<boolean>;
-   @Select(SaleState.error) error$:Observable<boolean>;
+export class NavigationComponent implements OnInit, OnDestroy {
+   @Select(SaleState.loading) loading$: Observable<boolean>;
+   @Select(SaleState.error) error$: Observable<boolean>;
    @Select(AuthState.isSignedIn) isSignedIn$: Observable<boolean>;
-   // @Select(SaleState.sales) sales$: Observable<Sale[]>;
-     @HostBinding('class') componentCssClass;
-
    title: string;
+   isDarkOrLight: FormControl = new FormControl(false);
 
-   isDarkTheme = "";
-   themeStr = '';
+   private destroy$ = new Subject<void>();
 
    links = [
       { name: "Sale", patch: "/sale-list" },
@@ -47,55 +47,12 @@ export class NavigationComponent implements OnInit {
 
    constructor(
       private breakpointObserver: BreakpointObserver,
-      // private auth: Auth2Service,
-      //public overlayContainer: OverlayContainer,
       private theme: ThemeService,
       private store: Store,
-      private actions$: Actions,
       private router: Router,
       private titleServise: Title,
-      private fireService: SalesService
    ) { }
 
-   sale = {
-      date: Date.now(),
-      discount: 100,
-   }
-
-   add() {
-
-      let sales = this.store.selectSnapshot(SaleState.sales);
-      console.log(sales);
-
-      this.fireService.create(sales).subscribe(({ name }) => {
-         //this.users.push({ ...this.user, id: res.name })
-         console.log("add", name);
-         // this.sales.push()
-      })
-   }
-
-   get() {
-      // this.fireService.getSales().subscribe(console.log);
-
-      // this.fireService.get().subscribe(res => {
-      //    this.users = res;
-      //    console.log("get:", res);
-      // });
-   }
-   update() {
-      // this.users[0].nikname = "nik";
-      this.fireService.update(this.sale ).subscribe(console.log)
-
-   }
-   delete() {
-      this.fireService.delete().subscribe((res) => {
-         console.log("delete", res)
-      });
-   }
-   edit() {
-      // this.users[0].nikname = "nik!!!";
-      this.fireService.edit({}).subscribe(console.log)
-   }
 
    setTitle(url: string) {
       switch (url) {
@@ -104,8 +61,8 @@ export class NavigationComponent implements OnInit {
             this.title = "Продажи";
             break;
          case "/history":
-            this.titleServise.setTitle("История продаж");
-            this.title = "История продаж";
+            this.titleServise.setTitle("История");
+            this.title = "История";
             break;
          case "/setting":
             this.titleServise.setTitle("Настройки");
@@ -119,23 +76,33 @@ export class NavigationComponent implements OnInit {
    }
 
    ngOnInit() {
+      this.isDarkOrLight.valueChanges
+         .pipe(
+            switchMap(() => this.store.dispatch(new ToggleDarkTheme())),
+            takeUntil(this.destroy$)
+         )
+         .subscribe(console.log);
+
+      this.store.select(ConfigState.theme)
+         .pipe(
+            map(t => t.includes(THEME.dark)),
+            takeUntil(this.destroy$)
+         )
+         .subscribe(t => this.isDarkOrLight.setValue(t, { emitEvent: false }));
 
       this.setTitle(this.router.url)
       this.router.events
          .pipe(
             filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-            map(e => e.url)
+            takeUntil(this.destroy$)
          )
-         .subscribe(url => this.setTitle(url))
+         .subscribe(e => this.setTitle(e.url))
 
    }
+   toggleDarkTheme(checked: boolean) {
+      console.log(checked);
 
-
-   cbChange(checked: boolean) {
-      this.isDarkTheme = checked ? "dark-theme" : "";
-      this.theme.setTheme(this.isDarkTheme + " " + this.themeStr);
-      // this.theme.setDarkTheme(checked);
-      //this.componentCssClass = checked ? "dark-theme" : "";
+      this.store.dispatch(new ToggleDarkTheme());
    }
 
    signIn() {
@@ -148,17 +115,21 @@ export class NavigationComponent implements OnInit {
 
       // this.auth.signOut();
    }
-   swappingTheme(theme) {
-      this.themeStr = theme;
 
-      this.theme.setTheme(this.isDarkTheme + " " + theme);
-      // document.getElementById('themeAsset').href = `assest/${theme}`
-   }
-
-   getSales(){
+   getSales() {
       this.store.dispatch(new GetSales());
    }
+   ngOnDestroy() {
+      this.destroy$.next();
+      this.destroy$.complete();
+   }
 
+   setGreenTheme() {
+      this.store.dispatch(new SetTheme(THEME.green));
+   }
+   setIndigoTheme() {
+      this.store.dispatch(new SetTheme(THEME.indigo));
+   }
 
 }
 

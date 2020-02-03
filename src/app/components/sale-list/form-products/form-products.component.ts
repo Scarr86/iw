@@ -34,12 +34,18 @@ export class FormProductsComponent implements OnInit {
     ctr.reset();
   }
 
-  handleInput(ev: Event, nameInput:MatInput) {
-    console.log(nameInput)
+  handleInput(ev: KeyboardEvent) {
+    let nativeInput: HTMLInputElement = ev.target as HTMLInputElement;
+    if (ev.code === "Enter")
+      nativeInput.blur()
   }
 
   setName(name: string, ) {
     this.name.setValue(name);
+  }
+
+   coutnError(){
+    return this.count.hasError('min') ? "меньше 0": ""; 
   }
 
 

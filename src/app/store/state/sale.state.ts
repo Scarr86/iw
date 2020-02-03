@@ -7,7 +7,6 @@ import { pluck, tap, filter, switchMap, map, mergeMap, catchError, take, retry }
 import { AuthState } from './auth.state';
 import { GetSales, SetBaseInfo, DeleteBaseInfo, DeleteSale, ChangeSale, UploadSales, GetSale, NewSale, SaveSale } from '../actions/sale.actions';
 import { File } from '../../models/file.model'
-import { compareDay } from 'src/app/lib/lib';
 import { SalesService } from 'src/app/service/sales.service';
 
 import * as moment from "moment";

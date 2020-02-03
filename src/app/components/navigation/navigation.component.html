@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-   <mat-sidenav #drawer class="sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+   <mat-sidenav #drawer  [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [autoFocus]='false'>
       <!-- fixedInViewport  -->
@@ -43,7 +43,7 @@
          <ng-template #retry>
             <div class="center-page">
                <h1 class="text-accent">Ошибка загрузки данный</h1>
-               <button type="button" mat-button  (click)="getSales()">
+               <button type="button" mat-button (click)="getSales()">
                   Повторить
                </button>
             </div>
@@ -70,18 +70,16 @@
 </mat-sidenav-container>
 
 
-
-
-
 <mat-menu [xPosition]="'before'" #menu="matMenu">
+   <!-- start Authorization -->
    <button (click)="signIn()" *ngIf='!(isSignedIn$ | async)' mat-menu-item> Войти </button>
    <button (click)="signOut()" *ngIf='isSignedIn$ | async' mat-menu-item> Выйти </button>
-
-   <mat-checkbox (change)="cbChange($event.checked)" class="mat-menu-item">
+   <!-- end  Authorization -->
+   <!--start THEME -->
+   <mat-checkbox [formControl]="isDarkOrLight" class="mat-menu-item">
       Темная тема
    </mat-checkbox>
-   <button (click)="swappingTheme('deep-purple')" mat-menu-item> deep-purple </button>
-   <button (click)="swappingTheme('')" mat-menu-item> pink-bluegrey </button>
-   <!-- <button (click)="swappingTheme('purple-green')" mat-menu-item> purple-green </button> -->
-   <!-- <button (click)="swappingTheme('indigo-pink')" mat-menu-item> indigo-pink </button> -->
+   <button (click)="setIndigoTheme()" mat-menu-item> Indigo </button>
+   <button (click)="setGreenTheme()" mat-menu-item> Green </button>
+   <!--end THEME -->
 </mat-menu>

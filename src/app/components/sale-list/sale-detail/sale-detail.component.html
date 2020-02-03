@@ -14,7 +14,7 @@
     {{date$ | async | date:"EE, d MMM yyyy"}}
   </h2>
 
-  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async">
+  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async" [style.fontSize.px]="18">
     <!-- Discount -->
     <mat-card class="form__discount">
       <mat-form-field class="form__discount-input">
@@ -37,12 +37,12 @@
     </mat-card>
     <!--  -->
     <!-- Accordion -->
-    <mat-accordion formArrayName="productList" [hideToggle]="true" [multi]="true">
-      <mat-expansion-panel (afterExpand)="test(accordion)" #accordion
+    <mat-accordion formArrayName="productList" [hideToggle]="true" [multi]="true" >
+      <mat-expansion-panel (afterExpand)="test(accordion)" #accordion 
         *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
-        <mat-expansion-panel-header>
-          <mat-panel-title *ngIf="!accordion.expanded">
+        <mat-expansion-panel-header collapsedHeight="60px">
+          <mat-panel-title *ngIf="!accordion.expanded" [style.fontSize.px]="18" >
             <span class="nowrap-hidden-text"> {{ product.get("name").value }} </span>
           </mat-panel-title>
           <mat-panel-description>
@@ -75,7 +75,7 @@
       <!-- New Product -->
       <mat-expansion-panel #expansionheadr (afterExpand)="test(expansionheadr)">
         <!-- New Product List Header -->
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header collapsedHeight="65px">
           <mat-panel-description>
             <span>+ Добавить продукт</span>
           </mat-panel-description>
