@@ -11,6 +11,27 @@ import { mapTo, map, mergeScan, expand, mergeAll, takeWhile, switchMap, concatMa
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+];
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -21,11 +42,18 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
   ],
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
+
+  displayedColumns: string[] = ['id', 'timestamp', 'discount'];
+  displayedColumnsFooter: string[] = ['id','timestamp',"discount1",  "discount"];
+    dataSource ;
+
+
   @Select(NameProductsSate.names) names$;
 
   dateFrom: FormControl = new FormControl();
   dateTo: FormControl = new FormControl();
-  range$;
+  range$:Observable<Sale[]>;
+  getTotalDiscount$;
   sales;
   constructor(
     private genereteService: GeneratorBase,
@@ -61,12 +89,18 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     ).pipe(
       switchMap(([start, end]) => this.store.selectOnce(SaleState.getSaleByDateBetween(start, end))),
       map((s: Sale[]) => s.sort((s1, s2) => moment(s1.timestamp).isAfter(moment(s2.timestamp)) ? 1 : -1)),
+      // map((s:Sale[])=> s.map(s=> ({...s, timestamp: moment(s.timestamp).format("DD-MM-YYYY") }))),
       shareReplay(1)
-    )
+    );
 
+    this.getTotalDiscount$ =  of(0)
+    // this.range$.pipe(
+      // scan((total, s)=> s.() , 0)
+    // )
+
+    this.dataSource = this.range$;
 
     this.range$.subscribe((s) => console.log(s));
-
 
     // console.log(moment([2020, 0, 1]), moment([2020, 0, 8]));
    
