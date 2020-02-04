@@ -1,5 +1,28 @@
 {
   "sales": [
+   
+    {
+      "id": 2,
+      "timestamp": 1577811600000,
+      "discount": 100,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 4000,
+          "count": 4
+        },
+        {
+          "name": "Штаны",
+          "price": 3000,
+          "count": 1
+        },
+        {
+          "name": "Майка",
+          "price": 1000,
+          "count": 3
+        }
+      ]
+    },
     {
       "id": 1,
       "timestamp": 1577811600000,
@@ -26,26 +49,16 @@
           "count": 2
         }
       ]
-    },
+    }, 
     {
-      "id": 2,
-      "timestamp": 1577811600000,
+      "id": 4,
+      "timestamp": 1577898000000,
       "discount": 100,
       "productList": [
         {
-          "name": "Футболка",
-          "price": 4000,
+          "name": "Трусы",
+          "price": 5000,
           "count": 4
-        },
-        {
-          "name": "Штаны",
-          "price": 3000,
-          "count": 1
-        },
-        {
-          "name": "Майка",
-          "price": 1000,
-          "count": 3
         }
       ]
     },
@@ -78,18 +91,6 @@
           "name": "Майка",
           "price": 4000,
           "count": 3
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "timestamp": 1577898000000,
-      "discount": 100,
-      "productList": [
-        {
-          "name": "Трусы",
-          "price": 5000,
-          "count": 4
         }
       ]
     },
@@ -154,29 +155,7 @@
         }
       ]
     },
-    {
-      "id": 8,
-      "timestamp": 1577984400000,
-      "discount": 200,
-      "productList": [
-        {
-          "name": "Футболка",
-          "price": 2000,
-          "count": 3
-        },
-        {
-          "name": "Носки",
-          "price": 3000,
-          "count": 4
-        },
-        {
-          "name": "Трусы",
-          "price": 2000,
-          "count": 3
-        }
-      ]
-    },
-    {
+     {
       "id": 9,
       "timestamp": 1577984400000,
       "discount": 100,
@@ -200,6 +179,28 @@
           "name": "Носки",
           "price": 1000,
           "count": 2
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "timestamp": 1577984400000,
+      "discount": 200,
+      "productList": [
+        {
+          "name": "Футболка",
+          "price": 2000,
+          "count": 3
+        },
+        {
+          "name": "Носки",
+          "price": 3000,
+          "count": 4
+        },
+        {
+          "name": "Трусы",
+          "price": 2000,
+          "count": 3
         }
       ]
     },
