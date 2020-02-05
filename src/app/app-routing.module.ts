@@ -13,9 +13,21 @@ import { AppComponent } from './app.component';
 
 const routesSection: Routes = [
    { path: "", redirectTo: "sale-list", pathMatch: "full" },
-   { path: "sale-list", component: SaleListComponent },
-   { path: "history", component: HistoryComponent },
-   { path: "setting", component: SettingComponent },
+   {
+      path: "sale-list",
+      component: SaleListComponent,
+      data: { animation: "SalesAnim" }
+   },
+   {
+      path: "history",
+      component: HistoryComponent,
+      data: { animation: "HistoryAnim" }
+   },
+   {
+      path: "setting",
+      component: SettingComponent,
+      data: { animation: "SettingAnim" }
+   },
 ]
 // children: routesSection
 // component:NavigationComponent

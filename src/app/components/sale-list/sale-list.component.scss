@@ -1,6 +1,10 @@
 
 
+:host{
+    display: flex;
 
+    //height: 100%;
+}
 .icon-more-vert{
     position: relative;
     left: 10px;
@@ -12,7 +16,8 @@
     top: 50%;
     left: 0;
     right: 0;
-    transform: translateY(-50%);
+    transform: translateY(-50%); 
+    
 }
 .date {
     text-align: center;

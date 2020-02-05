@@ -35,6 +35,7 @@ export class ConfigState {
 
     @Selector()
     static theme(state: ConfigStateModel) {
-        return state.darkOrLight + " " + state.theme;
+
+        return (state.darkOrLight ? state.darkOrLight + " " : "" )+ state.theme;
     }
 }

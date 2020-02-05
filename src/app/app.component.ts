@@ -33,7 +33,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // })
   }
   ngAfterViewInit() {
-    console.log(this.componentCssClass);
+    // console.log(this.componentCssClass);
 
     // setTimeout(() => {
     //   this.saleStory.getSaleList();

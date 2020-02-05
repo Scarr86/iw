@@ -32,7 +32,9 @@
       <section class="mat-typography container-page">
          <ng-container *ngIf="!(loading$ | async) else loading">
             <ng-container *ngIf="!(error$ | async) else retry">
-               <router-outlet></router-outlet>
+               <div [@routeAnimations]="prepareRoute(outlet)">
+                  <router-outlet #outlet="outlet"></router-outlet>
+               </div>
             </ng-container>
          </ng-container>
          <ng-template #loading>

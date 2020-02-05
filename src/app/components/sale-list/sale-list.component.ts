@@ -9,14 +9,20 @@ import { DeleteSale } from 'src/app/store/actions/sale.actions';
 import { FormControl } from '@angular/forms';
 
 import * as moment from "moment";
+import { slide, salesListAnim, } from '../animation';
 
 @Component({
   selector: 'app-sale-list',
   templateUrl: './sale-list.component.html',
   styleUrls: ['./sale-list.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [
+    slide,
+    salesListAnim
+  ]
 })
 export class SaleListComponent implements OnInit, AfterViewInit {
+  anim: boolean = true;
 
   @Select(SaleState.loading) loading$: Observable<boolean>;
   date: FormControl = new FormControl(new Date());
@@ -34,14 +40,17 @@ export class SaleListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     moment.locale('ru')
+
     this.sales$ = this.date.valueChanges.pipe(
       delay(0),
       tap(d => {
         this.isSameDate = !moment(d).isSame(moment(), 'day');
-        this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня" ;
-        sessionStorage.setItem("sessionDate", d)
+        this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня";
+        sessionStorage.setItem("sessionDate", d);
       }),
-      switchMap(d => this.store.select(SaleState.getSaleByDate(moment(d)))),
+      switchMap(d => this.store.selectOnce(SaleState.getSaleByDate(moment(d)))),
+      tap(_ => { this.anim = !this.anim; }),
+      shareReplay(1),
     );
   }
   ngAfterViewInit() {
@@ -65,6 +74,11 @@ export class SaleListComponent implements OnInit, AfterViewInit {
   }
   onDelete(s: Sale) {
     this.store.dispatch(new DeleteSale(s.id));
+  }
+
+  closedPicker() {
+    console.log("closed picker");
+
   }
 
 }

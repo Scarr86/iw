@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 
-import { NgxsModule } from "@ngxs/store";
+
+import { NgxsModule, Store } from "@ngxs/store";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin"
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
@@ -38,16 +39,17 @@ import { SearchPipe } from './components/sale-list/form-products/search.pipe';
 import { FormProductsComponent } from './components/sale-list/form-products/form-products.component';
 import { NameProductsSate } from './store/state/name-products.state';
 import { ConfigState } from './store/state/config.state';
+import { pairwise } from 'rxjs/operators';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiService: GapiService) {
   // return () => gapiService.initGapi();
-  return ()=>{}
+  return () => { }
 }
-export function noop(){
-  return function(){};
+export function noop() {
+  return function () { };
 }
 
 @NgModule({
@@ -91,39 +93,40 @@ export function noop(){
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
-    { provide: APP_INITIALIZER, 
-      useFactory: initGapi, 
-      deps: [GapiService], 
-      multi: true 
-    }, 
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initGapi,
+      deps: [GapiService],
+      multi: true
+    },
     { provide: LOCALE_ID, useValue: "ru" }
   ],
   bootstrap: [AppComponent]
 
 })
 export class AppModule {
-  constructor(overlayContainer: OverlayContainer, private theme: ThemeService) {
-    this.theme.theme.subscribe((t) => {
-      // console.log(t);
-      let tt = t.split(" ")[0];
-      let ttt = t.split(" ")[1];
-      overlayContainer.getContainerElement().classList.remove('deep-purple')
-      overlayContainer.getContainerElement().classList.remove('dark-theme');
-      if (tt) {
-        overlayContainer.getContainerElement().classList.add(tt);
-      }
-      if (ttt) {
-        overlayContainer.getContainerElement().classList.add(ttt);
-      }
-      
+  constructor(overlayContainer: OverlayContainer, private store: Store) {
+
+    store.select(ConfigState.theme)
+      .pipe(
+        pairwise()
+      )
+      .subscribe(([oldTheme, newTheme]) => {
+
+        let arrOldTheme: string[] = oldTheme.split(" ");
+        if (arrOldTheme[0])
+          overlayContainer.getContainerElement().classList.remove(arrOldTheme[0]);
+        if (arrOldTheme[1])
+          overlayContainer.getContainerElement().classList.remove(arrOldTheme[1]);
 
 
+        let arrNewTheme: string[] = newTheme.split(" ");
+        if (arrNewTheme[0])
+          overlayContainer.getContainerElement().classList.add(arrNewTheme[0]);
+        if (arrNewTheme[1])
+          overlayContainer.getContainerElement().classList.add(arrNewTheme[1]);
+        console.log(overlayContainer.getContainerElement().className);
 
-      // this.componentCssClass= theme.split(" ")[0]+" "+ theme.split(" ")[1];
-    })
-
-    // theme.isDarkTheme.subscribe((isDark) => isDark ?
-    //   overlayContainer.getContainerElement().classList.add('dark-theme') :
-    //   overlayContainer.getContainerElement().classList.remove('dark-theme'))
+      })
   }
 }

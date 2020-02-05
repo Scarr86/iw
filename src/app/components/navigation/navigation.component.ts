@@ -9,18 +9,22 @@ import { AuthState } from 'src/app/store/state/auth.state';
 import { SignIn, SignOut } from 'src/app/store/actions/auth.actions';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SalesService, IUser } from 'src/app/service/sales.service';
 import { GetSales } from 'src/app/store/actions/sale.actions';
 import { ToggleDarkTheme, SetTheme } from 'src/app/store/actions/config.action';
 import { THEME, ConfigState } from 'src/app/store/state/config.state';
 import { FormControl } from '@angular/forms';
+import { slideInAnimation } from '../animation';
 
 @Component({
    selector: 'app-navigation',
    templateUrl: './navigation.component.html',
-   styleUrls: ['./navigation.component.scss']
+   styleUrls: ['./navigation.component.scss'],
+   animations:[
+      slideInAnimation
+   ]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
    @Select(SaleState.loading) loading$: Observable<boolean>;
@@ -81,7 +85,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
             switchMap(() => this.store.dispatch(new ToggleDarkTheme())),
             takeUntil(this.destroy$)
          )
-         .subscribe(console.log);
+         .subscribe();
 
       this.store.select(ConfigState.theme)
          .pipe(
@@ -97,17 +101,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
             takeUntil(this.destroy$)
          )
          .subscribe(e => this.setTitle(e.url))
-
-   }
-   toggleDarkTheme(checked: boolean) {
-      console.log(checked);
-
-      this.store.dispatch(new ToggleDarkTheme());
    }
 
    signIn() {
       this.store.dispatch(new SignIn())
-      // this.auth.signIn();
    }
    signOut() {
       this.store.dispatch(new SignOut())
@@ -130,6 +127,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
    setIndigoTheme() {
       this.store.dispatch(new SetTheme(THEME.indigo));
    }
+
+   prepareRoute(outlet: RouterOutlet){
+      return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    }
 
 }
 
