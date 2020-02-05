@@ -1,14 +1,20 @@
+:host {
+    display: block;
+    // height: 100%;
+    // position: absolute;
+    // bottom: 0;
+    // top: 112px;
+    // left: 0;
+    // width: 100%;
 
-
-:host{
-    display: flex;
-
-    //height: 100%;
+    // //height: 100%;
 }
-.icon-more-vert{
+
+.icon-more-vert {
     position: relative;
     left: 10px;
 }
+
 .emty-sale {
     width: 100%;
     text-align: center;
@@ -16,9 +22,10 @@
     top: 50%;
     left: 0;
     right: 0;
-    transform: translateY(-50%); 
-    
+    transform: translateY(-50%);
+
 }
+
 .date {
     text-align: center;
     cursor: pointer;
@@ -55,6 +62,3 @@
         text-align: right;
     }
 }
-
-
-

@@ -40,6 +40,7 @@ import { FormProductsComponent } from './components/sale-list/form-products/form
 import { NameProductsSate } from './store/state/name-products.state';
 import { ConfigState } from './store/state/config.state';
 import { pairwise } from 'rxjs/operators';
+import { HistoryModalDialogComponent } from './components/history/history-modal-dialog/history-modal-dialog.component';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -69,9 +70,11 @@ export function noop() {
     SaleDetailComponent,
     SearchPipe,
     FormProductsComponent,
+    HistoryModalDialogComponent,
   ],
   entryComponents: [
-    ModalDialogComponent
+    ModalDialogComponent,
+    HistoryModalDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { DeleteSale } from 'src/app/store/actions/sale.actions';
 import { FormControl } from '@angular/forms';
 
+
+
+
 import * as moment from "moment";
 import { slide, salesListAnim, } from '../animation';
 
@@ -41,9 +44,16 @@ export class SaleListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     moment.locale('ru')
 
+
+  }
+  ngAfterViewInit() {
+
+
     this.sales$ = this.date.valueChanges.pipe(
-      delay(0),
+      // delay(0),
       tap(d => {
+        console.log(d);
+        
         this.isSameDate = !moment(d).isSame(moment(), 'day');
         this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня";
         sessionStorage.setItem("sessionDate", d);
@@ -52,8 +62,7 @@ export class SaleListComponent implements OnInit, AfterViewInit {
       tap(_ => { this.anim = !this.anim; }),
       shareReplay(1),
     );
-  }
-  ngAfterViewInit() {
+
     let sessionDate = sessionStorage.getItem("sessionDate");
     this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
   }
