@@ -1,19 +1,40 @@
-<mat-action-list>
-    <mat-list-item (click)='pickerFrom.open()'>
-        <input class="hidden" [max]="dateTo.value" [formControl]='dateFrom' [matDatepicker]="pickerFrom"
-            autocomplete="off">
-        <mat-datepicker #pickerFrom [startAt]="dateFrom.value "></mat-datepicker>
-        <span>От:</span>
-        <span> {{dateFrom.value | date:"EE, d MMM yyyy"}}</span>
-    </mat-list-item>
-    <mat-list-item (click)='pickerTo.open()'>
-        <input class="hidden" [min]="dateFrom.value" [formControl]='dateTo' [matDatepicker]="pickerTo"
-            autocomplete="off">
-        <mat-datepicker #pickerTo [startAt]="dateTo.value"></mat-datepicker>
-        <span>До:</span>
-        <span> {{dateTo.value | date:"EE, d MMM yyyy"}}</span>
-    </mat-list-item>
-</mat-action-list>
+<section class="history">
+    <div class="history__period">
+
+        <div class="mat-title text-primary"> {{periods[slectPeriod]}}</div>
+
+        <mat-action-list>
+            <ng-container *ngIf="slectPeriod == periods.length - 1">
+                <mat-list-item (click)='pickerFrom.open()'>
+                    <input class="hidden" [max]="dateTo.value" [formControl]='dateFrom' [matDatepicker]="pickerFrom"
+                        autocomplete="off">
+                    <mat-datepicker #pickerFrom [startAt]="dateFrom.value "></mat-datepicker>
+                    <span>От:</span>
+                    <span> {{dateFrom.value | date:"EE, d MMM yyyy"}}</span>
+                </mat-list-item>
+                <mat-list-item (click)='pickerTo.open()'>
+                    <input class="hidden" [min]="dateFrom.value" [formControl]='dateTo' [matDatepicker]="pickerTo"
+                        autocomplete="off">
+                    <mat-datepicker #pickerTo [startAt]="dateTo.value"></mat-datepicker>
+                    <span>До:</span>
+                    <span> {{dateTo.value | date:"EE, d MMM yyyy"}}</span>
+                </mat-list-item>
+            </ng-container>
+            <mat-list-item>
+                <mat-icon matListIcon>sort</mat-icon>
+                <span>По убыванию</span>
+            </mat-list-item>
+
+
+        </mat-action-list>
+    </div>
+
+    <mat-list>
+        <mat-list-item *ngFor="let day of dates">
+            <div class="history__date"> {{day | date:"EE, d MMM yyyy"}} </div>
+        </mat-list-item>
+    </mat-list>
+</section>
 
 <!-- start Table -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -27,16 +48,16 @@
         <td mat-footer-cell *matFooterCellDef> Discount </td>
     </ng-container>
     <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef> id </th>
+        <th mat-header-cell *matHeaderCellDef> timestamp </th>
         <td mat-cell *matCellDef="let dataSource"> {{dataSource.timestamp}} </td>
-        <td mat-footer-cell *matFooterCellDef> Discount </td>
+        <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
     <ng-container matColumnDef="discount1">
-        <td mat-footer-cell *matFooterCellDef> {{getTotalDiscount$ | async | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
     <ng-container matColumnDef="discount">
-        <th mat-header-cell *matHeaderCellDef> id </th>
-        <td mat-cell *matCellDef="let dataSource"> {{dataSource.discount}} </td>
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> discount </th>
+        <td mat-cell *matCellDef="let dataSource" [attr.colspan]="2"> {{dataSource.discount}} </td>
         <td mat-footer-cell *matFooterCellDef> {{getTotalDiscount$ | async | currency}} </td>
     </ng-container>
 

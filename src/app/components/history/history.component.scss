@@ -15,3 +15,22 @@ table {
     visibility: hidden;
     // display: none;
 }
+
+.mat-title{
+    text-align: center;
+}
+
+.history {
+
+    &__period {
+        margin-bottom: 30px;
+    }
+
+    &__table {
+    }
+
+    &__date {
+        text-align: center;
+        width: 100%;
+    }
+}

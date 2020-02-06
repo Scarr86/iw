@@ -1,6 +1,10 @@
-<mat-radio-group #radio (change)="onChange($event)" class="radio-group">
-    <mat-radio-button [checked]="i == data.select" class="radio-button"
-        *ngFor="let period of periods; let i = index" [value]="period">
+<mat-radio-group class="radio-group">
+    <mat-radio-button 
+    [checked]="i == data.select" 
+    class="radio-button" 
+    *ngFor="let period of data.periods; let i = index"
+    (click)="onSelect(i)" 
+    [value]="period">
         {{period}}
     </mat-radio-button>
 </mat-radio-group>

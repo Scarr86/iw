@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { GeneratorBase } from '../../service/generator-sale.service';
-import { from, of, Observable, combineLatest, range } from 'rxjs';
+import { from, of, Observable, combineLatest, range, Subscribable, Subscription } from 'rxjs';
 import { Sale } from 'src/app/models/sale.model';
 import { Select, Store } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
@@ -8,8 +8,9 @@ import { NameProductsSate } from 'src/app/store/state/name-products.state';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment'
 import { mapTo, map, mergeScan, expand, mergeAll, takeWhile, switchMap, concatMap, tap, distinctUntilChanged, reduce, scan, shareReplay, share } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { HistoryModalDialogComponent } from './history-modal-dialog/history-modal-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { HistoryModalDialogComponent, HistoryDialogData } from './history-modal-dialog/history-modal-dialog.component';
+import { HistoryService } from 'src/app/service/history.service';
 
 export interface PeriodicElement {
   name: string;
@@ -35,6 +36,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
@@ -44,71 +46,75 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   dataSource;
 
 
-  @Select(NameProductsSate.names) names$;
+  periods: string[] = [
+    "За последнию неделю",
+    "За последный месяц",
+    "За последный год",
+    "Другое"
+  ];
 
-  dateFrom: FormControl = new FormControl();
-  dateTo: FormControl = new FormControl();
-  range$: Observable<Sale[]>;
-  getTotalDiscount$;
-  sales;
+  startPeriods = [
+    moment().subtract(1, 'week'),
+    moment().subtract(1, 'month'),
+    moment().subtract(1, 'year'),
+    moment()
+  ]
+  slectPeriod: number = 0;
+
+  dates: moment.Moment[] = [];
+  subDates: Subscription;
+
+  dateFrom: FormControl = new FormControl(moment());
+  dateTo: FormControl = new FormControl(moment());
+
+  getTotalDiscount$ = of(300);
   constructor(
     private genereteService: GeneratorBase,
     private store: Store,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public historyService: HistoryService,
+    private cdr: ChangeDetectorRef
   ) { }
-
-
-
 
   ngOnInit() {
     moment.locale('ru');
 
-    this.range$ = combineLatest(
-      this.dateFrom.valueChanges.pipe(distinctUntilChanged()),
-      this.dateTo.valueChanges.pipe(distinctUntilChanged())
-    ).pipe(
-      switchMap(([start, end]) => this.store.selectOnce(SaleState.getSaleByDateBetween(start, end))),
-      map((s: Sale[]) => s.sort((s1, s2) => moment(s1.timestamp).isAfter(moment(s2.timestamp)) ? 1 : -1)),
-      // map((s:Sale[])=> s.map(s=> ({...s, timestamp: moment(s.timestamp).format("DD-MM-YYYY") }))),
-      shareReplay(1)
-    );
+    this.subDates = this.historyService.days()
+      .subscribe(dates => this.dates = dates);
 
-    this.getTotalDiscount$ = of(0)
-    // this.range$.pipe(
-    // scan((total, s)=> s.() , 0)
-    // )
+    this.dateFrom.valueChanges.subscribe(d => this.historyService.start = d);
+    this.dateTo.valueChanges.subscribe(d => this.historyService.end = d);
 
-    this.dataSource = this.range$;
-
-    this.range$.subscribe((s) => console.log(s));
-
-    // console.log(moment([2020, 0, 1]), moment([2020, 0, 8]));
-
-    this.dateFrom.setValue(moment([2020, 0, 1]))
-    this.dateTo.setValue(moment([2020, 0, 8]));
+    this.dateFrom.setValue(this.startPeriods[this.slectPeriod]);
+    this.dateTo.setValue(moment());
   }
   ngAfterViewInit() {
-
 
   }
 
   openDialod() {
-    const dialogRef = this.dialog.open(
+    let dialogRef = this.dialog.open(
       // this.modalDialogComponent
       HistoryModalDialogComponent, {
-      minWidth: '200px',
+      minWidth: '300px',
       data: {
-        select: 2
+        periods: this.periods,
+        select: this.slectPeriod
       },
       autoFocus: false
     });
 
-    dialogRef.afterClosed().subscribe(period => {
-      console.log(period);
-    })
-
+    dialogRef.afterClosed().toPromise()
+      .then(period => {
+        if (period === undefined) return;
+        this.slectPeriod = period;
+        this.dateFrom.setValue(this.startPeriods[period]);
+        this.dateTo.setValue(moment());
+       this.cdr.detectChanges();
+      })
   }
 
+  sales;
   generete() {
     this.sales = this.genereteService.genereteSale(new Date(2020, 0, 1));
     return JSON.stringify(this.sales, null, 2);

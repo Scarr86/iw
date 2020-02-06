@@ -4,9 +4,14 @@
     margin: 15px 0;
   }
   
-  .radio-button {
-    margin: 15px;
-  }
-  .mat-dialog-container{
-      padding: 0 !important;
-  }
+.radio-button {
+  margin: 15px;
+}
+// .mat-dialog-container{
+//     padding: 0 !important;
+// }
+
+.mat-dialog-container{
+  padding: 0 !important;
+  background-color: red;
+}
