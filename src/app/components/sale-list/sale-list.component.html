@@ -1,6 +1,6 @@
 <section>
 
-    <div [@slide]="'out'" (click)="picker.open()" matRipple class="date text-primary">
+    <div (click)="picker.open()" matRipple class="date text-primary">
         <input [formControl]='date' [matDatepicker]="picker" autocomplete="off">
         <mat-datepicker #picker [startAt]="date.value | date" (closed)="closedPicker()"></mat-datepicker>
         <h1> {{date.value | date:"EE, d MMM yyyy"}}</h1>

@@ -54,9 +54,9 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   ];
 
   startPeriods = [
-    moment().subtract(1, 'week'),
-    moment().subtract(1, 'month'),
-    moment().subtract(1, 'year'),
+    moment().startOf('week').add(1, 'd'),
+    moment().startOf('month'),
+    moment().startOf('year'),
     moment()
   ]
   slectPeriod: number = 0;

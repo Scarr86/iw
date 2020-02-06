@@ -3,7 +3,7 @@ import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
 import { SaleState } from 'src/app/store/state/sale.state';
 import { Sale } from 'src/app/models/sale.model';
-import { switchMap, tap, shareReplay, share, buffer, bufferCount, delay } from 'rxjs/operators';
+import { switchMap, tap, shareReplay, share, buffer, bufferCount, delay, map, withLatestFrom } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { DeleteSale } from 'src/app/store/actions/sale.actions';
 import { FormControl } from '@angular/forms';
@@ -42,29 +42,40 @@ export class SaleListComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    moment.locale('ru')
+    moment.locale('ru');
+
+    let sessionDate = sessionStorage.getItem("sessionDate");
+    this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
 
 
   }
   ngAfterViewInit() {
 
-
     this.sales$ = this.date.valueChanges.pipe(
       // delay(0),
       tap(d => {
-        console.log(d);
-        
         this.isSameDate = !moment(d).isSame(moment(), 'day');
         this.descriptionDate = this.isSameDate ? moment(d).endOf('day').fromNow() : "Сегодня";
+        console.log(this.descriptionDate);
         sessionStorage.setItem("sessionDate", d);
       }),
       switchMap(d => this.store.selectOnce(SaleState.getSaleByDate(moment(d)))),
       tap(_ => { this.anim = !this.anim; }),
       shareReplay(1),
-    );
+    )
 
-    let sessionDate = sessionStorage.getItem("sessionDate");
-    this.date.setValue(sessionDate ? new Date(sessionDate) : new Date());
+      console.log(this.isSameDate, this.descriptionDate);
+      
+
+    // this.isSameDate$ = this.date.valueChanges.pipe(map(d => !moment(d).isSame(moment(), 'day')));
+
+    // this.descriptionDate$ = this.isSameDate$
+    //   .pipe(
+    //     withLatestFrom(this.date.valueChanges),
+    //     map(([notToDay, d]) => notToDay ? moment(d).endOf('day').fromNow() : "Сегодня")
+    //   )
+
+
   }
 
   onSelect(id: any, indx: number) {

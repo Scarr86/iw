@@ -35,23 +35,36 @@ export class HistoryService implements OnInit {
     }
 
 
-    private dates(granilarity: moment.unitOfTime.DurationConstructor): Observable<moment.Moment[]> {
+    private dates(unit: moment.unitOfTime.DurationConstructor): Observable<moment.Moment[]> {
         return combineLatest(this._start, this._end)
             .pipe(
-                map(([start, end]) => {
-                    // console.log(start.format(), end);
-                    
-                    if (!start || !end) return [];
-                    if (start.isAfter(end)) return [];
+                map(([start, end]) => this.createDates(start, end, unit))
+            );
+    }
 
-                    let day = start.clone();
-                    let dates: moment.Moment[] = [];
-                    while (day.isSameOrBefore(end, granilarity)) {
-                        dates.push(day.clone());
-                        day.add(1, granilarity);
-                    }
-                    return dates
-                }));
+    private createDates(
+        start: moment.Moment,
+        end: moment.Moment,
+        unit: moment.unitOfTime.DurationConstructor,
+        // unitStart: moment.unitOfTime.DurationConstructor
+    ) {
+
+        let dates: moment.Moment[] = [];
+        // let startOf = start.clone().startOf(unitStart);
+        // let endOf = end.clone().endOf(unitStart);
+        // console.log(`
+        //     start ${start.format("DD-MM-YYYY")}\n
+        //     end ${end.format("DD-MM-YYYY")}`);
+
+        let date = start.clone();
+        if (!start || !end) return [];
+        if (start.isAfter(end)) return [];
+
+        while (date.isSameOrBefore(end, unit)) {
+            dates.push(date.clone());
+            date.add(1, unit);
+        }
+        return dates;
     }
 
 }
