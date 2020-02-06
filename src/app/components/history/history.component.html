@@ -1,75 +1,19 @@
 <section class="history">
     <div class="history__period">
-
-        <div class="mat-title text-primary"> {{periods[slectPeriod]}}</div>
-
-        <mat-action-list>
-            <ng-container *ngIf="slectPeriod == periods.length - 1">
-                <mat-list-item (click)='pickerFrom.open()'>
-                    <input class="hidden" [max]="dateTo.value" [formControl]='dateFrom' [matDatepicker]="pickerFrom"
-                        autocomplete="off">
-                    <mat-datepicker #pickerFrom [startAt]="dateFrom.value "></mat-datepicker>
-                    <span>От:</span>
-                    <span> {{dateFrom.value | date:"EE, d MMM yyyy"}}</span>
-                </mat-list-item>
-                <mat-list-item (click)='pickerTo.open()'>
-                    <input class="hidden" [min]="dateFrom.value" [formControl]='dateTo' [matDatepicker]="pickerTo"
-                        autocomplete="off">
-                    <mat-datepicker #pickerTo [startAt]="dateTo.value"></mat-datepicker>
-                    <span>До:</span>
-                    <span> {{dateTo.value | date:"EE, d MMM yyyy"}}</span>
-                </mat-list-item>
-            </ng-container>
-            <mat-list-item>
-                <mat-icon matListIcon>sort</mat-icon>
-                <span>По убыванию</span>
-            </mat-list-item>
-
-
-        </mat-action-list>
+        <app-selector></app-selector>
     </div>
-
-    <mat-list>
-        <mat-list-item *ngFor="let day of dates">
-            <div class="history__date"> {{day | date:"EE, d MMM yyyy"}} </div>
-        </mat-list-item>
-    </mat-list>
+    <ng-container *ngFor="let day of dates">
+        <div matLine class="history__date mat-title"> {{day | date:"EE, d MMM yyyy"}} </div>
+        <!-- start Table -->
+        <!-- <app-table-history matLine></app-table-history> -->
+        <!-- end Table -->
+    </ng-container>
+ 
 </section>
 
-<!-- start Table -->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- <mat-text-column name="id"></mat-text-column>
-    <mat-text-column name="timestamp"></mat-text-column>
-    <mat-text-column name="discount"></mat-text-column> -->
 
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> id </th>
-        <td mat-cell *matCellDef="let dataSource"> {{dataSource.id}} </td>
-        <td mat-footer-cell *matFooterCellDef> Discount </td>
-    </ng-container>
-    <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef> timestamp </th>
-        <td mat-cell *matCellDef="let dataSource"> {{dataSource.timestamp}} </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="discount1">
-        <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="discount">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> discount </th>
-        <td mat-cell *matCellDef="let dataSource" [attr.colspan]="2"> {{dataSource.discount}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{getTotalDiscount$ | async | currency}} </td>
-    </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumnsFooter"></tr>
-</table>
-<!-- end Table -->
 
-<button class="btn-fly" (click)="openDialod()" mat-fab>
-    <mat-icon>update</mat-icon>
-</button>
 
 
 <button mat-flat-button color="primary" (click)='textarea.value = generete()'>Generete Sale</button>

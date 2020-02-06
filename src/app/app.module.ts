@@ -41,6 +41,9 @@ import { NameProductsSate } from './store/state/name-products.state';
 import { ConfigState } from './store/state/config.state';
 import { pairwise } from 'rxjs/operators';
 import { HistoryModalDialogComponent } from './components/history/history-modal-dialog/history-modal-dialog.component';
+import { TableHistoryComponent } from './components/history/table-history/table-history.component';
+import { SelectorComponent } from './components/history/selector/selector.component';
+import { FlyDirective } from './components/fly.directive';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, 'ru');
@@ -71,6 +74,9 @@ export function noop() {
     SearchPipe,
     FormProductsComponent,
     HistoryModalDialogComponent,
+    TableHistoryComponent,
+    SelectorComponent,
+    FlyDirective,
   ],
   entryComponents: [
     ModalDialogComponent,

@@ -3,6 +3,11 @@ import * as moment from 'moment'
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+export interface HistorySale{
+    title:string;
+    
+}
+
 @Injectable({ providedIn: "root" })
 export class HistoryService implements OnInit {
     // private _dates: BehaviorSubject<moment.Moment[]> = new BehaviorSubject([]);

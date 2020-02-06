@@ -103,7 +103,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   formValidator(control: FormControl) {
     let diff = (control.value as Sale).productList.reduce((s, p) => s += p.price * p.count, 0) - (control.value as Sale).discount
-    if (diff <= 0) return { "invalidDiscount": true };
+    if (diff < 0) return { "invalidDiscount": true };
     return null
   }
   asyncFormValidator(control: FormControl) {

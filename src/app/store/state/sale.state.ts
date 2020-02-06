@@ -150,19 +150,25 @@ export class SaleState implements NgxsOnInit {
     @Action(SaveSale)
     saveSale(ctx: StateContext<SaleStateModel>) {
         let select = ctx.getState().select;
-        if (!select.id) {
-            let id = Math.max(...ctx.getState().sales.map(s => s.id), 0) + 1;
-            select = {
-                ...select,
-                timestamp: moment().valueOf(),
-                id
-            }
+        if (!select.productList.length) {
+            if (!select.id) return;
+            else this.store.dispatch(new DeleteSale(select.id))
         }
-        ctx.setState(
-            patch({
-                sales: insertOrUpdateSale(select.id, select)
-            })
-        )
+        else {
+            if (!select.id) {
+                let id = Math.max(...ctx.getState().sales.map(s => s.id), 0) + 1;
+                select = {
+                    ...select,
+                    timestamp: moment().valueOf(),
+                    id
+                }
+            }
+            ctx.setState(
+                patch({
+                    sales: insertOrUpdateSale(select.id, select)
+                })
+            );
+        }
     }
     @Selector()
     static loading(state: SaleStateModel) {

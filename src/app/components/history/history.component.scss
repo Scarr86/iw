@@ -1,11 +1,5 @@
-table {
-  width: 100%;
-}
-.mat-list-item{
-    position: relative;
-    span + span{
-        margin-left: 10px;
-    }
+.table-history .mat-list-item{
+    height: auto;
 }
 .hidden{
     position: absolute;
@@ -30,6 +24,7 @@ table {
     }
 
     &__date {
+        margin-top: 30px;
         text-align: center;
         width: 100%;
     }

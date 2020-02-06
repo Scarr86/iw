@@ -49,8 +49,8 @@ html {
 
 .container-page {
   display: block;
-  padding: 15px 5px 30px;
-
+  margin: 15px 5px 30px;
+  position: relative;
 }
 
 
@@ -83,11 +83,10 @@ ul {
   // overflow-x: hidden;
   // position: relative;
 }
-
-.btn-fly {
-  position: fixed !important;
+.btn-fly.mat-fab {
+  position: fixed ;
   margin: 0 auto !important;
-  bottom: 15px;
+  bottom: 20px;
   left: 0;
-  right: 0;
+  right: 20px;
 }
