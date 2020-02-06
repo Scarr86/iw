@@ -110,7 +110,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         this.slectPeriod = period;
         this.dateFrom.setValue(this.startPeriods[period]);
         this.dateTo.setValue(moment());
-       this.cdr.detectChanges();
+        this.cdr.detectChanges();
       })
   }
 
@@ -118,5 +118,23 @@ export class HistoryComponent implements OnInit, AfterViewInit {
   generete() {
     this.sales = this.genereteService.genereteSale(new Date(2020, 0, 1));
     return JSON.stringify(this.sales, null, 2);
+  }
+
+
+  spy(observable: Observable<any>): Observable<any> {
+
+    return new Observable(obs => {
+      console.log("subscription");
+      let sub = observable.subscribe((v) => {
+        console.log("source  emmit", v);
+        obs.next(v);
+      });
+
+      return function unsubscribe() {
+        console.log("unsubscribe");
+        sub.unsubscribe()
+      }
+    })
+
   }
 }
