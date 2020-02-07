@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy, HostListener, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, of, iif, Observable, fromEvent } from 'rxjs';
 import { map, find, switchMap, pairwise, startWith, tap, filter, take, debounceTime, distinctUntilChanged, delay, timeout, catchError, share, publish, refCount, switchAll, pluck, publishReplay, takeWhile, shareReplay, mergeMap, distinct } from 'rxjs/operators';
@@ -49,7 +49,8 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private fb: FormBuilder,
     private store: Store,
     private activeRoute: ActivatedRoute,
-    private el: ElementRef
+    private el: ElementRef,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -79,7 +80,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.date$ = this.sale$.pipe(pluck('timestamp'))
 
     this.formSale = this.fb.group({
-      discount: ["0"],
+      discount: ["0", [Validators.min(0)]],
       productList: this.fb.array([])
     }, {
       validators: this.formValidator,
@@ -101,11 +102,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
     );
   }
-  formValidator(control: FormControl) {
-    let diff = (control.value as Sale).productList.reduce((s, p) => s += p.price * p.count, 0) - (control.value as Sale).discount
-    if (diff < 0) return { "invalidDiscount": true };
-    return null
-  }
+
   asyncFormValidator(control: FormControl) {
     return of({ "AsyncInvalidForm": true }).pipe(delay(1000))
   }
@@ -113,15 +110,17 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   createFormProduct(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      count: ['', [Validators.required, Validators.min(0)]],
-      price: ['', [Validators.required, Validators.min(0)]],
+      count: ['', [Validators.required, Validators.min(1)]],
+      price: ['', [Validators.required, Validators.min(1)]],
     }, {
       validators: Validators.required
     })
   }
   ngAfterViewInit() {
     this.formSale.statusChanges.subscribe(v => {
-      console.log(v, this.formSale.errors)
+      console.log(v, this.formSale.errors);
+      // this.cdr.markForCheck();
+      this.formSale.get('discount').markAllAsTouched();
     });
   }
   goBack() {
@@ -144,6 +143,21 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.arrayProductControl.removeAt(i);
   }
 
+  formValidator(control: FormControl) {
+    let diff = (control.value as Sale).productList.reduce((s, p) => s += p.price * p.count, 0) - (control.value as Sale).discount
+    if (diff < 0) return { "invalidDiscount": true };
+    return null
+  }
+  discountError() {
+    console.log(this.formSale.hasError('invalidDiscount'));
+
+
+    this.formSale.hasError('invalidDiscount') ?
+      this.formSale.get('discount').setErrors({ invalidDiscount: true })
+      : this.formSale.get('discount').setErrors(null);
+
+    return this.formSale.get('discount').hasError("invalidDiscount") ? "Скидка больше цены" : "";
+  }
 
   test(el: MatExpansionPanel) {
     let nativEl: HTMLElement = document.querySelector(`[aria-controls=${el.id}]`);

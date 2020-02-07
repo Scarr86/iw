@@ -20,7 +20,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { DriveViewerComponent } from './components/drive-viewer/drive-viewer.component';
-import { ConnectFormControlDirective } from './components/connect-form.directive';
+import { ConnectFormControlDirective } from './components/drive-viewer/connect-form.directive';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from './service/theme.service';
 import { ModalDialogComponent } from './components/drive-viewer/modal-diolog/modal-diolog.component';
@@ -49,8 +49,7 @@ import { FlyDirective } from './components/fly.directive';
 registerLocaleData(localeRu, 'ru');
 
 export function initGapi(gapiService: GapiService) {
-  // return () => gapiService.initGapi();
-  return () => { }
+  return environment.gooleDrive ? () => gapiService.initGapi() : () => { }
 }
 export function noop() {
   return function () { };
@@ -134,8 +133,6 @@ export class AppModule {
           overlayContainer.getContainerElement().classList.add(arrNewTheme[0]);
         if (arrNewTheme[1])
           overlayContainer.getContainerElement().classList.add(arrNewTheme[1]);
-        console.log(overlayContainer.getContainerElement().className);
-
       })
   }
 }

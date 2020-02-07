@@ -1,6 +1,7 @@
 import { State, NgxsAfterBootstrap, StateContext, Action, NgxsOnInit, Selector, Store } from '@ngxs/store';
 import { SignIn, SignOut, UpdateSigninStatus, InitSession } from '../actions/auth.actions';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 export interface GapiStateModel {
     // googleAuth: gapi.auth2.GoogleAuth | null;
@@ -12,7 +13,7 @@ export interface GapiStateModel {
     defaults: {
         // googleAuth: null,
         googleUser: null,
-        isSignedIn: true// false
+        isSignedIn: environment.gooleDrive ? false : true
     }
 })
 export class AuthState implements NgxsAfterBootstrap, NgxsOnInit {
@@ -37,7 +38,7 @@ export class AuthState implements NgxsAfterBootstrap, NgxsOnInit {
         let googleAuth = gapi.auth2.getAuthInstance();
         //const googleAuth = ctx.getState().googleAuth;
         try {
-          return googleAuth.signIn({ prompt: "select_account" });
+            return googleAuth.signIn({ prompt: "select_account" });
         }
         catch{
             throw new Error("googleAuth is unset")

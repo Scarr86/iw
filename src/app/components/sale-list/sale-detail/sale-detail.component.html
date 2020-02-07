@@ -14,7 +14,7 @@
     {{date$ | async | date:"EE, d MMM yyyy"}}
   </h2>
 
-  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async" [style.fontSize.px]="18">
+  <form class="form" [formGroup]="formSale" [appConnectFormGroup]="sale$ | async" [style.fontSize.px]="16">
     <!-- Discount -->
     <mat-card class="form__discount">
       <mat-form-field class="form__discount-input">
@@ -22,6 +22,7 @@
         <button type="button" mat-icon-button matSuffix (click)="discount = 0">
           <mat-icon>close</mat-icon>
         </button>
+        <mat-error> {{discountError()}} </mat-error>
       </mat-form-field>
       <div class="form__discount-actions">
         <button type="button" mat-stroked-button (click)="discount = discount + 50" color="primary">
@@ -42,7 +43,7 @@
         *ngFor="let product of arrayProductControl.controls; index as i" [formGroupName]="i">
         <!-- Product List Header -->
         <mat-expansion-panel-header collapsedHeight="60px">
-          <mat-panel-title *ngIf="!accordion.expanded" [style.fontSize.px]="18" >
+          <mat-panel-title *ngIf="!accordion.expanded" [style.fontSize.px]="16" >
             <span class="nowrap-hidden-text"> {{ product.get("name").value }} </span>
           </mat-panel-title>
           <mat-panel-description>

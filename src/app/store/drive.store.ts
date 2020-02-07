@@ -268,8 +268,6 @@ export class DriveStore {
             case EDriveActions.deleteSuccess:
             case EDriveActions.fileUpdSuccess:
                 this.list();
-                console.log("my state");
-
                 return { ...state, loading: false }
 
             case EDriveActions.fileSuccess:

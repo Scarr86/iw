@@ -16,7 +16,7 @@ export class SearchPipe implements PipeTransform {
 
   constructor(private store: Store) { }
 
-  transform(value: string, suffix: string): any {
+  transform(value: string): any {
 
     return combineLatest(this.select$.pipe(map(s => s.productList.map(p => p.name))), this.names$)
       .pipe(

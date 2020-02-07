@@ -14,22 +14,21 @@ import { ConfigState } from './store/state/config.state';
 })
 export class AppComponent implements AfterViewInit, OnInit {
   @HostBinding('class') componentCssClass;
-  @Select(SaleState.loading) loading$:Observable<boolean>;
+  @Select(SaleState.loading) loading$: Observable<boolean>;
 
- 
+
   title = 'iw';
   constructor(
     private driveStore: DriveStore,
     private theme: ThemeService,
-    private store:Store
-  ) {
-  }
+    private store: Store
+  ) { }
   ngOnInit() {
 
-    this.store.select(ConfigState.theme).subscribe(theme=> this.componentCssClass = theme)
+    this.store.select(ConfigState.theme).subscribe(theme => this.componentCssClass = theme)
     // this.theme.isDarkTheme.subscribe((isDark) => this.componentCssClass = isDark ? "dark-theme" : "")
     // this.theme.theme.subscribe((theme) => {
-      // this.componentCssClass= theme.split(" ")[0]+" "+ theme.split(" ")[1];
+    // this.componentCssClass= theme.split(" ")[0]+" "+ theme.split(" ")[1];
     // })
   }
   ngAfterViewInit() {

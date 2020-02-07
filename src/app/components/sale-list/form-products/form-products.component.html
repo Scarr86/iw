@@ -1,9 +1,9 @@
-<div class="form-product" [formGroup]="formGroup" [style.fontSize.px]="18">
+<div class="form-product" [formGroup]="formGroup" [style.fontSize.px]="16">
     <!-- Name -->
     <mat-form-field class="form-product__name">
-        <input  #nameInput="matInput" (keypress)="handleInput($event)" formControlName="name" type="text" autocomplete="off" matInput placeholder="Название"
-            required />
-           
+        <input #nameInput="matInput" (keypress)="handleInput($event)" formControlName="name" type="text"
+            autocomplete="off" matInput placeholder="Название" required />
+
         <button type="button" mat-icon-button matSuffix (click)="clear(name)">
             <mat-icon>close</mat-icon>
         </button>
@@ -15,14 +15,14 @@
         <mat-form-field class="form-product__count">
             <input formControlName="count" type="number" min="0" autocomplete="off" matInput placeholder="Количество"
                 required />
-                <mat-error> {{coutnError()}} </mat-error>
-            </mat-form-field>
+            
+        </mat-form-field>
         <div class="form-product__count-actions">
             <button type="button" mat-stroked-button color="primary" (click)="onChange(count,-1)" color="primary">
-                <mat-icon >remove</mat-icon>
+                <mat-icon>remove</mat-icon>
             </button>
             <button type="button" mat-stroked-button color="primary" (click)="onChange(count, 1)" color="primary">
-                <mat-icon >add</mat-icon>
+                <mat-icon>add</mat-icon>
             </button>
         </div>
         <!-- end Count -->

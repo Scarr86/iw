@@ -44,9 +44,7 @@ export class FormProductsComponent implements OnInit {
     this.name.setValue(name);
   }
 
-   coutnError(){
-    return this.count.hasError('min') ? "меньше 0": ""; 
-  }
+
 
 
 }

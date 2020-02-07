@@ -7,6 +7,7 @@
     &__count,
     &__price {
         min-width: 0;
+        margin-bottom: 15px;
     }
 
     &__name {
@@ -30,8 +31,9 @@
     }
 
     &__price-actions {
+        margin-bottom: 15px;
         button + button{
-            margin-left: 10px;
+            margin-left: 15px;
         }
     }
 }

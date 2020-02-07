@@ -32,11 +32,13 @@
 
     &__discount-input {
         width: 100%;
+        margin-bottom: 15px;
     }
 
     &__discount-actions {
         button+button {
-            margin-left: 10px;
+            margin-left: 15px;
+            margin-bottom: 15px;
         }
     }
 }
