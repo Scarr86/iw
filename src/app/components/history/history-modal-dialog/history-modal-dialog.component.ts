@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange, MatRadioGroup } from '@angular/material/radio';
 
 export interface HistoryDialogData {
-  periods: string[],
+  period: string[],
   select: number
 }
 

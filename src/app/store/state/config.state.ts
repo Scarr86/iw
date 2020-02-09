@@ -3,8 +3,8 @@ import { ToggleDarkTheme, SetTheme, } from '../actions/config.action';
 
 export enum THEME {
     dark = 'dark-theme',
-    light = "",
-    indigo = "",
+    light = "light-theme",
+    indigo = "default-theme",
     green = "green-theme"
 
 }
@@ -23,7 +23,6 @@ interface ConfigStateModel {
 })
 export class ConfigState {
 
-
     @Action(ToggleDarkTheme)
     toggleDarkTheme({ getState, patchState }: StateContext<ConfigStateModel>) {
         patchState({ darkOrLight: getState().darkOrLight === THEME.dark ? THEME.light : THEME.dark })
@@ -35,7 +34,7 @@ export class ConfigState {
 
     @Selector()
     static theme(state: ConfigStateModel) {
-
-        return (state.darkOrLight ? state.darkOrLight + " " : "" )+ state.theme;
+        return state.darkOrLight + " " + state.theme;
+       // return (state.darkOrLight ? state.darkOrLight + " " : "" )+ state.theme;
     }
 }
