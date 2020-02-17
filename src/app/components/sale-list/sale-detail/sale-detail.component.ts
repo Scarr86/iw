@@ -102,7 +102,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.isShodow$ = fromEvent(this.el.nativeElement, "scroll").pipe(
+    this.isShodow$ = fromEvent(document.body, "scroll").pipe(
       map((ev: Event) => (ev.target as HTMLElement).scrollTop),
       map(top => (top > 10 ? true : false)),
       distinctUntilChanged(),
@@ -205,7 +205,7 @@ export class SaleDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         (s, p) => (s += p.price * p.count),
         0
       ) - (control.value as Sale).discount;
-    if (diff <= 0) return { invalidDiscount: true };
+    if (diff < 0) return { invalidDiscount: true };
     return null;
   }
   discountError() {

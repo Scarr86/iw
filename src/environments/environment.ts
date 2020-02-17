@@ -4,8 +4,30 @@
 
 export const environment = {
   production: false,
-  gooleDrive: false
+  gooleDrive: false,
+
 };
+
+// <!-- The core Firebase JS SDK is always required and must be listed first -->
+// <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+
+// <!-- TODO: Add SDKs for Firebase products that you want to use
+//      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+// <script>
+//   // Your web app's Firebase configuration
+//   var firebaseConfig = {
+//     apiKey: "AIzaSyDTVaxk_zq4A5lRdAEgS15vz7W05aJJ-vI",
+//     authDomain: "iweeks.firebaseapp.com",
+//     databaseURL: "https://iweeks.firebaseio.com",
+//     projectId: "iweeks",
+//     storageBucket: "iweeks.appspot.com",
+//     messagingSenderId: "752520476098",
+//     appId: "1:752520476098:web:41950f02b4d2bd163f925b"
+//   };
+//   // Initialize Firebase
+//   firebase.initializeApp(firebaseConfig);
+// </script>
 
 /*
  * For easier debugging in development mode, you can import the following file

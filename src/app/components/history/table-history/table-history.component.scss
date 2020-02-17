@@ -1,6 +1,11 @@
-table{
+table {
     width: 100%;
 }
-:host{
+
+tr.mat-footer-row {
+    font-weight: bold;
+}
+
+:host {
     display: block;
 }

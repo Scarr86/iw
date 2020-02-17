@@ -10,7 +10,7 @@
     <mat-action-list [@salesListAnim]="anim? true : false">
         <mat-list-item (click)="onSelect(s.id, i + 1)" *ngFor=" let s of (sales$ | async); let i=index">
             <div class="sale text-primary">
-                <div class="sale__item"> {{i + 1}} </div>
+                <div class="sale__item"> {{s.id}} </div>
                 <div class="sale__item"> {{s.count}} поз. </div>
                 <div class="sale__item"> {{s.total | currency:'RUB':'symbol-narrow'}} </div>
             </div>

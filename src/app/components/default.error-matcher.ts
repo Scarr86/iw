@@ -3,7 +3,7 @@ import { FormControl, FormGroupDirective, NgForm, AbstractControl } from '@angul
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        console.log( control.invalid,  form.invalid);
+        // console.log( control.invalid,  form.invalid);
         
         return !!(control && control.invalid && (control.dirty || control.touched));
     }

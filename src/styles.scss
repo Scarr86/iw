@@ -49,7 +49,7 @@ html {
 
 .container-page {
   display: block;
-  margin: 15px 5px 30px;
+  padding: 15px 5px 30px;
   position: relative;
 }
 
@@ -89,4 +89,5 @@ ul {
   bottom: 20px;
   left: 0;
   right: 20px;
+  z-index: 1000;
 }

@@ -11,7 +11,7 @@ export class FileService {
     controller = new AbortController();
     signal = this.controller.signal;
 
-    constructor(private generatorBase: GeneratorBase) {
+    constructor() {
         this.signal.addEventListener("abort", () => alert("abort"));
         // this.controller.abort();
         // alert(this.signal.aborted)

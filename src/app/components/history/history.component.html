@@ -1,24 +1,18 @@
 <section class="history">
-    <div class="history__period">
-        <app-selector></app-selector>
-    </div>
-    <ng-container *ngFor="let day of dates">
-        <div matLine class="history__date mat-title"> {{day | date:"EE, d MMM yyyy"}} </div>
-        <!-- start Table -->
-        <!-- <app-table-history matLine></app-table-history> -->
-        <!-- end Table -->
-    </ng-container>
- 
+  <app-selector></app-selector>
+  <ng-container *ngFor="let h of historys$ | async; let i = index">
+    <app-table-history
+      @fadeIn
+      [data]="h"
+      class="history__table"
+    ></app-table-history>
+  </ng-container>
 </section>
 
-
-
-
-
-
-<button mat-flat-button color="primary" (click)='textarea.value = generete()'>Generete Sale</button>
-
+<button mat-flat-button color="primary" (click)="textarea.value = generete()">
+  Generete Sale
+</button>
 
 <textarea style="display: block; width: 100%;" rows="10" #textarea></textarea>
-<pre>{{sales | json}}</pre>
-<pre>{{name$ | async | json}}</pre>
+<pre>{{ sales | json }}</pre>
+<pre>{{ name$ | async | json }}</pre>

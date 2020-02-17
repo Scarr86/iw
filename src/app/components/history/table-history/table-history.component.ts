@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { HistorySale } from "src/app/store/state/history.state";
 
-interface HistoryTable {
+export interface HistoryTable {
   name: string;
   count: number;
   total: number;
@@ -20,8 +21,22 @@ const ELEMENT_DATA: HistoryTable[] = [
 })
 export class TableHistoryComponent implements OnInit {
   displayedColumns: string[] = ["name", "count", "total"];
-  @Input() dataSource: HistoryTable[] = ELEMENT_DATA;
+  @Input() data: HistorySale = null;
+  //@Input() dataSource: HistoryTable[] = ELEMENT_DATA;
+  // @Input() caption: string = "";
   constructor() {}
 
   ngOnInit() {}
+  getTotalCount() {
+    return this.data.products.reduce((acc, p) => (acc += p.count), 0);
+  }
+  getTotal() {
+    return (
+      this.data.products.reduce((acc, p) => (acc += p.total), 0) -
+      this.data.discount
+    );
+  }
+  getDiscount(){
+    return this.data.discount
+  }
 }

@@ -193,20 +193,11 @@ export class SaleState implements NgxsOnInit {
     }
 
 
-    static getSaleByDate(date: moment.Moment) {
+    static getSaleByDate(dateFrom: moment.Moment, dateTo: moment.Moment = dateFrom) {
         return createSelector(
             [SaleState],
             (state: SaleStateModel) => {
-                return state.sales ? state.sales.filter(s => date.isSame(moment(s.timestamp), 'days')) : [];
-            }
-        )
-    }
-
-    static getSaleByDateBetween(start: moment.Moment, end: moment.Moment) {
-        return createSelector(
-            [SaleState],
-            (state: SaleStateModel) => {
-                return state.sales ? state.sales.filter(s => moment(s.timestamp).isBetween(start, end, null, '[]')) : [];
+                return state.sales ? state.sales.filter(s => moment(s.timestamp).isBetween(dateFrom, dateTo, "day", '[]')) : [];
             }
         )
     }

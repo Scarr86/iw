@@ -43,7 +43,8 @@ import { HistoryModalDialogComponent } from "./components/history/history-modal-
 import { TableHistoryComponent } from "./components/history/table-history/table-history.component";
 import { SelectorComponent } from "./components/history/selector/selector.component";
 import { FlyDirective } from "./components/fly.directive";
-import { HistorySatate } from './store/state/history.state';
+import { HistorySatate } from "./store/state/history.state";
+import { ConnectControlDirective } from './components/history/selector/connect-form-control.directive';
 
 // the second parameter 'ru' is optional
 registerLocaleData(localeRu, "ru");
@@ -63,9 +64,10 @@ export function noop() {
     NotFoundComponent,
     HistoryComponent,
     DriveViewerComponent,
-    ConnectFormControlDirective,
     ModalDialogComponent,
+    ConnectFormControlDirective,
     ConnectFormGroupDirective,
+    ConnectControlDirective,
     SettingComponent,
     FileListComponent,
     LoginComponent,
@@ -106,7 +108,7 @@ export function noop() {
     ),
     // NgxsLoggerPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot({
-      key: ConfigState
+      key: [ConfigState, HistorySatate]
     }),
     !environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : []
   ],
